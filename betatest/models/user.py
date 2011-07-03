@@ -7,6 +7,8 @@ class User(db.Model):
     email = db.Column(db.String(256), unique=True)
     registered_date = db.Column(db.DateTime)
     projects = db.relationship('Project', backref='author', lazy='dynamic')
+    outbox = db.relationship('Message', backref='sender', lazy='dynamic', primaryjoin='Message.sender_id == User.id')
+    inbox = db.relationship('Message', backref='receiver', lazy='dynamic', primaryjoin='Message.receiver_id == User.id')
 
     def __init__(self, username, password, email):
         self.username = username

@@ -34,5 +34,16 @@ db.session.add(betatest)
 db.session.add(spacegame)	
 db.session.add(ducttape)
 
+# create sample messages
+msg_1 = models.message.Message("Test 1", "BlaBla", opatut, zetaron)
+msg_2 = models.message.Message("Test 2", "BlaBla", opatut, zetaron)
+msg_3 = models.message.Message("Test 3", "BlaBla", zetaron, opatut)
+msg_4 = models.message.Message("Test 4", "BlaBla", zetaron, opatut)
+
+db.session.add(msg_1)
+db.session.add(msg_2)
+db.session.add(msg_3)
+db.session.add(msg_4)
+
 # close
 db.session.commit()

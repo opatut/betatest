@@ -20,7 +20,7 @@
         <div id="footer">
             <ul id="navi">
                 {% for url in get_footer_navi() % }
-                <li><a href="{{ url.href }}">{{ url.text }}</a></li>
+                <li><a href="{{ url.href }}">{% if url.img %}<img src="{{ url.img }}" />{% endif %}{{ url.text }}</a></li>
                 {% endfor %}
             </ul>
             &copy; Copyright by <a href="zetaron.de">Fabian Stegemann</a> | <a href="opatut.de">Paul Bienkowski</a>
