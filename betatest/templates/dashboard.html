@@ -8,8 +8,12 @@
 
 {% block content %}
 	<h1>Dashboard</h1>
-
 	<p>
+		
+		<ul class="tabs small-tabs" id="main-buttons" style="text-align: right; margin-bottom: -10px;">
+			<li><a href="/dashboard/lol">Create a project</a></li>
+		</ul>
+		
 		<ul class="tabs standing-tabs" id="main-tabs">
 			{% for name, caption in [("projects","Your Projects"),("tested","Tested projects"),("messages","Messages"),("feedback","Feedback")] %}
 				{{ dashboardTab(name, caption) }}

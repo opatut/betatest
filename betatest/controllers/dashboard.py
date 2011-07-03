@@ -1,5 +1,6 @@
 from betatest import *
 
+
 @app.route("/")
 @app.route("/dashboard")
 @app.route("/dashboard/<page>")
@@ -20,5 +21,5 @@ def home(page = 'projects'):
 	elif page == 'feedback':
 		projects = models.project.Project.query.all()
 		return render_template("dashboard-projects.html", subpage = page, projects = projects)
-	else:
-		return ""
+	
+	return redirect(url_for("home"))

@@ -182,6 +182,9 @@ ul.tabs.standing-tabs li a {
 	border-bottom: 0;
 }
 
+ul.tabs.small-tabs li a {
+	padding: 3px 8px;
+}
 
 
 

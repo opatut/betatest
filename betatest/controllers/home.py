@@ -1,6 +1,6 @@
 from betatest import *
 
-@app.route("/test")
+@app.route("/home")
 def home():
     return "lol"
 

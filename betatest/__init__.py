@@ -1,5 +1,4 @@
-from flask import Flask, session, redirect, url_for, escape, request, \
-        render_template
+from flask import *
 
 from flaskext.sqlalchemy import SQLAlchemy
 from flaskext.wtf import *
@@ -34,6 +33,13 @@ def humantime(s):
 		return str(weeks) + " week" + ("s" if weeks > 1 else "") + " ago"
 	return s.strftime("%Y-%m-%d %H:%M:%S")
 
+
 from betatest.models import *
 from betatest.usersession import *
 from betatest.controllers import *
+
+def setupGlobals(sender):
+	g.usersession = usersession
+
+request_started.connect(setupGlobals)
+
