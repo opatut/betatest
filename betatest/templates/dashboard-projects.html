@@ -1,0 +1,26 @@
+{% extends "dashboard.html" %}
+
+{% block dashboard %}
+<p>
+	<ul class="projects-list">
+		
+		{% for project in projects %}
+		<li>
+			<div class="icon">
+				<img src="{{ url_for('static', filename='project-unknown-48.png') }}" />
+			</div>
+			<div class="title"><a href="#">{{ project.title }}</a></div>
+			<div class="description">{{ project.description }}</div>
+			<div class="meta">
+				by <b><a class="author" href="/user/{{ project.author.username }}">{{ project.author.username }}</a></b> |
+				created <b><span class="creation-date">{{ project.creation_date | humantime }}</span></b> |
+				<b>20</b> testers
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+</p>
+<p align="right">
+	<a href="#">show more &raquo;</a>
+</p>
+{% endblock dashboard %}

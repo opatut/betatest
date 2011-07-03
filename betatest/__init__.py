@@ -2,12 +2,14 @@ from flask import Flask, session, redirect, url_for, escape, request, \
         render_template
 
 from flaskext.sqlalchemy import SQLAlchemy
+from flaskext.wtf import *
 from datetime import datetime, timedelta
 from hashlib import sha512
 	
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///betatest.db'
 app.config['SQLALCHEMY_ECHO'] = True
+app.config['SECRET_KEY'] = 'aio3ujhrsdflncm239mlehasudkj<bkm'
 db = SQLAlchemy(app)
 
 #define filters
@@ -32,11 +34,6 @@ def humantime(s):
 		return str(weeks) + " week" + ("s" if weeks > 1 else "") + " ago"
 	return s.strftime("%Y-%m-%d %H:%M:%S")
 
-def getCurrentUser():
-	if 'username' in session:
-		return models.user.User.query.filter_by(username = session['username']).first()
-	else:
-		return None
-
 from betatest.models import *
+from betatest.usersession import *
 from betatest.controllers import *

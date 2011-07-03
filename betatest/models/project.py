@@ -10,7 +10,7 @@ class Project(db.Model):
     def __init__(self, title, description, author):
         self.title = title
         self.description = description
-        self.creation_date = datetime.utcnow() - timedelta(days = 10)
+        self.creation_date = datetime.utcnow()
         self.author = author
 
     def __repr__(self):

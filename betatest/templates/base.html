@@ -12,11 +12,15 @@
 			</div>
 			<div id="TAB-BAR">
 				<ul class="tabs hanging-tabs">
-					<li><a href="#"><img id="tabbar-profile-icon" src="{{ url_for('static', filename='profile-icon-14.jpeg') }}"> opatut</a></li>
-					<li><a href="#">Dashboard</a></li>
-					<li><a href="#">Inbox <span id="inbox-count">4</span></a></li>
-					<li><a href="#">Account</a></li>
-					<li><a href="#">Log Out</a></li>
+					{% if session.logged_in %}
+					<li><a href="/{{ session.username }}"><img id="tabbar-profile-icon" src="{{ url_for('static', filename='profile-icon-14.jpeg') }}"> opatut</a></li>
+					<li><a href="/dashboard">Dashboard</a></li>
+					<li><a href="/dashboard/messages">Inbox <span id="inbox-count">4</span></a></li>
+					<li><a href="/settings">Account</a></li>
+					<li><a href="/logout">Log Out</a></li>
+					{% else %}
+					<li><a href="/login">Login</a></li>
+					{% endif %}
 				</ul>
 			</div>
 			<div id="SEARCH-BAR">
