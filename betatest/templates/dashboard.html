@@ -7,61 +7,29 @@
 
 	<p>
 		<ul class="tabs standing-tabs" id="main-tabs">
-			<li class="current"><a href="#">Your Projects</a></li>
-			<li><a href="#">Participations</a></li>
-			<li><a href="#">Messages</a></li>
-			<li><a href="#">Feedback</a></li>
+			<li class="current"><a href="/dashboard/projects">Your Projects</a></li>
+			<li><a href="/dashboard/tested">Tested projects</a></li>
+			<li><a href="/dashboard/messages">Messages</a></li>
+			<li><a href="/dashboard/feedback">Feedback</a></li>
 		</ul>
 		
 		<div class="box" style="border-top-left-radius: 0;" id="main-box">
 			<p>
 				<ul class="projects-list">
-					<li>
-						<div class="icon">
-							<img src="{{ url_for('static', filename='profile-icon-48.jpeg') }}" />
-						</div>
-						<div class="title"><a href="#">Betatest backend</a></div>
-						<div class="description">The betatest.net website really needs an analytics tool backend...</div>
-						<div class="meta">
-							by <a class="author" href="#">zetaron</a> |
-							created <span class="creation-date" title="June 30, 2011">3 days ago</span>
-						</div>
-					</li>
+					{% for project in projects %}
 					<li>
 						<div class="icon">
 							<img src="{{ url_for('static', filename='project-unknown-48.png') }}" />
 						</div>
-						<div class="title"><a href="#">RedditGameJam webapp</a></div>
-						<div class="description">A helper webapp for organising the reddit game jams (http://reddit.com/r/RedditGameJam).</div>
-						
+						<div class="title"><a href="#">{{ project.title }}</a></div>
+						<div class="description">{{ project.description }}</div>
 						<div class="meta">
-							by <a class="author" href="#">svenstaro</a> |
-							created <span class="creation-date">June 24, 2011</span>
+							by <b><a class="author" href="/user/{{ project.author.username }}">{{ project.author.username }}</a></b> |
+							created <b><span class="creation-date">{{ project.creation_date | humantime }}</span></b> |
+							<b>20</b> testers
 						</div>
 					</li>
-					<li>
-						<div class="icon">
-							<img src="{{ url_for('static', filename='project-unknown-48.png') }}" />
-						</div>
-						<div class="title"><a href="#">Space game</a></div>
-						<div class="description">Awesome game. Just a space shooter.</div>
-						<div class="meta">
-							by <a class="author" href="#">opatut</a> |
-							created <span class="creation-date">May 20, 2011</span>
-						</div>
-						
-					</li>
-					<li>
-						<div class="icon">
-							<img src="{{ url_for('static', filename='project-unknown-48.png') }}" />
-						</div>
-						<div class="title"><a href="#">Ducttape Game Engine</a></div>
-						<div class="description">The awesome game engine. It's magic inside!</div>
-						<div class="meta">
-							by <a class="author" href="#">opatut</a> |
-							created <span class="creation-date" title="look at your clock!">just now</span>
-						</div>
-					</li>
+					{% endfor %}
 				</ul>
 			</p>
 			<p align="right">

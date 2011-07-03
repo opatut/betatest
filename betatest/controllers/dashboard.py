@@ -2,7 +2,24 @@ from betatest import *
 
 @app.route("/")
 @app.route("/dashboard")
-def home():
-    return render_template("dashboard.html");
-
-
+@app.route("/dashboard/<page>")
+def home(page = 'projects'):
+	user = getCurrentUser()
+	user = models.user.User.query.filter_by(username = "opatut").first()
+	if user == None:
+		return render_template("home.html")
+	
+	if page == 'projects':
+		projects = models.project.Project.query.filter_by(author_id = user.id)
+		return render_template("dashboard.html", projects = projects)
+	elif page == 'tested':
+		projects = models.project.Project.query.all()
+		return render_template("dashboard.html", projects = projects)
+	elif page == 'messages':
+		projects = models.project.Project.query.all()
+		return render_template("dashboard.html", projects = projects)
+	elif page == 'feedback':
+		projects = models.project.Project.query.all()
+		return render_template("dashboard.html", projects = projects)
+	else:
+		return ""
