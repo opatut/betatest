@@ -5,7 +5,6 @@ from betatest import *
 @app.route("/dashboard/<page>")
 def home(page = 'projects'):
 	user = usersession.getCurrentUser()
-	user = models.user.User.query.filter_by(username = "opatut").first()
 	if user == None:
 		return render_template("home.html")
 	
@@ -16,8 +15,8 @@ def home(page = 'projects'):
 		projects = models.project.Project.query.all()
 		return render_template("dashboard-projects.html", subpage = page, projects = projects)
 	elif page == 'messages':
-		projects = models.project.Project.query.all()
-		return render_template("dashboard-projects.html", subpage = page, projects = projects)
+		messages = models.message.Message.query.filter_by(receiver_id = user.id)
+		return render_template("dashboard-messages.html", subpage = page, messages = messages)
 	elif page == 'feedback':
 		projects = models.project.Project.query.all()
 		return render_template("dashboard-projects.html", subpage = page, projects = projects)

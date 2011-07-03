@@ -5,7 +5,7 @@ class Project(db.Model):
     title = db.Column(db.String(80), unique=True)
     description = db.Column(db.Text)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    creation_date = db.Column(db.DateTime)
+    creation_date = db.Column(db.DateTime)    
 
     def __init__(self, title, description, author):
         self.title = title

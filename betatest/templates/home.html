@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
-{% block page_title %}
-    title
-{% endblock %}
+{% block pagetitle %}Home{% endblock %}
 
 
 {% block content %}
@@ -10,4 +8,6 @@
     {% if message != "" %}
 		<div class="message">{{ message }}</div>
 	{% endif %}
+	<p>This is home.</p>
+	
 {% endblock %}
