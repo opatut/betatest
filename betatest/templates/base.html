@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<title>{% block pagetitle %}{% endblock %}</title>
+		<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
+		<script src="{{ url_for('static', filename='jquery.js') }}"> </script>
+		<!--<script src="{{ url_for('static', filename='tabs.js') }}"> </script>-->
+	</head>
+	<body>
+		<div id="WRAPPER">
+			<div id="HEADER">
+				<div id="HEADER-TEXT"></div>
+			</div>
+			<div id="TAB-BAR">
+				<ul class="tabs hanging-tabs">
+					<li><a href="#"><img id="tabbar-profile-icon" src="{{ url_for('static', filename='profile-icon-14.jpeg') }}"> opatut</a></li>
+					<li><a href="#">Dashboard</a></li>
+					<li><a href="#">Inbox <span id="inbox-count">4</span></a></li>
+					<li><a href="#">Account</a></li>
+					<li><a href="#">Log Out</a></li>
+				</ul>
+			</div>
+			<div id="SEARCH-BAR">
+				<form>
+					<input type="text" placeholder="Search..." name="q" class="input-text search-text" size="40" />
+				</form>
+			</div>
+			
+			
+			<div id="CONTENT">
+				{% block content %}{% endblock %}
+			</div>
+			<div id="FOOTER">
+				<ul class="footer-links">
+					<li><a href="#">About</a></li>
+					<li><a href="#">Contact</a></li>
+					<li><a href="#">Terms of Service</a></li>
+					<li><a href="#">Privacy</a></li>
+					<li><a href="#">Development</a></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

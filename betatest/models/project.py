@@ -1,20 +1,16 @@
-
+from betatest import *
 
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), unique=True)
-    pa = db.Column(db.String(128))
-    email = db.Column(db.String(256), unique=True)
-    registered = db.Column(db.DateTime)
-    verified = db.Column(db.Boolean)
-    entries = db.relationship('Entry', backref='participant', lazy='dynamic')
+    description = db.Column(db.Text)
+    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
+    creation_date = db.Column(db.DateTime)
 
-    def __init__(self, username, password, email):
-        self.username = username
-        self.password = sha512(password).hexdigest()
-        self.email = email
-        self.registered = datetime.utcnow()
-        self.verified = False
+    def __init__(self, title, description):
+        self.title = title
+        self.description = description
+        self.creation_date = datetime.utcnow()
 
     def __repr__(self):
         return '<User %r>' % self.username

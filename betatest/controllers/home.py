@@ -1,6 +1,6 @@
-from betatest import app
+from betatest import *
 
-@app.route("/")
+@app.route("/test")
 def home():
-    return "Hello World in view."
+    return render_template("home.html");
 
