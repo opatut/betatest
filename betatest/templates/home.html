@@ -6,5 +6,8 @@
 
 
 {% block content %}
-    content!
+    <h1>Home</h1>
+    {% if message != "" %}
+		<div class="message">{{ message }}</div>
+	{% endif %}
 {% endblock %}
