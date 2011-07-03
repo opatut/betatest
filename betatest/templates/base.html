@@ -15,7 +15,7 @@
 					{% if session.logged_in %}
 					<li><a href="/{{ session.username }}"><img id="tabbar-profile-icon" src="{{ url_for('static', filename='profile-icon-14.jpeg') }}"> {{ session.username }}</a></li>
 					<li><a href="/dashboard">Dashboard</a></li>
-					<li><a href="/dashboard/messages">Inbox <span id="inbox-count">4</span></a></li>
+					<li><a href="/dashboard/messages">Inbox <span id="inbox-count">{{ g.usersession.getCurrentUser().getNewMessageCount() }}</span></a></li>
 					<li><a href="/settings">Account</a></li>
 					<li><a href="/logout">Log Out</a></li>
 					{% else %}

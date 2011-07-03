@@ -18,3 +18,10 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User: %r>' % self.username
+        
+    def getNewMessageCount(self): 
+		i = 0
+		for msg in self.inbox:
+			if not msg.isread:
+				i += 1
+		return i
