@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+
+    <head>
+        <link rel="stylesheet" href="css/reset.css" />
+        <link rel="stylesheet" href="css/base.css" />
+
+        <script src="js/jquery.js"></script>
+
+        <title>BetaTest</title>
+    </head>
+    <body>
+        <div id="head>">
+            <h1>BetaTest</h1>
+            {% include view/login.html %}
+            </div>
+        <div id="wrapper">
+            {% block body %}{% endblock %}
+        </div>
+        <div id="footer">
+            <ul id="navi">
+                {% for url in get_footer_navi() % }
+                <li><a href="{{ url.href }}">{{ url.text }}</a></li>
+                {% endfor %}
+            </ul>
+            &copy; Copyright by <a href="zetaron.de">Fabian Stegemann</a> | <a href="opatut.de">Paul Bienkowski</a>
+        </div>
+    </body>
+
+</html>
