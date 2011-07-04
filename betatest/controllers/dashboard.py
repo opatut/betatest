@@ -20,7 +20,7 @@ def dashboard(page = 'projects'):
 		return render_template("dashboard-messages.html", subpage = page, messages = messages)
 	elif page == 'feedback':
 		projects = models.project.Project.query.all()
-		return render_template("dashboard-projects.html", subpage = page, projects = projects)
+		return render_template("dashboard-feedback.html", subpage = page, projects = projects)
 	
 	return redirect(url_for("home"))
 
@@ -59,3 +59,14 @@ def new_message():
 		message = form.receiver.data
 	
 	return render_template("dashboard-messages.html", subpage = 'messages', newmessage=True, form = form)
+
+@app.route("/dashboard/messages/action", methods=['GET', 'POST'])
+def message_action():
+	if request.form:
+		if "delete" in request.form:
+			return "Delete"
+		elif "markread" in request.form:
+			return "read"
+		elif "markunread" in request.form:
+			return "unread"
+	return redirect(url_for('dashboard'))

@@ -1,3 +1,4 @@
 env/
 *.pyc
 betatest.db
+fam/

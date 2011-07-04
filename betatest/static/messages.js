@@ -20,4 +20,8 @@ $(document).ready(function() {
 		toggleSelected($(this));
 	});
 	
+	$("ul.message-list-ul li input.selection").each(function() {
+		toggleSelected($(this));
+	});
+	
 });
