@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}{{ error.name }}{% endblock %}
+
+{% block content %}
+	<h1>{{ error.code }} - {{ error.name }}</h1>
+	
+	<div class="box">
+	{% if error.code == 404 %} 
+		<h4>You've found a page that does not exist.</h4>
+		<p>
+			<span style="color: #888;">That is generally not a good sign. You may want to try one of these</span>			
+		</p>
+	{% elif error.code == 403 %}
+		We don't want you to see this.
+	{% else %}
+		Something wrong happened.
+	{% endif %}
+	</div>
+{% endblock %}

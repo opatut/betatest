@@ -13,9 +13,9 @@ def login():
 		password = sha512(form.password.data).hexdigest()
 		user = models.user.User.query.filter_by(username = username).first()
 		if not user:
-			error = 'Invalid username.'
+			error = 'That username is wrong.'
 		elif not user.password == password:
-			error = 'Invalid password.'
+			error = 'That\'s not your password.'
 		else:
 			usersession.login(username)
 			return render_template('home.html', message = 'Welcome back, %s.' % username);
