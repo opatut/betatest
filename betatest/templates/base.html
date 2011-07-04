@@ -1,3 +1,7 @@
+{% macro printTab(mainpage, name, caption) -%}
+	<li {% if name == subpage %}class="current"{% endif %}><a href="/{{mainpage}}/{{ name }}">{{ caption }}</a></li>
+{%- endmacro %}
+
 <html>
 	<head>
 		<title>betatest » {% block pagetitle %}{% endblock %}</title>
@@ -13,13 +17,14 @@
 			<div id="TAB-BAR">
 				<ul class="tabs hanging-tabs">
 					{% if session.logged_in %}
-					<li><a href="/{{ session.username }}"><img id="tabbar-profile-icon" src="{{ url_for('static', filename='profile-icon-14.jpeg') }}"> {{ session.username }}</a></li>
-					<li><a href="/dashboard">Dashboard</a></li>
-					<li><a href="/dashboard/messages">Inbox <span id="inbox-count">4</span></a></li>
-					<li><a href="/settings">Account</a></li>
-					<li><a href="/logout">Log Out</a></li>
+						<li><a href="{{ url_for('profile', username=session.username) }}"><img id="tabbar-profile-icon" src="{{ g.usersession.getCurrentUser().getAvatar(14) }}"> {{ session.username }}</a></li>
+						<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+						{% set inbox = g.usersession.getCurrentUser().getNewMessageCount() %}
+						<li><a href="{{ url_for('dashboard', page='messages') }}">Inbox{% if inbox %} <span id="inbox-count">{{ inbox }}</span>{% endif %}</a></li>
+						<li><a href="/settings">Account</a></li>
+						<li><a href="{{ url_for('logout') }}">Log Out</a></li>
 					{% else %}
-					<li><a href="/login">Login</a></li>
+						<li><a href="{{ url_for('login') }}">Login</a></li>
 					{% endif %}
 				</ul>
 			</div>
@@ -35,11 +40,11 @@
 			</div>
 			<div id="FOOTER">
 				<ul class="footer-links">
-					<li><a href="#">About</a></li>
-					<li><a href="#">Contact</a></li>
-					<li><a href="#">Terms of Service</a></li>
-					<li><a href="#">Privacy</a></li>
-					<li><a href="#">Development</a></li>
+					<li><a href="/about">About</a></li>
+					<li><a href="/contact">Contact</a></li>
+					<li><a href="/terms-of-service">Terms of Service</a></li>
+					<li><a href="/privacy">Privacy</a></li>
+					<li><a href="http://github.com/opatut/betatest" target="_blank">Development</a></li>
 				</ul>
 			</div>
 		</div>

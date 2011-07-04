@@ -4,7 +4,7 @@ from betatest import *
 @app.route("/")
 @app.route("/dashboard")
 @app.route("/dashboard/<page>")
-def home(page = 'projects'):
+def dashboard(page = 'projects'):
 	user = usersession.getCurrentUser()
 	if user == None:
 		return render_template("home.html")

@@ -7,8 +7,8 @@ db.create_all()
 
 
 # create users
-opatut = models.user.User("opatut", "test", "opatut@example.com")
-zetaron = models.user.User("zetaron", "test", "zetaron@example.com")
+opatut = models.user.User("opatut", "test", "opatutlol@aol.com")
+zetaron = models.user.User("zetaron", "test", "zetaron@live.com")
 svenstaro = models.user.User("svenstaro", "test", "svenstaro@example.com")
 
 db.session.add(opatut)
