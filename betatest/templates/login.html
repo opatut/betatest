@@ -1,21 +1,35 @@
 {% extends "base.html" %}	
 {% block pagetitle %}Login{% endblock %}
 {% block content %}
-	<h1>Login</h1>
-	{% if error %}<p class="error">Error: {{ error }}</p>{% endif %}
-	<p>
-		{% if not session.logged_in %}
-			<form action="{{ url_for('login') }}" method=post>
-				{{ form.hidden_tag() }}
-				{% for error in form.username.errors %}{{ error }}{% endfor %}
-				{{ form.username.label }}: {{ form.username() }}
-				{% for error in form.password.errors %}{{ error }}{% endfor %}
-				{{ form.password.label }}: {{ form.password() }}
-				<input type=submit value=Go>
-			</form>
-		{% else %}
-			You are already logged in!
-			<a href="{{ url_for('logout')}}" class="button">Logout</a>
+<p>
+	{% if not session.logged_in %}
+	<form action="{{ url_for('login') }}" method="post" class="login-form box">
+		<h4>Login</h4>
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.username.label }}{{ form.username(class="input-text") }}
+			<label> </label>{% for error in form.username.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+		</p>
+		<p>
+			{{ form.password.label }}{{ form.password(class="input-password") }}<br />
+			<label> </label>{% for error in form.password.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+		</p>
+		{% if error %}
+		<p>
+			<label> </label><span class="form-error">{{ error }}</p>
+		</p>
 		{% endif %}
-	</p>
+		<p>
+			<label> </label><input type="submit" value="Login">
+		</p>
+		<hr />
+		<p style="font-size:8pt">
+			Are you <a href="#">not registered</a> or did you <a href="#">forget your password</a>?
+		</p>
+	</form>
+	{% else %}
+	You are already logged in!
+	<a href="{{ url_for('logout')}}" class="button">Logout</a>
+	{% endif %}
+</p>
 {% endblock %}

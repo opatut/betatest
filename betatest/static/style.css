@@ -18,6 +18,15 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 }
 
+h1 {
+	margin-bottom: 8px;
+}
+
+hr {
+	border: 0;
+	border-top: 1px solid #CCC;
+}
+
 a {
 	color: #56F;
 	text-decoration: none;
@@ -29,21 +38,47 @@ a:hover {
 
 input {
 	vertical-align: middle;
+	margin-left: 0;
 }
 
-input.input-text {
-	border: 1px solid #e5e5e5;
+input.input-text,
+input.input-password {
+	border: 1px solid #AAA;
 	background: #FFF;
 	border-radius: 4px;
 	padding: 3px 6px;
 	color: #888;
 }
 
-input.input-text:focus {
-	border-color: #CCC;
+input.input-text:focus,
+input.input-password:focus {
+	border-color: #888;
 	color: #666;
 	box-shadow: 0 0 3px #DDD inset;
 }
+
+input.search-text {
+	border-color: #e5e5e5;
+}
+
+input.search-text:focus {
+	border-color: #CCC;
+}
+
+input.form-error {
+	border-color: #F00;
+}
+
+span.form-error {
+	color: #F00;
+	display: inline-block;
+	padding: 3px 10px;
+	background: #FCC;
+	border: 1px solid #F00;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+
 
 input.search-text {
 	background: #FFF url("search.png") 6px center no-repeat;
@@ -56,7 +91,6 @@ input.search-text {
 	border-radius: 10px;
 	padding: 10px;
 	border: 1px solid #d3d3d3;
-	min-height: 90%;
 	width: 900px;
 	margin: 10px auto;
 }
@@ -71,6 +105,10 @@ input.search-text {
 	background: url("logo.png") left top no-repeat;
 	width: 615px;
 	height: 100px;
+}
+
+#CONTENT {
+	min-height: 50%;
 }
 
 .box {
@@ -253,9 +291,27 @@ ul.footer-links {
 
 ul.footer-links li {
 	display: inline;
-	padding: 0 4px;
+	margin-right: 8px;
 }
 
 ul.footer-links li a {
 	color: #888;
+}
+
+
+
+.login-form {
+	width: 300px;
+	margin: 30px auto;
+}
+
+form.login-form label {
+	display: inline-block;
+	width: 70px;
+	font-weight: bold;
+	color: #444;
+	text-shadow: 1px 1px 1px #FFF;
+	font-size: 8pt;
+	text-align: right;
+	padding-right: 10px;
 }
