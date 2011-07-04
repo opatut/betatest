@@ -44,11 +44,15 @@
 	</p>
 	{% elif newmessage %}
 		<p>
+		
 		<form class="message-new-form">
-			<p><label for="subject">Subject:</label><input type="text" name="subject" /></p>
-			<p><label for="receiver">Receiver:</label><input type="text" name="receiver" /></p>
-			<p><label for="message">Message:</label><textarea name="message"></textarea></p>
+		{{ form.hidden_tag() }}
+		<p>{{ form.subject.label }}{{ form.subject(class="input-text") }}</p>
+		<p>{{ form.receiver.label }}{{ form.receiver(class="input-text") }}</p>
+		<p>{{ form.message.label }}{{ form.message() }}</p>
+		<p><input type="submit" value="Send" /></p>
 		</form>
+		
 		</p>
 	{% else %}
 		<p>Invalid call!</p>

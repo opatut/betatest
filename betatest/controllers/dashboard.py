@@ -33,12 +33,29 @@ def show_message(message_id):
 	
 	return redirect(url_for("home"))
 	
+def userlist_check(field):
+	error = ""
+	for user in re.split("[^\w\d]*", field.data):
+		if not models.user.User.query.filter_by(username = user).first():
+			error.append(user+" does not exist.\n")
+	if error:
+		raise ValidationError(error)
+	
+class NewMessageForm(Form):
+	subject = TextField("Subject", validators=[Required(), Length(max=255)])
+	receiver = TextField("Receiver", validators=[Required(), userlist_check])
+	message = TextAreaField("Message")
+
 @app.route("/dashboard/messages/new")
 def new_message():
 	user = usersession.getCurrentUser()
 	if user == None:
 		return render_template("home.html")
 	
-	return render_template("dashboard-messages.html", subpage = 'messages', newmessage=True)
+	form = NewMessageForm()
+	if form.validate_on_submit():
+		subject = form.subject.data
+		receiver = form.receiver.data
+		message = form.receiver.data
 	
-	return redirect(url_for("home"))
+	return render_template("dashboard-messages.html", subpage = 'messages', newmessage=True, form = form)
