@@ -35,3 +35,13 @@ def messages(msg_id):
 		return render_template("dashboard-messages.html", subpage = 'messages', message = msg)
 	
 	return redirect(url_for("home"))
+	
+@app.route("/dashboard/messages/new")
+def new_message():
+	user = usersession.getCurrentUser()
+	if user == None:
+		return render_template("home.html")
+	
+	return render_template("dashboard-messages.html", subpage = 'messages', newmessage=True)
+	
+	return redirect(url_for("home"))

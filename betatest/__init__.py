@@ -14,6 +14,10 @@ db = SQLAlchemy(app)
 #define filters
 
 @app.template_filter()
+def formattime(s):
+	return s.strftime("%Y-%m-%d %H:%M:%S")
+
+@app.template_filter()
 def humantime(s):
 	diff = datetime.utcnow() - s
 	if(diff.seconds < 10):
@@ -31,8 +35,7 @@ def humantime(s):
 	weeks = (diff.days - diff.days % 7) / 7
 	if(weeks <= 4):
 		return str(weeks) + " week" + ("s" if weeks > 1 else "") + " ago"
-	return s.strftime("%Y-%m-%d %H:%M:%S")
-
+	return formattime(s)
 
 from betatest.models import *
 from betatest.usersession import *

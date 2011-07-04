@@ -7,15 +7,11 @@
 		<h4>{{ message.title }}</h4>
 		<p>{{ message.message }}</p>
 	{% elif messages %}
-		<!--<ul>
-		{% for message in messages %}
-			<li><a href="/dashboard/messages/{{ message.id }}">{{ message.title }}</a></li>
-		{% endfor %}
-		</ul>-->
-
 		<form>
+			<a class="button" href="/dashboard/messages/new">New Message</a>
 			<table>
 				<tr>
+					<th></th>
 					<th></th>
 					<th>Subject</th>
 					<th>Date</th>
@@ -24,19 +20,22 @@
 				{% for message in messages %}
 				<tr>
 					<td><input type="checkbox" name="message_action[]" value="{{ message.id }}" /></td>
-					<td>{{ message.title }}</td>
-					<td>{{ message.send_date | humantime }}</td>
-					<td>{{ message.sender.username }}</td>
+					<td>Flags</td>
+					<td><a href="/dashboard/messages/{{ message.id }}">{{ message.title }}</a></td>
+					<td><span title="{{ message.send_date | formattime }}">{{ message.send_date | humantime }}</span></td>
+					<td><a href="{{ url_for('profile', username = message.sender.username) }}">{{ message.sender.username }}</a></td>
 				</tr>
 				{% endfor %}
 			</table>
-			<select name="message_action_choise">
-				<option value="none">-- Please Chose --</option>
-				<option value="delete">Delete selected</option>
-				<option value="read">Mark selected as read</option>
-				<option value="unread">Mark selected ad unread</option>
-			</select>
-			<input type="submit" value="Do it!" />
+			<input type="submit" name="delete" value="Delete" />
+			<input type="submit" name="read" value="Mark as read" />
+			<input type="submit" name="unread" value="Mark as unread" />
+		</form>
+	{% elif newmessage %}
+		<form>
+			<p><label for="subject">Subject:</label><input type="text" name="subject" /></p>
+			<p><label for="receiver">Receiver:</label><input type="text" name="receiver" /></p>
+			<p><label for="message">Message:</label><textarea name="message"></textarea></p>
 		</form>
 	{% else %}
 		<p>Invalid call!</p>
