@@ -14,7 +14,7 @@
 			<div class="meta">
 				by <b><a class="author" href="/user/{{ project.author.username }}">{{ project.author.username }}</a></b> |
 				created <b><span class="creation-date">{{ project.creation_date | humantime }}</span></b> |
-				<b>20</b> testers
+				<b>{{ project.testers | length }}</b> tester{% if project.testers | length != 1 %}s{% endif %}
 			</div>
 		</li>
 		{% endfor %}

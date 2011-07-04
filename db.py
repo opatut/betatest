@@ -34,6 +34,15 @@ db.session.add(betatest)
 db.session.add(spacegame)	
 db.session.add(ducttape)
 
+# add some testers
+ducttape.testers.append(zetaron)
+ducttape.testers.append(opatut)
+betatest.testers.append(opatut)
+betatest.testers.append(svenstaro)
+spacegame.testers.append(svenstaro)
+spacegame.testers.append(zetaron)
+rgj_webapp.testers.append(zetaron)
+
 # create sample messages
 msg_1 = models.message.Message("Test 1", "BlaBla", opatut, zetaron)
 msg_2 = models.message.Message("Test 2", "BlaBla", opatut, zetaron)

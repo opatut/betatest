@@ -13,7 +13,7 @@ def dashboard(page = 'projects'):
 		projects = models.project.Project.query.filter_by(author_id = user.id)
 		return render_template("dashboard-projects.html", subpage = page, projects = projects)
 	elif page == 'tested':
-		projects = models.project.Project.query.all()
+		projects = models.project.Project.query.filter(models.project.Project.testers.contains(user) == True)
 		return render_template("dashboard-projects.html", subpage = page, projects = projects)
 	elif page == 'messages':
 		messages = models.message.Message.query.filter_by(receiver_id = user.id)
