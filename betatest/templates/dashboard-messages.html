@@ -4,16 +4,40 @@
 
 {% block dashboard %}
 	{% if message %}
-		<div class="box">
-			<h4>{{ message.title }}</h4>
-			<p>{{ message.message }}</p>
-		</div>
+		<h4>{{ message.title }}</h4>
+		<p>{{ message.message }}</p>
 	{% elif messages %}
-		<ul>
+		<!--<ul>
 		{% for message in messages %}
-			<li>{{ message.title }}</li>
+			<li><a href="/dashboard/messages/{{ message.id }}">{{ message.title }}</a></li>
 		{% endfor %}
-		</ul>
+		</ul>-->
+
+		<form>
+			<table>
+				<tr>
+					<th></th>
+					<th>Subject</th>
+					<th>Date</th>
+					<th>From</th>
+				</tr>
+				{% for message in messages %}
+				<tr>
+					<td><input type="checkbox" name="message_action[]" value="{{ message.id }}" /></td>
+					<td>{{ message.title }}</td>
+					<td>{{ message.send_date | humantime }}</td>
+					<td>{{ message.sender.username }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+			<select name="message_action_choise">
+				<option value="none">-- Please Chose --</option>
+				<option value="delete">Delete selected</option>
+				<option value="read">Mark selected as read</option>
+				<option value="unread">Mark selected ad unread</option>
+			</select>
+			<input type="submit" value="Do it!" />
+		</form>
 	{% else %}
 		<p>Invalid call!</p>
 	{% endif %}

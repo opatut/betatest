@@ -23,3 +23,15 @@ def home(page = 'projects'):
 		return render_template("dashboard-projects.html", subpage = page, projects = projects)
 	
 	return redirect(url_for("home"))
+
+@app.route("/dashboard/messages/<int:msg_id>")
+def messages(msg_id):
+	user = usersession.getCurrentUser()
+	if user == None:
+		return render_template("home.html")
+	
+	if msg_id >= 0:
+		msg = models.message.Message.query.filter_by(id = msg_id).first()
+		return render_template("dashboard-messages.html", subpage = 'messages', message = msg)
+	
+	return redirect(url_for("home"))
