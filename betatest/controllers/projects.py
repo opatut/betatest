@@ -13,5 +13,5 @@ def projects():
 @app.route("/<username>/<project>")
 def project(username, project):
 	user = models.user.User.query.filter_by(username = username).first_or_404()
-	project = models.project.Project.query.filter_by(title = project, author_id = user.id).first_or_404()
+	project = models.project.Project.query.filter_by(slug = project.lower(), author_id = user.id).first_or_404()
 	return render_template("home.html", message = "project found")

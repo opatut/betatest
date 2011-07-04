@@ -4,39 +4,52 @@
 
 {% block dashboard %}
 	{% if message %}
-		<h4>{{ message.title }}</h4>
-		<p>{{ message.message }}</p>
+	<h4>{{ message.title }}</h4>
+	<p>{{ message.message }}</p>
 	{% elif messages %}
-		<form>
-			<a class="button" href="/dashboard/messages/new">New Message</a>
-			<table>
-				<tr>
-					<th></th>
-					<th></th>
-					<th>Subject</th>
-					<th>Date</th>
-					<th>From</th>
-				</tr>
-				{% for message in messages %}
-				<tr>
-					<td><input type="checkbox" name="message_action[]" value="{{ message.id }}" /></td>
-					<td>Flags</td>
-					<td><a href="/dashboard/messages/{{ message.id }}">{{ message.title }}</a></td>
-					<td><span title="{{ message.send_date | formattime }}">{{ message.send_date | humantime }}</span></td>
-					<td><a href="{{ url_for('profile', username = message.sender.username) }}">{{ message.sender.username }}</a></td>
-				</tr>
-				{% endfor %}
-			</table>
-			<input type="submit" name="delete" value="Delete" />
-			<input type="submit" name="read" value="Mark as read" />
-			<input type="submit" name="unread" value="Mark as unread" />
-		</form>
+	<p>
+		<ul class="tabs small-tabs">
+			<li><a class="button" href="/dashboard/messages/new">New Message</a></li>
+			<li><a class="button" href="/dashboard/messages/markread">Mark all as read</a></li>
+		</ul>
+	</p>
+	<p>
+	<form class="message-list-form">
+		<ul class="message-list-ul">
+		{% for message in messages %}
+		<li>
+			<div class="selection">
+				<input type="checkbox" class="selection" name="message_action[]" value="{{ message.id }}" />
+			</div>
+			<div class="flags">
+				- flags -
+			</div>
+			<div class="title">
+				<a href="{{ url_for('show_message', message_id = message.id) }}">{{ message.title }}</a>
+				<span class="meta">
+					received {{ time(message.send_date, "send_date") }}
+					from <a class="sender" href="{{ url_for('profile', username = message.sender.username) }}">{{ message.sender.username }}</a>
+				</span>
+			</div>
+			<div class="message">
+				{{ message.message }}
+			</div>
+		</li>
+		{% endfor %}
+		</ul>
+		<input type="submit" name="delete" value="Delete" />
+		<input type="submit" name="read" value="Mark as read" />
+		<input type="submit" name="unread" value="Mark as unread" />
+	</form>
+	</p>
 	{% elif newmessage %}
-		<form>
+		<p>
+		<form class="message-new-form">
 			<p><label for="subject">Subject:</label><input type="text" name="subject" /></p>
 			<p><label for="receiver">Receiver:</label><input type="text" name="receiver" /></p>
 			<p><label for="message">Message:</label><textarea name="message"></textarea></p>
 		</form>
+		</p>
 	{% else %}
 		<p>Invalid call!</p>
 	{% endif %}

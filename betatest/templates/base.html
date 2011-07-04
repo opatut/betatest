@@ -2,12 +2,16 @@
 	<li {% if name == subpage %}class="current"{% endif %}><a href="/{{mainpage}}/{{ name }}">{{ caption }}</a></li>
 {%- endmacro %}
 
+{% macro time(time, class="") -%}
+    <span {% if class != "" %}class="{{class}}" {% endif %}title="{{ time | formattime }}">{{ time | humantime }}</span>
+{%- endmacro %}
+
 <html>
 	<head>
 		<title>betatest » {% block pagetitle %}{% endblock %}</title>
 		<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
 		<script src="{{ url_for('static', filename='jquery.js') }}"> </script>
-		<!--<script src="{{ url_for('static', filename='tabs.js') }}"> </script>-->
+		<script src="{{ url_for('static', filename='messages.js') }}"> </script>
 	</head>
 	<body>
 		<div id="WRAPPER">
@@ -29,7 +33,7 @@
 				</ul>
 			</div>
 			<div id="SEARCH-BAR">
-				<form>
+				<form action="/search" method="get">
 					<input type="text" placeholder="Search..." name="q" class="input-text search-text" size="40" />
 				</form>
 			</div>

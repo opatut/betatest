@@ -1,4 +1,15 @@
 from betatest import *
+import re
+
+def isBlockedUsername(u):
+	u = u.lower()
+	if re.search("[^a-zA-Z0-9]", u):
+		return False
+	if u in ["admin", "about", "help", "contact", "privacy", "settings", "user", "project", "dashboard", "login", "logout"]:
+		return False
+	if len(u) < 6:
+		return False
+	return True
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
