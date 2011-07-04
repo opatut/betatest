@@ -1,5 +1,5 @@
-{% macro printTab(mainpage, name, caption) -%}
-	<li {% if name == subpage %}class="current"{% endif %}><a href="/{{mainpage}}/{{ name }}">{{ caption }}</a></li>
+{% macro printTab(mainpage, name, caption, icon) -%}
+	<li {% if name == subpage %}class="current"{% endif %}><a href="/{{mainpage}}/{{ name }}">{% if icon %}<span class="icon-16 icon-16-{{ icon }}"></span>{% endif %}{{ caption }}</a></li>
 {%- endmacro %}
 
 {% macro time(time, class="") -%}
@@ -10,6 +10,7 @@
 	<head>
 		<title>betatest » {% block pagetitle %}{% endblock %}</title>
 		<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ url_for('static', filename='icons.css') }}" rel="stylesheet" type="text/css" />
 		<script src="{{ url_for('static', filename='jquery.js') }}"> </script>
 		<script src="{{ url_for('static', filename='messages.js') }}"> </script>
 	</head>

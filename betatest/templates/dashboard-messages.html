@@ -2,27 +2,30 @@
 
 {% block page_title %}{{ message.title }}{% endblock %}
 
+{% block buttons %}
+	<li><a href="/dashboard/messages/new"><span class="icon-16 icon-16-new-message"></span>Compose a message</a></li>
+{% endblock %}
+
 {% block dashboard %}
 	{% if message %}
 	<h4>{{ message.title }}</h4>
 	<p>{{ message.message }}</p>
 	{% elif messages %}
 	<p>
-		<ul class="tabs small-tabs">
-			<li><a class="button" href="/dashboard/messages/new">New Message</a></li>
-			<li><a class="button" href="/dashboard/messages/markread">Mark all as read</a></li>
-		</ul>
-	</p>
-	<p>
-	<form class="message-list-form">
+	<form class="message-list-form" method="post" action="{{ url_for('message_action') }}">
 		<ul class="message-list-ul">
 		{% for message in messages %}
-		<li>
+		<li{% if not message.isread %} class="unread"{% endif %}>
 			<div class="selection">
 				<input type="checkbox" class="selection" name="message_action[]" value="{{ message.id }}" />
 			</div>
 			<div class="flags">
-				- flags -
+				{% if message.isread %}
+				<a href="#" title="Mark as unread"><span class="icon-16 icon-16-old-message"></span></a>
+				{% else %}
+				<a href="#" title="Mark as read"><span class="icon-16 icon-16-new-message"></span></a>
+				{% endif %}
+				<a href="{{ url_for('show_message', message_id = message.id) }}" title="View thread"><span class="icon-16 icon-16-more"></span></a>
 			</div>
 			<div class="title">
 				<a href="{{ url_for('show_message', message_id = message.id) }}">{{ message.title }}</a>
@@ -38,8 +41,8 @@
 		{% endfor %}
 		</ul>
 		<input type="submit" name="delete" value="Delete" />
-		<input type="submit" name="read" value="Mark as read" />
-		<input type="submit" name="unread" value="Mark as unread" />
+		<input type="submit" name="markread" value="Mark as read" />
+		<input type="submit" name="markunread" value="Mark as unread" />
 	</form>
 	</p>
 	{% elif newmessage %}

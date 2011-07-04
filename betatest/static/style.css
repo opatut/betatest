@@ -262,7 +262,9 @@ ul.projects-list li div.description {
 }
 
 ul.projects-list li div.meta,
-ul.projects-list li div.meta a.author {
+ul.projects-list li div.meta a,
+ul.projects-list li div.meta a.author,
+ul.projects-list li div.meta a.testers {
 	color: #666;
 	font-size: 8pt;
 }
@@ -323,14 +325,27 @@ ul.message-list-ul {
 }
 
 ul.message-list-ul li {
-	border-top: 2px solid #FFF;
+	margin-top: 2px;
 	background: #EEF;
+	-webkit-transition: background 0.2s linear;
 	padding: 4px 10px;
 	cursor: pointer;
+	border-radius: 4px;
+}
+
+ul.message-list-ul li.unread {
+	background: #CDF;
 }
 
 ul.message-list-ul li.selected {
-	background: #CDF;
+	background: #FC5;
+}
+
+ul.message-list-ul li a {
+	color: background 0.2s linear;
+}
+ul.message-list-ul li.selected a {
+	color: #000;
 }
 
 ul.message-list-ul li .selection {
@@ -339,11 +354,12 @@ ul.message-list-ul li .selection {
 
 ul.message-list-ul li .flags {
 	float: right;
+	margin-top: 9px;
 }
 
 ul.message-list-ul li .title {
 	font-size: 11pt;
-	font-weight: bold;	
+	font-weight: bold;
 }
 	
 ul.message-list-ul li .message,
