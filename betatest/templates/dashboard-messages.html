@@ -8,19 +8,44 @@
 
 {% block dashboard %}
 	{% if message %}
-	<h4>{{ message.title }}</h4>
-	<p>{{ message.message }}</p>
+	<h2>{{ message.title }}</h2>
+	<div class="message-thread">
+	<p>
+		{% for entry in message.getCompleteThread() %}
+		<div class="message">
+			<div class="icon">
+				<img src="http://www.gravatar.com/avatar/?d=mm&s=32">
+			</div>
+			<div class="right">
+				<div class="meta">
+					<a class="author" href="{{ url_for('profile', username = message.sender.username) }}">{{ entry.sender.username }}</a> said {{ time(entry.send_date) }}:
+				</div>
+				<div class="content">
+					{{ entry.message }}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+		<div class="message">
+			<div class="right">
+				<textarea></textarea>
+			</div>
+		</div>
+	</p>
+	</div>	
 	{% elif messages %}
 	<p>
 	<form class="message-list-form" method="post" action="{{ url_for('message_action') }}">
 		<ul class="message-list-ul">
 		{% for message in messages %}
-		<li{% if not message.isread %} class="unread"{% endif %}>
+		{% set is_sender = session.username == message.sender.username %}
+		{% set read = (message.isread or is_sender) %}
+		<li{% if not read %} class="unread"{% endif %}>
 			<div class="selection">
 				<input type="checkbox" class="selection" name="message_action[]" value="{{ message.id }}" />
 			</div>
 			<div class="flags">
-				{% if message.isread %}
+				{% if read %}
 				<a href="#" title="Mark as unread"><span class="icon-16 icon-16-old-message"></span></a>
 				{% else %}
 				<a href="#" title="Mark as read"><span class="icon-16 icon-16-new-message"></span></a>
@@ -30,8 +55,16 @@
 			<div class="title">
 				<a href="{{ url_for('show_message', message_id = message.id) }}">{{ message.title }}</a>
 				<span class="meta">
-					received {{ time(message.send_date, "send_date") }}
-					from <a class="sender" href="{{ url_for('profile', username = message.sender.username) }}">{{ message.sender.username }}</a>
+					
+					
+					{% if is_sender %}sent{%else%}received{%endif%}
+					{{ time(message.send_date, "send_date") }}
+					
+					{% if is_sender %}
+						to <a class="sender" href="{{ url_for('profile', username = message.receiver.username) }}">{{ message.receiver.username }}</a>
+					{% else %}
+						from <a class="sender" href="{{ url_for('profile', username = message.sender.username) }}">{{ message.sender.username }}</a>
+					{%endif%}
 				</span>
 			</div>
 			<div class="message">

@@ -16,7 +16,10 @@ def dashboard(page = 'projects'):
 		projects = models.project.Project.query.filter(models.project.Project.testers.contains(user) == True)
 		return render_template("dashboard-projects.html", subpage = page, projects = projects)
 	elif page == 'messages':
-		messages = models.message.Message.query.filter_by(receiver_id = user.id)
+		messages = models.message.Message.query.filter(db.and_(
+				db.or_(models.message.Message.receiver_id == user.id, 
+						models.message.Message.sender_id == user.id),
+				models.message.Message.reply == None)).order_by(models.message.Message.send_date.desc())
 		return render_template("dashboard-messages.html", subpage = page, messages = messages)
 	elif page == 'feedback':
 		projects = models.project.Project.query.all()
@@ -29,6 +32,10 @@ def show_message(message_id):
 	user = usersession.getCurrentUser()
 	if user != None:
 		msg = models.message.Message.query.filter_by(id = message_id).first_or_404()
+		# mark as read
+		if user == msg.receiver:
+			msg.isread = True
+			db.session.commit()
 		return render_template("dashboard-messages.html", subpage = 'messages', message = msg)
 	
 	return redirect(url_for("home"))
