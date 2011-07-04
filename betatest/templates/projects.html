@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}Projects{% endblock %} 
+
+{% block content %}
+	<h1>Projects</h1>
+	<p>
+		<ul class="tabs standing-tabs" id="main-tabs">
+			{% for name, caption in [("interesting","Interesting stuff"),("new","Create New Project")] %}
+				{{ printTab("projects", name, caption) }}
+			{% endfor %}
+		</ul>
+		
+		<div class="box" style="border-top-left-radius: 0;" id="main-box">
+			{% block projects %}{% endblock %}
+		</div>
+	</p>
+{% endblock content %}

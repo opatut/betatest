@@ -3,7 +3,7 @@ from flask import *
 from flaskext.sqlalchemy import SQLAlchemy
 from flaskext.wtf import *
 from datetime import datetime, timedelta
-from hashlib import sha512
+from hashlib import sha512, md5
 	
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///betatest.db'

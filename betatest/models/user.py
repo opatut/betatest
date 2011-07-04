@@ -20,8 +20,12 @@ class User(db.Model):
         return '<User: %r>' % self.username
         
     def getNewMessageCount(self): 
-		i = 0
-		for msg in self.inbox:
-			if not msg.isread:
-				i += 1
-		return i
+        i = 0
+        for msg in self.inbox:
+            if not msg.isread:
+                i += 1
+        return i
+
+    def getAvatar(self, size = 32):
+        return "http://www.gravatar.com/avatar/{0}?s={1}&d=mm".format(md5(self.email).hexdigest(), size)
+
