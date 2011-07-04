@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}Projects{% endblock %} 
+
+{% block content %}
+	{% if user.username == project.author.username %}<a href="/{{ user.username }}/{{ project.title }}"><span class="icon-16 icon-16-edit-project"></span>Edit Project</a>{% endif %}
+	<h1>{{ project.title }}{% if testers %} - Testers{% endif %}</h1>
+	<p>
+		<div class="columns">
+			{% if not testers %}
+			<div class="box">
+				<h4>Details</h4>
+				<p><label>Description: </label>{{ project.description }}</p>
+				<p><label>Author: </label><a href="/{{ user.username }}">{{ user.username }}</a></p>
+				<p><label>Createt: </label>{{ time(project.creation_date) }}</p>
+			</div>
+			{% endif %}
+			<div class="box">
+				<h4>Testers</h4>
+				<p>
+					<ul>
+						{% for tester in project.testers %}
+						<li><a href="/{{ tester.username }}">{{ tester.username }}</a></li>
+						{% endfor %}
+					</ul>
+				</p>
+			</div>
+		</div>
+	</p>
+{% endblock content %}

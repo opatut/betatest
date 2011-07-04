@@ -16,7 +16,7 @@
 			<div class="title"><a href="{{ url_for('project', username = project.author.username, project = project.slug) }}">{{ project.title }}</a></div>
 			<div class="description">{{ project.description }}</div>
 			<div class="meta">
-				by <b><a class="author" href="/user/{{ project.author.username }}">{{ project.author.username }}</a></b> |
+				by <b><a class="author" href="/{{ project.author.username }}">{{ project.author.username }}</a></b> |
 				created <b>{{ time(project.creation_date, "creation-date") }}</b> |
 				<a class="testers" href="{{ url_for('project', username = project.author.username, project = project.slug) }}/testers"><b>{{ project.testers | length }}</b> tester{% if project.testers | length != 1 %}s{% endif %}</a>
 			</div>
