@@ -18,6 +18,14 @@ h1 {
 	margin-bottom: 8px;
 }
 
+h2 {
+	margin: 10px 10px 6px 10px;
+	font-size: 16pt;
+	font-weight: normal;
+	color: #039;
+	letter-spacing: 1pt;
+}
+
 hr {
 	border: 0;
 	border-top: 1px solid #CCC;
@@ -247,9 +255,10 @@ ul.projects-list li div.icon {
 	margin-left: -70px;
 }
 
-ul.projects-list li div.icon img {
-	border: 1px solid #FFF;
-	box-shadow: 0 0 0px 1px #999;
+ul.projects-list li div.icon img,
+div.message-thread div.message div.icon img {
+	border: 2px solid #FFF;
+	box-shadow: 0 0 0px 1px #BBB;
 }
 
 ul.projects-list li div.title {
@@ -376,4 +385,28 @@ ul.message-list-ul li .meta {
 ul.message-list-ul li .message {
 	color: #444;
 	margin-top: 2px;
+}
+
+
+div.message-thread div.message {
+	margin: 10px 20px;
+	padding: 10px 10px;
+	border-top: 1px solid #CCC;
+}
+
+div.message-thread div.message div.icon {
+	float: left;
+}
+
+div.message-thread div.message div.right  {
+	margin-left: 48px;
+}
+
+div.message-thread div.message div.meta {
+	font-weight: bold;
+	font-size: 10pt;
+}
+
+div.message-thread div.message div.meta a.author {
+	font-size: 11pt;
 }
