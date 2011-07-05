@@ -5,3 +5,4 @@ import projects
 import login
 import help
 import errors
+import settings
