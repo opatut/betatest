@@ -3,6 +3,7 @@
 {% block pagetitle %}Profile{% endblock %} 
 
 {% block content %}
+	{{ displayMessages() }}
 	<div class="profile">
 		<div class="icon">
 			<img width="64" height="64" src="{{ user.getAvatar(64) }}">

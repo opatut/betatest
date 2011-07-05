@@ -26,8 +26,7 @@ betatest = models.project.Project("Betatest Backend",
 	"http://betatest.net")
 spacegame = models.project.Project("Space game", 
 	"Awesome game. Just a space shooter.", 
-	opatut,
-	"http://opatut.org/spacegame")
+	opatut)
 ducttape = models.project.Project("Ducttape Game Engine", 
 	"The most awesome game engine. It's magic inside!", 
 	svenstaro,

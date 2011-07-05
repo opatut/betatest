@@ -1,4 +1,4 @@
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
 from betatest import *
 import re
@@ -10,10 +10,10 @@ project_testers = db.Table('project_testers', db.Model.metadata,
 
 def titleToSlug(s):
 	s = s.lower()
-	s = s.replace("ä","ae")
-	s = s.replace("ö","oe")
-	s = s.replace("ü","ue")
-	s = s.replace("ß","ss")
+	s = s.replace(u"ä","ae")
+	s = s.replace(u"ö","oe")
+	s = s.replace(u"ü","ue")
+	s = s.replace(u"ß","ss")
 	s = re.sub(r"[\s_+]+", "-", s)
 	s = re.sub("[^a-z0-9\-]", "", s)
 	return s
@@ -47,3 +47,8 @@ class Project(db.Model):
 
     def __repr__(self):
 		return '<Project: %r>' % self.title
+			
+    def getIcon(self, size = 32):
+        return "http://www.gravatar.com/avatar/{0}?s={1}&d=identicon".format(md5(self.slug).hexdigest(), size)
+
+

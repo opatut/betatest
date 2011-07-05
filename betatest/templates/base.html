@@ -26,13 +26,13 @@
 <li>
 	<div class="icon">
 		<a href="{{ project.url() }}">
-			<img width="16" height="16" src="{{ url_for('static', filename='project-unknown-48.png') }}" />
+			<img width="16" height="16" src="{{ project.getIcon(16) }}" />
 		</a>
 	</div>
 	<div class="title">
 		<a href="{{ project.url() }}">{{ project.title | search_highlight(highlight) }}</a>
 		<div class="author">
-			by <a class="author" href="{{ project.author.url() }}">{{ project.author.username | search_highlight(highlight) }}</a>
+			by <a class="author" href="{{ project.author.url() }}">{{ project.author.username }}</a>
 		</div>
 	</div>
 </li>
@@ -43,7 +43,7 @@
 {% for project in projects %}
 <li>
 	<div class="icon">
-		<a href="{{ project.url() }}"><img src="{{ url_for('static', filename='project-unknown-48.png') }}" /></a>
+		<a href="{{ project.url() }}"><img src="{{ project.getIcon(48) }}" /></a>
 	</div>
 	<div class="title"><a href="{{ project.url() }}">{{ project.title }}</a></div>
 	<div class="description">{{ project.description | markdown | wordcrop(40) }}</div>
