@@ -6,6 +6,18 @@
     <span {% if class != "" %}class="{{class}}" {% endif %}title="{{ time | formattime }}">{{ time | humantime }}</span>
 {%- endmacro %}
 
+{% macro displayMessages() -%}
+{% with messages = get_flashed_messages(with_categories = True) %}
+{% if messages %}
+<ul class="flash-messages">
+{% for category, message in messages %}
+	<li class="flash-{% if category != 'message' %}{{ category }}{% else %}info{% endif %}">{{ message }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+{%- endmacro %}
+
 <html>
 	<head>
 		<title>betatest » {% block pagetitle %}{% endblock %}</title>

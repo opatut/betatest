@@ -90,15 +90,49 @@ input.form-error {
 	border-color: #F00;
 }
 
+ul.flash-messages {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.flash-error,
+.flash-success,
+.flash-warning,
+.flash-info,
 span.form-error {
-	color: #F00;
-	display: inline-block;
 	padding: 3px 10px;
-	background: #FCC;
-	border: 1px solid #F00;
 	border-radius: 4px;
 	vertical-align: middle;
+	border: 1px solid #888;
+	margin-top: 2px;
 }
+
+.flash-error,
+span.form-error {
+	color: #F00;
+	background: #FCC;
+	border-color: #F00;
+}
+
+.flash-success {
+	color: #080;
+	background: #CFC;
+	border-color: #080;
+}
+
+.flash-warning {
+	color: #FB0;
+	background: #FF8;
+	border-color: #FB0;
+}
+
+.flash-info {
+	color: #00A;
+	background: #CCF;
+	border-color: #00A;
+}
+
 
 
 input.search-text {
@@ -480,4 +514,9 @@ form.message-new-form label {
 
 form.message-new-form input.input-text {
 	width: 658px;
+}
+
+
+.no-js-hide {
+	visibility: hidden;
 }

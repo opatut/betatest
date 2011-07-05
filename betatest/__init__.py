@@ -5,6 +5,8 @@ from flaskext.wtf import *
 from datetime import datetime, timedelta
 from hashlib import sha512, md5
 from markdown2 import markdown as Markdown
+import re
+
 	
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///betatest.db'

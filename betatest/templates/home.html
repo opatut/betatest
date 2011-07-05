@@ -4,9 +4,7 @@
 
 {% block content %}
     <h1>Home</h1>
-    {% if message != "" %}
-		<div class="message">{{ message }}</div>
-	{% endif %}
-	<p>This is home.</p>
+    {{ displayMessages() }}
+    <p>This is home.</p>
 	
 {% endblock %}
