@@ -55,5 +55,5 @@ def charcrop(s, char_count):
 def search_highlight(s, q):
 	if not q:
 		return s
-	s = s.replace(q, '<span class="highlight">' + q + '</span>')
+	s = re.sub("(" + q + ")", '<span class="highlight">\g<0></span>', s, flags = re.IGNORECASE)
 	return Markup(s)

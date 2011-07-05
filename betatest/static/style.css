@@ -31,6 +31,11 @@ hr {
 	border-top: 1px solid #CCC;
 }
 
+hr.fat {
+	border-width: 3px;
+	margin: 30px 0;
+}
+
 a {
 	color: #56F;
 	text-decoration: none;
@@ -111,6 +116,7 @@ ul.flash-messages {
 	padding: 0;
 	margin: 0;
 	list-style: none;
+	margin-bottom: 10px;
 }
 
 .flash-error,
@@ -197,6 +203,7 @@ input.search-text {
 	font-size: 1em;
 	border-bottom: 1px solid #CCC;
 	padding: 4px 10px;
+	border-radius: 2px 2px 0 0;
 }
 
 .box > .box-content {
@@ -209,6 +216,12 @@ input.search-text {
 	background: #EEEEFF;
 	margin: 0;
 	text-align: right;
+	border-radius: 0px 0px 2px 2px;
+}
+
+.box p.form-buttons.only-in-box {
+	border-top: 0;
+	border-radius: 2px;
 }
 
 .columns {
@@ -263,6 +276,15 @@ ul.tabs li a {
 	-webkit-transition: box-shadow 0.2s linear, color 0.2s linear, background 0.2s linear;
 }
 
+.box p.form-buttons input.red,
+.box p.form-buttons a.button.red,
+ul.tabs li a.red {
+	background: -webkit-gradient(linear, left top, left bottom, from(#F00), to(#900));
+	border-color: #900;
+	color: #FFF;
+	text-shadow: 0 -1px 1px #339;
+}
+
 .box p.form-buttons input.default,
 .box p.form-buttons a.button.default {
 	background: -webkit-gradient(linear, left top, left bottom, from(#9AF), to(#37F));
@@ -279,6 +301,12 @@ ul.tabs li a:hover {
 .box p.form-buttons a:hover {
 	color: #222;
 	box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.box p.form-buttons input.red:hover,
+.box p.form-buttons a.red:hover {
+	color: #FFF;
+	background: -webkit-gradient(linear, left top, left bottom, from(#F44), to(#C00));
 }
 
 .box p.form-buttons input.default:hover,
@@ -752,5 +780,4 @@ ul.userlist li div.icon {
 	font-weight: bold;
 	color: #000;
 	padding: 0 1px;
-	margin: 0 1px;
 }

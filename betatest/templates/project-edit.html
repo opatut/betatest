@@ -1,0 +1,60 @@
+{% extends "project.html" %}
+
+{% block project_details %}
+	<form method="post" action="{{ url_for('project_edit', username = project.author.username, project = project.slug) }}">
+	{{ form.hidden_tag() }}
+	<h2>General settings</h2>
+	<div class="box">
+		<div class="box-content">
+			<table class="details">
+				<tr><th>{{ form.title.label }}</th><td>{{ form.title(class="input-text", value = project.title) }}</td></tr>
+				<tr><th>{{ form.homepage.label }}</th><td>{{ form.homepage(class="input-text", value = project.homepage) }}
+				<span style="color: #CCC; font-size: 8pt;">Remember to prepend <b>http://</b> to your URL!</span>
+				</td></tr>
+			</table>
+		</div>
+	</div>
+	
+	<h2>Description</h2>
+	<div class="box">
+		<div class="box-content">
+			<p>{{ form.description(class="compose-message") }}</p>
+			<p align="right">Parsed with <a href="/help/messages/compose">Markdown</a></p>
+		</div>
+	</div>
+	
+	<div class="box">
+		<p class="form-buttons only-in-box">
+			<input type="reset" value="Reset" />
+			<input type="submit" value="Save changes" class="default" />
+		</p>
+	</div>
+	</form>
+	
+	<hr class="fat"/>
+	
+	<h2>Danger Zone<span title="We don't know who trademarked it, ask github!">&trade;</span></h2>
+	<div class="columns">
+		<div class="box" style="width: 1px;">
+			<h4>Transfer ownership</h4>
+			<div class="box-content">
+				<p>Once the new owner accepts the transfer, you lose all admin rights. Only enter a username below if you are 100% sure.</p>
+				<p><input type="text" class="input-text" style="width: 100%;" placeholder="Who will be the happy one?"/></p>
+			</div>
+			<p class="form-buttons">
+				<a href="#" class="button red">Transfer</a>
+			</p>
+		</div>
+		<div class="columns-separator"></div>
+		<div class="box" style="width: 1px;">
+			<h4>Delete project</h4>
+			<div class="box-content">
+				<p>A deleted project cannot be recovered. Enter your password below if you are sure.</p>
+				<p><input type="password" class="input-password" style="width: 100%;" placeholder="Your password here..."/></p>
+			</div>
+			<p class="form-buttons">
+				<a href="#" class="button red">Delete project</a>
+			</p>
+		</div>
+	</div>
+{% endblock %}

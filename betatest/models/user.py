@@ -1,4 +1,5 @@
 from betatest import *
+from betatest.models.project import Project
 import re
 
 def isBlockedUsername(u):
@@ -47,5 +48,8 @@ class User(db.Model):
         return i
 
     def getAvatar(self, size = 32):
-        return "http://www.gravatar.com/avatar/{0}?s={1}&d=mm".format(md5(self.email).hexdigest(), size)
+        return "http://www.gravatar.com/avatar/{0}?s={1}&d=identicon".format(md5(self.email.lower()).hexdigest(), size)
+        
+    def findProject(self, slug):
+		return Project.query.filter_by(slug = slug.lower(), author_id = self.id).first()
 
