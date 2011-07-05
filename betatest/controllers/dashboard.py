@@ -1,4 +1,5 @@
 from betatest import *
+import re
 
 
 @app.route("/")
@@ -34,9 +35,12 @@ def show_message(message_id):
 		msg = models.message.Message.query.filter_by(id = message_id).first_or_404()
 		# mark as read
 		if user == msg.receiver:
-			msg.isread = True
-			db.session.commit()
-		return render_template("dashboard-messages.html", subpage = 'messages', message = msg)
+			msg.markRead(True)
+		# check if allowed to read
+		if user == msg.receiver or user == msg.sender:
+			return render_template("dashboard-messages.html", subpage = 'messages', message = msg)
+		else:
+			abort(403)
 	
 	return redirect(url_for("home"))
 	
@@ -50,7 +54,7 @@ def userlist_check(field):
 	
 class NewMessageForm(Form):
 	subject = TextField("Subject", validators=[Required(), Length(max=255)])
-	receiver = TextField("Receiver", validators=[Required(), userlist_check])
+	receiver = TextField("To", validators=[Required(), userlist_check])
 	message = TextAreaField("Message")
 
 @app.route("/dashboard/messages/new")
@@ -70,10 +74,16 @@ def new_message():
 @app.route("/dashboard/messages/action", methods=['GET', 'POST'])
 def message_action():
 	if request.form:
-		if "delete" in request.form:
-			return "Delete"
-		elif "markread" in request.form:
-			return "read"
-		elif "markunread" in request.form:
-			return "unread"
-	return redirect(url_for('dashboard'))
+		for key in request.form:
+			if re.search("message-", key):
+				key = key.replace("message-", "")
+				msg = models.message.Message.query.filter_by(id = key).first_or_404()
+				if "delete" in request.form:
+					return "Delete"
+				elif "markread" in request.form:
+					if msg.receiver == usersession.getCurrentUser():
+						msg.markRead(True)
+				elif "markunread" in request.form:
+					if msg.receiver == usersession.getCurrentUser():
+						msg.markRead(False)
+	return redirect('/dashboard/messages')

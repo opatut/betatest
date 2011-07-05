@@ -4,6 +4,7 @@ from flaskext.sqlalchemy import SQLAlchemy
 from flaskext.wtf import *
 from datetime import datetime, timedelta
 from hashlib import sha512, md5
+from markdown2 import markdown as Markdown
 	
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///betatest.db'
@@ -12,6 +13,10 @@ app.config['SECRET_KEY'] = 'aio3ujhrsdflncm239mlehasudkj<bkm'
 db = SQLAlchemy(app)
 
 #define filters
+
+@app.template_filter()
+def markdown(s):
+	return Markdown(s)
 
 @app.template_filter()
 def formattime(s):

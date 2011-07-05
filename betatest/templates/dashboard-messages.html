@@ -10,31 +10,32 @@
 	{% if message %}
 	<h2>{{ message.title }}</h2>
 	<div class="message-thread">
-	<p>
 		{% for entry in message.getCompleteThread() %}
 		<div class="message">
 			<div class="icon">
-				<img src="http://www.gravatar.com/avatar/?d=mm&s=32">
+				<img src="{{ entry.sender.getAvatar(32) }}">
 			</div>
 			<div class="right">
 				<div class="meta">
 					<a class="author" href="{{ url_for('profile', username = message.sender.username) }}">{{ entry.sender.username }}</a> said {{ time(entry.send_date) }}:
 				</div>
 				<div class="content">
-					{{ entry.message }}
+					{{ entry.message | markdown | safe }}
 				</div>
 			</div>
 		</div>
-		{% endfor %}
-		<div class="message">
-			<div class="right">
-				<textarea></textarea>
-			</div>
-		</div>
-	</p>
-	</div>	
+	{% endfor %}
+	</div>
+	<h2>Reply</h2>
+	
+	<div class="message-write">
+		<form action="/dashboard/messages/{{message.id}}/reply" method="post">
+			<p><textarea class="compose-message"></textarea></p>
+			<p style="float:right;">Parsed with <a href="/help/messages/compose">Markdown</a></p>
+			<p><input type="submit" value="Send reply"></p>
+		</form>
+	</div>
 	{% elif messages %}
-	<p>
 	<form class="message-list-form" method="post" action="{{ url_for('message_action') }}">
 		<ul class="message-list-ul">
 		{% for message in messages %}
@@ -42,7 +43,14 @@
 		{% set read = (message.isread or is_sender) %}
 		<li{% if not read %} class="unread"{% endif %}>
 			<div class="selection">
-				<input type="checkbox" class="selection" name="message_action[]" value="{{ message.id }}" />
+				<input type="checkbox" class="selection" name="message-{{ message.id }}"/>
+			</div>
+			<div class="icon">
+				{% if is_sender %}	
+				<img src="{{ message.receiver.getAvatar(24) }}">
+				{% else %}
+				<img src="{{ message.sender.getAvatar(24) }}">
+				{% endif %}
 			</div>
 			<div class="flags">
 				{% if read %}
@@ -53,10 +61,8 @@
 				<a href="{{ url_for('show_message', message_id = message.id) }}" title="View thread"><span class="icon-16 icon-16-more"></span></a>
 			</div>
 			<div class="title">
-				<a href="{{ url_for('show_message', message_id = message.id) }}">{{ message.title }}</a>
+				<a class="message_title" href="{{ url_for('show_message', message_id = message.id) }}">{{ message.title }}</a>
 				<span class="meta">
-					
-					
 					{% if is_sender %}sent{%else%}received{%endif%}
 					{{ time(message.send_date, "send_date") }}
 					
@@ -65,6 +71,9 @@
 					{% else %}
 						from <a class="sender" href="{{ url_for('profile', username = message.sender.username) }}">{{ message.sender.username }}</a>
 					{%endif%}
+										
+					{% set replies = message.getCompleteThread() | length - 1 %}
+					{% if replies > 0 %}| {{replies}} repl{%if replies == 1%}y{%else%}ies{%endif%}{%endif%}
 				</span>
 			</div>
 			<div class="message">
@@ -73,23 +82,23 @@
 		</li>
 		{% endfor %}
 		</ul>
-		<input type="submit" name="delete" value="Delete" />
-		<input type="submit" name="markread" value="Mark as read" />
-		<input type="submit" name="markunread" value="Mark as unread" />
-	</form>
-	</p>
-	{% elif newmessage %}
-		<p>
-		
-		<form class="message-new-form">
-		{{ form.hidden_tag() }}
-		<p>{{ form.subject.label }}{{ form.subject(class="input-text") }}</p>
-		<p>{{ form.receiver.label }}{{ form.receiver(class="input-text") }}</p>
-		<p>{{ form.message.label }}{{ form.message() }}</p>
-		<p><input type="submit" value="Send" /></p>
-		</form>
-		
+		<p class="form-buttons">
+			<input type="submit" name="delete" value="Delete" />
+			<input type="submit" name="markunread" value="Mark as unread" />
+			<input type="submit" name="markread" value="Mark as read" class="default"/>
 		</p>
+	</form>
+	{% elif newmessage %}
+		<h2>Compose a message</h2>
+		<div class="message-write">
+			<form class="message-new-form">
+				{{ form.hidden_tag() }}
+				<p>{{ form.receiver.label }}{{ form.receiver(class="input-text") }}</p>
+				<p>{{ form.subject.label }}{{ form.subject(class="input-text") }}</p>
+				<p>{{ form.message(class="compose-message") }}</p>
+				<p><input type="submit" value="Send message" /></p>
+			</form>
+		</div>
 	{% else %}
 		<p>Invalid call!</p>
 	{% endif %}

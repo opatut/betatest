@@ -46,13 +46,21 @@ rgj_webapp.testers.append(zetaron)
 # create sample messages
 msg_1 = models.message.Message("Message 1", "Hi what's up?", opatut, zetaron)
 msg_2 = models.message.Message("Message 2", "Omg is this really you?", opatut, zetaron)
-msg_3 = models.message.Message("Message 3", "How are you?", zetaron, opatut)
+msg_3 = models.message.Message("Message 3", '''Hey how are you?
+
+I just wrote this message to check how **you** are feeling. Also, this is a test for [Markdown](http://daringfireball.net/projects/markdown/).
+
+* This 
+* is
+* LIST-TEST!!!
+
+Have fun with it!''', opatut, zetaron)
 msg_4 = models.message.Message("Message 4", "Good morning!", zetaron, opatut)
 
 reply_3_1 = models.message.Message(msg_3, "Hello you!", zetaron, opatut)
-reply_3_2 = models.message.Message(msg_3, "I got your message.", zetaron, opatut)
+reply_3_2 = models.message.Message(msg_3, "I got your message.", opatut, zetaron)
 reply_3_3 = models.message.Message(msg_3, "What are you up to?", zetaron, opatut)
-reply_3_4 = models.message.Message(msg_3, "Can you please reply?!", zetaron, opatut)
+reply_3_4 = models.message.Message(msg_3, "Can you please reply?!", opatut, zetaron)
 
 db.session.add(msg_1)
 db.session.add(msg_2)

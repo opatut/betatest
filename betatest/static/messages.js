@@ -13,6 +13,8 @@ $(document).ready(function() {
 		var $c = $(this).find("input.selection");
 		$c.attr("checked", !$c.attr("checked"));
 		toggleSelected($c);
+	}).dblclick(function() {
+		window.location.href = $(this).find("a.message_title").attr("href");
 	});
 	
 	$("ul.message-list-ul li input.selection").click(function() {

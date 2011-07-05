@@ -50,3 +50,7 @@ class Message(db.Model):
     def isThreadRoot(self):
         return not self.parent
 
+    def markRead(self, read = True):
+        for msg in self.getCompleteThread():
+            msg.isread = read
+        db.session.commit()
