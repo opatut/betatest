@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}Home{% endblock %}
+
+{% block content %}
+    <h1>Search</h1>
+    {{ displayMessages() }}
+    
+    {% if queried %}
+    {% set query = request.args.get("q","") %}
+    <div class="columns">
+		{% if projects %}
+		<div class="box">
+			<h4>{{ projects | length }} Projects</h4>
+			<div class="box-content">
+				{{ render_projects_list(projects, True, highlight = query) }}
+			</div>
+		</div>
+		{% endif %}
+		
+		{% if projects and users %}<div class="columns-separator"></div>{% endif %}
+		
+		{% if users %}
+		<div class="box">
+			<h4>Users</h4>
+			{{ render_user_list(users, highlight = query) }}
+		</div>
+		{% endif %}
+		
+		{% if not projects and not users %}
+		<div class="box">
+			<h4>No results</h4>
+			<div class="box-content">
+				<p>Sorry, we found neither projects nor users matching your search for <b>{{ query }}</b>.</p>
+			</div>
+		</div>
+		{% endif %}
+    </div>
+    {% endif %}
+{% endblock %}

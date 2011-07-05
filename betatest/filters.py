@@ -51,3 +51,9 @@ def charcrop(s, char_count):
 		part += "..."
 	return part
 
+@app.template_filter()
+def search_highlight(s, q):
+	if not q:
+		return s
+	s = s.replace(q, '<span class="highlight">' + q + '</span>')
+	return Markup(s)

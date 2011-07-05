@@ -19,7 +19,7 @@
 {%- endmacro %}
 
 
-{% macro render_projects_list(projects, small_view = False) -%}
+{% macro render_projects_list(projects, small_view = False, highlight = '') -%}
 {% if small_view %}
 <ul class="small-projects-list">		
 {% for project in projects %}
@@ -30,9 +30,9 @@
 		</a>
 	</div>
 	<div class="title">
-		<a href="{{ project.url() }}">{{ project.title }}</a>
+		<a href="{{ project.url() }}">{{ project.title | search_highlight(highlight) }}</a>
 		<div class="author">
-			by <a class="author" href="{{ project.author.url() }}">{{ project.author.username }}</a>
+			by <a class="author" href="{{ project.author.url() }}">{{ project.author.username | search_highlight(highlight) }}</a>
 		</div>
 	</div>
 </li>
@@ -58,6 +58,28 @@
 {% endif %}
 {%- endmacro %}
 
+{% macro render_user_list(users, max = 0, highlight = '') -%}
+<ul class="userlist">
+	{% set counter = 0 %}
+	{% for user in users if (counter < max or max == 0) %}
+	{% set counter = counter + 1 %}
+	<li>
+		<a href="{{ user.url() }}">
+			<div class="icon">
+				<img width="16" height="16" src="{{ user.getAvatar(16) }}" />
+			</div>
+			<div class="more">
+				<span class="icon-16 icon-16-more"></span>
+			</div>
+			<div class="username">
+				{{ user.username | search_highlight(highlight) }}
+			</div>
+		</a>
+	</li>
+	{% endfor %}
+</ul>
+{%- endmacro %}
+
 <html>
 	<head>
 		<title>betatest » {% block pagetitle %}{% endblock %}</title>
@@ -74,9 +96,9 @@
 			<div id="TAB-BAR">
 				<ul class="tabs hanging-tabs">
 					{% if session.logged_in %}
-						{% set user = g.usersession.getCurrentUser() %}
-						<li><a href="{{ user.url() }}"><img
-						 id="tabbar-profile-icon" src="{{ user.getAvatar(14) }}"> {{ session.username }}</a></li>
+						{% set l_user = g.usersession.getCurrentUser() %}
+						<li><a href="{{ l_user.url() }}"><img
+						 id="tabbar-profile-icon" src="{{ l_user.getAvatar(14) }}"> {{ session.username }}</a></li>
 						
 						<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
 						{% set inbox = g.usersession.getCurrentUser().getNewMessageCount() %}
@@ -90,7 +112,7 @@
 			</div>
 			<div id="SEARCH-BAR">
 				<form action="/search" method="get">
-					<input type="text" placeholder="Search..." name="q" class="input-text search-text" size="40" />
+					<input type="text" placeholder="Search..." name="q" {% if request.endpoint == "search" %}value="{{ request.args.get('q', '') }}" {% endif %}class="input-text search-text" size="40" />
 				</form>
 			</div>
 			

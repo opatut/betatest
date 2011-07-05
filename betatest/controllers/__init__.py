@@ -6,3 +6,4 @@ import login
 import help
 import errors
 import settings
+import search

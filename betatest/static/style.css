@@ -411,6 +411,7 @@ ul.small-projects-list li {
 
 ul.small-projects-list li div.icon {
 	margin-top: 2px;
+	float:left;
 }
 
 ul.small-projects-list li div.title {
@@ -744,4 +745,12 @@ ul.userlist li div.icon {
 	font-size: 40pt;
 	font-weight: bold;
 	color: #888;
+}
+
+.highlight {
+	background: #FF0;
+	font-weight: bold;
+	color: #000;
+	padding: 0 1px;
+	margin: 0 1px;
 }
