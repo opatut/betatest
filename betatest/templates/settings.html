@@ -4,13 +4,66 @@
 
 {% block content %}
 	<h1>Settings</h1>
+	{{ displayMessages() }}
 	<p>
-		<div class="box">
-			<h4>Change Password:</h4>
-			<p><label>current Password: </label><input type="password" name="password" class="input-text" /></p>
-			<p><label>new Password: </label><input type="password" name="password_new" class="input-text" /></p>
-			<p><label>retype new Password: </label><input type="password" name="password_new2" class="input-text" /></p>
-			<p class="form-buttons"><input type="submit" /></p>
+		<div class="columns">
+			<form action="{{ url_for('settings') }}" method="post">
+				{{ pw_form.hidden_tag() }}
+				<div class="box">
+					<h4>Change Password:</h4>
+					<div class="box-content">
+						<table class="details">
+							<tr>
+								<th>{{ pw_form.password.label }}</th>
+								<td>
+									{{ pw_form.password(class="input-password") }}
+									<label> </label>{% for error in pw_form.password.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+								</td>
+							</tr>
+							<tr>
+								<th>{{ pw_form.password_new.label }}</th>
+								<td>
+									{{ pw_form.password_new(class="input-password") }}
+									<label> </label>{% for error in pw_form.password_new.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+								</td>
+							</tr>
+							<tr>
+								<th>{{ pw_form.password_new2.label }}</th>
+								<td>
+									{{ pw_form.password_new2(class="input-password") }}
+									<label> </label>{% for error in pw_form.password_new2.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+								</td>
+							</tr>
+						</table>
+					</div>
+					<p class="form-buttons"><input type="submit" /></p>
+				</div>
+			</form>
+			<div class="columns-separator"></div>
+			<div class="box">
+				<h4>Tags:</h4>
+				<div class="box-content">
+					<style>
+						.tags { list-style: none; }
+						.tags li {
+							float: left;
+						}
+					</style>
+					<ul class="tags">
+						<li><a href="#"><span class="icon-16 icon-16-close" style="float: right;"></span>Game</a></li>
+						<li><a href="#"><span class="icon-16 icon-16-close" style="float: right;"></span>Desktop</a></li>
+						<li><a href="#"><span class="icon-16 icon-16-close" style="float: right;"></span>WebApp</a></li>
+						<li><a href="#"><span class="icon-16 icon-16-close" style="float: right;"></span>MMORPG</a></li>
+					</ul>
+					<table class="details">
+						<tr>
+							<td>{{ tag_form.tag(class="input-text") }}</td>
+							<td><input type="submit" value="Add" /></td>
+						</tr>
+					</table>
+					<p>Separate tags with a space</p>
+				</div>
+			</div>
 		</div>
 	</p>
 {% endblock content %}
