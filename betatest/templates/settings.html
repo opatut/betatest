@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}Settings{% endblock %} 
+
+{% block content %}
+	<h1>Settings</h1>
+	<p>
+		<div class="box">
+			<h4>Change Password:</h4>
+			<p><label>current Password: </label><input type="password" name="password" class="input-text" /></p>
+			<p><label>new Password: </label><input type="password" name="password_new" class="input-text" /></p>
+			<p><label>retype new Password: </label><input type="password" name="password_new2" class="input-text" /></p>
+			<p class="form-buttons"><input type="submit" /></p>
+		</div>
+	</p>
+{% endblock content %}
