@@ -13,7 +13,7 @@
 		{% for entry in message.getCompleteThread() %}
 		<div class="message">
 			<div class="icon">
-				<img src="{{ entry.sender.getAvatar(32) }}">
+				<img width="32" height="32" src="{{ entry.sender.getAvatar(32) }}">
 			</div>
 			<div class="right">
 				<div class="meta">
@@ -83,6 +83,9 @@
 		{% endfor %}
 		</ul>
 		<p class="form-buttons">
+			
+			<input style="float: left;" type="button" name="select_all" class="select_all no-js-hide" value="Select all" />
+			
 			<input type="submit" name="delete" value="Delete" />
 			<input type="submit" name="markunread" value="Mark as unread" />
 			<input type="submit" name="markread" value="Mark as read" class="default"/>

@@ -18,11 +18,14 @@ def login():
 			error = 'That\'s not your password.'
 		else:
 			usersession.login(username)
-			return render_template('home.html', message = 'Welcome back, %s.' % username);
+			flash("Welcome back, %s." % username, "success")
+			return redirect(url_for("dashboard"))
+	
 	return render_template('login.html', form = form, error = error)
 
 
 @app.route('/logout')
 def logout():
 	usersession.logout()
-	return render_template("home.html", message = "You have been logged out.");
+	flash("You have been logged out.")
+	return render_template("home.html")
