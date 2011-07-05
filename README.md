@@ -8,4 +8,6 @@ Dependencies
 * flask
 * flask-sqlalchemy
 * flask-login
-* flask-wtforms
+* flask-wtf
+* markdown2
+* blinker
