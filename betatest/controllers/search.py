@@ -3,17 +3,26 @@ from betatest import *
 @app.route("/search")
 def search():
 	q = request.args.get('q', '')
+	f = request.args.get('f', '')
+	
 	if q:
-		projects = models.project.Project.query.filter(db.or_(
-			models.project.Project.description.like("%"+q+"%"),
-			models.project.Project.title.like("%"+q+"%"),
-			models.project.Project.homepage.like("%"+q+"%")
-			)).all()
-		users = models.user.User.query.filter(db.or_(
-			models.user.User.username.like("%"+q+"%"),
-			models.user.User.realname.like("%"+q+"%"),
-			models.user.User.website.like("%"+q+"%")
-			)).all()
+		if f != "f" or request.args.get('p',''):
+			projects = models.project.Project.query.filter(db.or_(
+				models.project.Project.description.like("%"+q+"%"),
+				models.project.Project.title.like("%"+q+"%"),
+				models.project.Project.homepage.like("%"+q+"%")
+				)).all()
+		else:
+			projects = []
+			
+		if f != "f" or request.args.get('u',''):
+			users = models.user.User.query.filter(db.or_(
+				models.user.User.username.like("%"+q+"%"),
+				models.user.User.realname.like("%"+q+"%"),
+				models.user.User.website.like("%"+q+"%")
+				)).all()
+		else:
+			users = []
 			
 		if len(projects) == 1 and len(users) == 0:
 			# only 1 project, redirect there

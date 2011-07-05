@@ -5,65 +5,91 @@
 {% block content %}
 	<h1>Settings</h1>
 	{{ displayMessages() }}
-	<p>
-		<div class="columns">
-			<form action="{{ url_for('settings') }}" method="post">
-				{{ pw_form.hidden_tag() }}
-				<div class="box">
-					<h4>Change Password:</h4>
-					<div class="box-content">
-						<table class="details">
-							<tr>
-								<th>{{ pw_form.password.label }}</th>
-								<td>
-									{{ pw_form.password(class="input-password") }}
-									<label> </label>{% for error in pw_form.password.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
-								</td>
-							</tr>
-							<tr>
-								<th>{{ pw_form.password_new.label }}</th>
-								<td>
-									{{ pw_form.password_new(class="input-password") }}
-									<label> </label>{% for error in pw_form.password_new.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
-								</td>
-							</tr>
-							<tr>
-								<th>{{ pw_form.password_new2.label }}</th>
-								<td>
-									{{ pw_form.password_new2(class="input-password") }}
-									<label> </label>{% for error in pw_form.password_new2.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
-								</td>
-							</tr>
-						</table>
-					</div>
-					<p class="form-buttons"><input type="submit" /></p>
-				</div>
-			</form>
-			<div class="columns-separator"></div>
-			<div class="box">
-				<h4>Tags:</h4>
-				<div class="box-content">
-					<style>
-						.tags { list-style: none; }
-						.tags li {
-							float: left;
-						}
-					</style>
+	
+	<form action="{{ url_for('settings', subpage = 'general') }}" method="post">
+		{{ g_form.hidden_tag() }}
+		<h2>General settings</h2>
+		<div class="box">
+			<div class="box-content">
+				<table class="details">
+					<tr><th>{{ g_form.realname.label }}</th><td>{{ g_form.realname(class="input-text", value = user.realname ) }}</td></tr>
+					
+					<tr><th>{{ g_form.location.label }}</th><td>{{ g_form.location(class="input-text", value = user.location ) }}</td></tr>
+					
+					<tr><th>{{ g_form.website.label }}</th><td>{{ g_form.website(class="input-text", value = user.website ) }}
+						<span class="input-details">Remember to prepend <b>http://</b> to your URL!</span></td></tr>
+					
+					<tr><th>{{ g_form.email.label }}</th><td>{{ g_form.email(class="input-text", value = user.email ) }}
+						<span class="input-details">Will be used to fetch user icon from <a href="http://gravatar.com" target="_blank">Gravatar</a>.</span>
+						<p>
+						{% for error in g_form.email.errors %}<span class="form-error">{{ error }}</span>{% endfor %}</td></tr>
+						</p>
+				</table>
+			</div>
+			<p class="form-buttons">
+				<input type="reset" value="Reset" />
+				<input type="submit" class="default" value="Save changes" />
+			</p>
+		</div>
+	</form>
+	
+	<form action="{{ url_for('settings', subpage = 'tags') }}" method="post">
+		{{ tag_form.hidden_tag() }}
+		<h2>Interesting tags</h2>
+		<div class="box">
+			<div class="box-content">
+				<p>
+					<span class="input-details">Your tags:</span><br />
 					<ul class="tags">
-						<li><a href="#"><span class="icon-16 icon-16-close" style="float: right;"></span>Game</a></li>
-						<li><a href="#"><span class="icon-16 icon-16-close" style="float: right;"></span>Desktop</a></li>
-						<li><a href="#"><span class="icon-16 icon-16-close" style="float: right;"></span>WebApp</a></li>
-						<li><a href="#"><span class="icon-16 icon-16-close" style="float: right;"></span>MMORPG</a></li>
+						<li><span class="tag"><a href="#">game</a></span><a href="#" class="delete"></a></li>
+						<li><span class="tag"><a href="#">c++</a></span><a href="#" class="delete"></a></li>
+						<li><span class="tag"><a href="#">webapp</a></span><a href="#" class="delete"></a></li>
+						<li><span class="tag"><a href="#">desktop</a></span><a href="#" class="delete"></a></li>
+						<li><span class="tag"><a href="#">linux</a></span><a href="#" class="delete"></a></li>
 					</ul>
-					<table class="details">
-						<tr>
-							<td>{{ tag_form.tag(class="input-text") }}</td>
-							<td><input type="submit" value="Add" /></td>
-						</tr>
-					</table>
-					<p>Separate tags with a space</p>
-				</div>
+				</p>
+				<p>
+					<span class="input-details">Comma-separated list:</span><br />
+					{{ tag_form.tag(class="input-text") }} <input class="button" type="submit" value="Add" />
+				</p>
 			</div>
 		</div>
-	</p>
+	</form>
+	
+	<h2>Change Password</h2>
+	<form action="{{ url_for('settings', subpage = 'password') }}" method="post">
+		{{ pw_form.hidden_tag() }}
+		<div class="box">
+			<div class="box-content">
+				<table class="details">
+					<tr>
+						<th>{{ pw_form.password.label }}</th>
+						<td>
+							{{ pw_form.password(class="input-password") }}
+							<label> </label>{% for error in pw_form.password.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+						</td>
+					</tr>
+					<tr>
+						<th>{{ pw_form.password_new.label }}</th>
+						<td>
+							{{ pw_form.password_new(class="input-password") }}
+							<label> </label>{% for error in pw_form.password_new.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+						</td>
+					</tr>
+					<tr>
+						<th>{{ pw_form.password_new2.label }}</th>
+						<td>
+							{{ pw_form.password_new2(class="input-password") }}
+							<label> </label>{% for error in pw_form.password_new2.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+						</td>
+					</tr>
+				</table>
+			</div>
+			<p class="form-buttons">
+				<span class="input-details">This form will only changes your password. All other changes will be lost.</span>
+				<input type="submit" class="default" value="Change password"/>
+			</p>
+		</div>
+	</form>
+
 {% endblock content %}

@@ -36,5 +36,23 @@
 		</div>
 		{% endif %}
     </div>
+    {% else %}
+    <div class="box" style="width: 40%; margin: 0 auto;">
+		<div class="box-content">
+			<form action="/search" method="get">
+				<input type="hidden" name="f" value="f" />
+			<p><input type="text" name="q" class="input-text" style="width: 100%"></p>
+			<p style="font-size: 8pt; color: #666;">
+				<input type="checkbox" checked="checked" name="p" style="vertical-align: -2px;" /> Search projects
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" checked="checked" name="u" style="vertical-align: -2px;" /> Search users
+			</p>
+			</form>
+		</div>
+		<p class="form-buttons">
+			<input type="reset" value="Reset" />
+			<input type="submit" value="Search" class="default"/>
+		</p>
+    </div>
     {% endif %}
 {% endblock %}
