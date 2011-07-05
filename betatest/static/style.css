@@ -714,3 +714,34 @@ ul.userlist li div.icon {
 	margin-top: 1px;
 	margin-left: 4px;
 }
+
+
+.progress-bar {
+	background: #EEE;
+	border: 1px solid #888;
+	border-radius: 4px;
+	width: 200px; 
+	padding: 1px;
+}
+
+.progress-bar .progress-bar-inner {
+	display: block;
+	width: 100px;
+	background: #8BF;
+	height: 10px;
+	border-radius: 2px;
+}
+
+.progress-bar.mini .progress-bar-inner {
+	height: 4px;
+}
+
+.progress-bar.rainbow .progress-bar-inner 	{
+	background: url('progress.png');
+}
+
+.profile-rating {
+	font-size: 40pt;
+	font-weight: bold;
+	color: #888;
+}
