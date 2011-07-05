@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}Profile{% endblock %} 
+
+{% block content %}
+	<h1>{{ user.username }}</h1>
+	<p>
+		<div class="columns">
+			<div class="box">
+				<h4>Details</h4>
+				<p><label>eMail: </label>{{ user.email }}</p>
+				<p><label>registered since: </label>{{ time(user.registered_date) }}</p>
+			</div>
+			<div class="box">
+				<h4>Projects</h4>
+				<p>
+					<ul>
+						{% for project in user.projects %}
+						<li><a href="/{{ user.username }}/{{ project.slug }}">{{ project.title }}</a></li>
+						{% endfor %}
+					</ul>
+				</p>
+			</div>
+		</div>
+	</p>
+{% endblock content %}
