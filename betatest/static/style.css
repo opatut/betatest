@@ -40,6 +40,22 @@ p {
 	margin: 6px 0;
 }
 
+blockquote {
+	margin: 0;
+	padding-left: 5px;
+	border-left: 2px solid #248;
+}
+
+code {
+	background: #DDC;
+	padding: 1px 3px;
+}
+
+pre code {
+	padding: 2px 10px;
+	display: block;
+}
+
 form {
 	padding: 0;
 	margin: 0;
@@ -48,6 +64,7 @@ form {
 a:hover {
 	text-decoration: underline;
 }
+
 
 input {
 	vertical-align: middle;
@@ -163,6 +180,7 @@ input.search-text {
 }
 
 #CONTENT {
+	margin-top: 10px;
 	min-height: 50%;
 }
 
@@ -181,8 +199,8 @@ input.search-text {
 	padding: 4px 10px;
 }
 
-.box > p {
-	margin: 4px 10px;
+.box > .box-content {
+	padding: 4px 10px;
 }
 
 .box p.form-buttons {
@@ -194,8 +212,9 @@ input.search-text {
 }
 
 .columns {
-	display: table-row;
+	display: table;
 	width: 100%;
+	margin-bottom: 10px;
 }
 
 .columns > div {
@@ -224,7 +243,12 @@ ul.tabs li {
 	display: inline-block;
 }
 
+.box p.form-buttons a.button {
+	display: inline-block;
+}
+
 .box p.form-buttons input,
+.box p.form-buttons a.button,
 ul.tabs li a {
 	background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#DDD));
 	color: #666;
@@ -239,7 +263,8 @@ ul.tabs li a {
 	-webkit-transition: box-shadow 0.2s linear, color 0.2s linear, background 0.2s linear;
 }
 
-.box p.form-buttons input.default {
+.box p.form-buttons input.default,
+.box p.form-buttons a.button.default {
 	background: -webkit-gradient(linear, left top, left bottom, from(#9AF), to(#37F));
 	border-color: #558;
 	color: #FFF;
@@ -250,12 +275,14 @@ ul.tabs li a:hover {
 	color: #222;
 }
 
-.box p.form-buttons input:hover {
+.box p.form-buttons input:hover,
+.box p.form-buttons a:hover {
 	color: #222;
 	box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
 
-.box p.form-buttons input.default:hover {
+.box p.form-buttons input.default:hover,
+.box p.form-buttons a.default:hover {
 	color: #FFF;
 	background: -webkit-gradient(linear, left top, left bottom, from(#ACF), to(#48F));
 }
@@ -320,8 +347,8 @@ img#tabbar-profile-icon {
 
 ul.projects-list {
 	list-style: none;
-	padding: 0 10px;
 	margin: 0;
+	padding: 0;
 }
 
 ul.projects-list li {
@@ -330,15 +357,17 @@ ul.projects-list li {
 	margin-left: 70px;
 }
 
+ul.projects-list li:last-child {
+	border-bottom: 0;
+}
+
 ul.projects-list li div.icon {
 	width: 50px;
 	float:left;
 	margin-left: -70px;
 }
 
-ul.projects-list li div.icon img,
-div.message-thread div.message div.icon img,
-ul.message-list-ul li div.icon img {
+div.icon img {
 	border: 2px solid #FFF;
 	box-shadow: 0 0 0px 1px #BBB;
 }
@@ -367,6 +396,35 @@ ul.projects-list li div.creation-date {
 ul.projects-list li div.description {
 
 }
+
+ul.small-projects-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.small-projects-list li {
+	height: 24px;
+	line-height: 24px;
+	margin-bottom: 2px;
+}
+
+ul.small-projects-list li div.icon {
+	margin-top: 2px;
+}
+
+ul.small-projects-list li div.title {
+	font-size: 10pt;
+	font-weight: bold;
+	margin-left: 30px;
+}
+
+ul.small-projects-list li div.title div.author {
+	display: inline;
+	font-size: 9pt;
+	color: #666;
+}
+
 
 
 #FOOTER {
@@ -412,7 +470,7 @@ ul.message-list-ul {
 	margin: 10px;
 }
 
-ul.message-list-ul li {
+ul.message-list-ul > li {
 	margin-top: 2px;
 	background: #EEF;
 	-webkit-transition: background 0.2s linear;
@@ -462,6 +520,15 @@ ul.message-list-ul li .message,
 ul.message-list-ul li .title {
 	margin-left: 64px;
 	margin-right: 100px;
+}
+
+ul.message-list-ul li .message * {
+	font-size: 9pt;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	display: inline;
+	letter-spacing: 0;
 }
 
 ul.message-list-ul li .meta {
@@ -517,6 +584,133 @@ form.message-new-form input.input-text {
 }
 
 
+div.markdown h1 {
+	font-size: 12pt;
+	margin: 12px 0 6px 0;
+	border-bottom: 2px solid #CCC;
+}
+
+.markdown h2 {
+	font-size: 10pt;
+	margin: 6px 0;
+	font-weight: bold;
+}
+
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+	font-size: 1em;
+}
+
+.markdown h4 {
+	text-decoration: underline;
+	font-weight: normal;
+}
+
+.markdown h5,
+.markdown h6 {
+	font-weight: normal;
+}
+
+
 .no-js-hide {
 	visibility: hidden;
+}
+
+
+
+
+.project-title .author {
+	font-size: 0.7em;
+	color: #666;
+}
+
+h1 {
+	color: #444;
+}
+
+.profile .username .realname {
+	font-weight: normal;
+	color: #888;
+	font-size: 0.8em;
+}
+
+.profile .icon {
+	float: left;
+}
+
+.profile .right {
+	margin-left: 80px;
+}
+
+table.details {
+	font-size: 9pt;
+}
+
+table.details th {
+	text-align: left;
+	font-weight: normal;
+	color: #888;
+}
+
+table.details td,
+table.details th {
+	padding-right: 20px;
+}
+
+ul.userlist {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.userlist li {
+	margin: 0;
+	padding: 0;
+}
+
+ul.userlist li a {
+	display: block;
+	margin: 0;
+	padding: 2px 4px;
+	background: #EEF;
+	height: 22px;
+	line-height: 22px;
+	color: #444;
+	text-decoration: none;
+}
+
+ul.userlist li a:hover {
+	border-left: 4px solid #ACF;
+	padding-left: 0;
+}
+
+ul.userlist li:nth-child(2n) a:hover {
+	border-left-color: #9BF;
+}
+
+ul.userlist li:nth-child(2n) a {
+	background: #CDF;
+}
+
+ul.userlist li div.username {
+	margin-left: 30px;
+}
+
+ul.userlist li a div.more {
+	display: none;
+	float: right;
+	margin-top: 3px;
+}
+
+ul.userlist li a:hover div.more {
+	display: block;
+}
+
+ul.userlist li div.icon {
+	float: left;
+	width: 16px;
+	margin-top: 1px;
+	margin-left: 4px;
 }

@@ -32,6 +32,10 @@
 	background-image: url("icons/project_delete.png");
 }
 
+.icon-16-edit {
+	background-image: url("icons/edit.png");
+}
+
 .icon-16-feedback {
 	background-image: url("icons/feedback.png");
 }

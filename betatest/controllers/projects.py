@@ -23,3 +23,7 @@ def project_testers(username, project):
 	project = models.project.Project.query.filter_by(slug = project.lower(), author_id = user.id).first_or_404()
 	
 	return render_template("project.html", user = user, project = project, testers = True)
+	
+@app.route("/<username>/<project>/edit")
+def project_edit(username, project):
+	return "lol"

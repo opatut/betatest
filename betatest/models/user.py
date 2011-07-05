@@ -14,6 +14,9 @@ def isBlockedUsername(u):
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
+    realname = db.Column(db.String(128))
+    location = db.Column(db.String(128))
+    website = db.Column(db.String(128))
     password = db.Column(db.String(128))
     email = db.Column(db.String(256), unique=True)
     registered_date = db.Column(db.DateTime)
@@ -21,11 +24,17 @@ class User(db.Model):
     outbox = db.relationship('Message', backref='sender', lazy='dynamic', primaryjoin='Message.sender_id == User.id')
     inbox = db.relationship('Message', backref='receiver', lazy='dynamic', primaryjoin='Message.receiver_id == User.id')
 
-    def __init__(self, username, password, email):
+    def __init__(self, username, password, email, realname = '', location = '', website = ''):
         self.username = username
         self.password = sha512(password).hexdigest()
         self.email = email
         self.registered_date = datetime.utcnow()
+        self.realname = realname
+        self.location = location
+        self.website = website
+
+    def url(self):
+        return url_for("profile", username = self.username)
 
     def __repr__(self):
         return '<User: %r>' % self.username
@@ -33,7 +42,7 @@ class User(db.Model):
     def getNewMessageCount(self): 
         i = 0
         for msg in self.inbox:
-            if not msg.isread:
+            if not msg.isread and msg.reply == None:
                 i += 1
         return i
 

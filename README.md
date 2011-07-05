@@ -9,5 +9,5 @@ Dependencies
 * flask-sqlalchemy
 * flask-login
 * flask-wtf
-* markdown2
+* flask-markdown
 * blinker

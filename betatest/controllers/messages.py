@@ -30,7 +30,8 @@ class NewMessageForm(Form):
 	message = TextAreaField("Message")
 
 @app.route("/dashboard/messages/new")
-def new_message():
+@app.route("/<receiver>/contact")
+def new_message(receiver = ''):
 	user = usersession.getCurrentUser()
 	if user == None:
 		return render_template("home.html")
@@ -41,7 +42,7 @@ def new_message():
 		receiver = form.receiver.data
 		message = form.receiver.data
 	
-	return render_template("dashboard-messages.html", subpage = 'messages', newmessage=True, form = form)
+	return render_template("dashboard-messages.html", subpage = 'messages', newmessage=True, form = form, receiver = receiver)
 
 @app.route("/dashboard/messages/action", methods=['GET', 'POST'])
 def message_action():

@@ -10,6 +10,6 @@ def logout():
 
 def getCurrentUser():
 	if 'username' in session:
-		return models.user.User.query.filter_by(username = session['username']).first()
+		return models.user.User.query.filter_by(username = session['username']).first_or_404()
 	else:
 		return None

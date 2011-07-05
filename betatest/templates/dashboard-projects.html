@@ -5,26 +5,10 @@
 {% endblock %}
 
 {% block dashboard %}
-<p>
-	<ul class="projects-list">
-		
-		{% for project in projects %}
-		<li>
-			<div class="icon">
-				<a href="{{ url_for('project', username = project.author.username, project = project.slug) }}"><img src="{{ url_for('static', filename='project-unknown-48.png') }}" /></a>
-			</div>
-			<div class="title"><a href="{{ url_for('project', username = project.author.username, project = project.slug) }}">{{ project.title }}</a></div>
-			<div class="description">{{ project.description }}</div>
-			<div class="meta">
-				by <b><a class="author" href="/{{ project.author.username }}">{{ project.author.username }}</a></b> |
-				created <b>{{ time(project.creation_date, "creation-date") }}</b> |
-				<a class="testers" href="{{ url_for('project', username = project.author.username, project = project.slug) }}/testers"><b>{{ project.testers | length }}</b> tester{% if project.testers | length != 1 %}s{% endif %}</a>
-			</div>
-		</li>
-		{% endfor %}
-	</ul>
-</p>
-<p align="right">
+<div class="box-content">
+	{{ render_projects_list(projects) }}
+</div>
+<p class="form-buttons">
 	<a href="#">show more &raquo;</a>
 </p>
 {% endblock dashboard %}

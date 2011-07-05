@@ -3,28 +3,71 @@
 {% block pagetitle %}Projects{% endblock %} 
 
 {% block content %}
-	{% if user.username == project.author.username %}<a href="/{{ user.username }}/{{ project.title }}"><span class="icon-16 icon-16-edit-project"></span>Edit Project</a>{% endif %}
-	<h1>{{ project.title }}{% if testers %} - Testers{% endif %}</h1>
+	
+	{% if user.username == project.author.username %}
+		<ul class="tabs" style="float: right;">
+			<li><a href="{{ url_for('project_edit', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-edit"></span>Edit Project</a></li>
+		</ul>
+	{% endif %}
+
+	<h1 class="project-title">{{ project.title }} 
+		<span class="author">by <a href="{{ project.author.url() }}">{{ project.author.username }}</a></span>
+	{% if testers %} - Testers{% endif %}</h1>
 	<p>
 		<div class="columns">
 			{% if not testers %}
 			<div class="box">
 				<h4>Details</h4>
-				<p><label>Description: </label>{{ project.description }}</p>
-				<p><label>Author: </label><a href="/{{ user.username }}">{{ user.username }}</a></p>
-				<p><label>Createt: </label>{{ time(project.creation_date) }}</p>
+				<div class="box-content">
+					<table class="details">
+						<tr><th>Author</th><td><a href="{{ user.url()) }}">{{ user.username }}</a></td></tr>
+						<tr><th>Created</th><td>{{ time(project.creation_date) }}</td></tr>
+					</table>
+				</div>
 			</div>
+			<div class="columns-separator"></div>
 			{% endif %}
-			<div class="box">
+			<div class="box" style="width: 200px">
 				<h4>Testers</h4>
-				<p>
-					<ul>
-						{% for tester in project.testers %}
-						<li><a href="/{{ tester.username }}">{{ tester.username }}</a></li>
-						{% endfor %}
-					</ul>
-				</p>
+				<ul class="userlist">
+					{% set counter = 0 %}
+					{% for tester in project.testers if (counter < 10 or testers) %}
+					{% set counter = counter + 1 %}
+					<li>
+						<a href="{{ tester.url() }}">
+							<div class="icon">
+								<img width="16" height="16" src="{{ tester.getAvatar(16) }}" />
+							</div>
+							<div class="more">
+								<span class="icon-16 icon-16-more"></span>
+							</div>
+							<div class="username">
+								{{ tester.username }}
+							</div>
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+				
+				
+				{% if not testers and project.testers | length > 10 %}
+					<p class="form-buttons">
+						<a class="button" href="{{ url_for('project_testers', username = project.author.username, project = project.slug) }}">Show all</a>							
+					</p>
+				{% elif testers %}
+					<p class="form-buttons">
+						<a class="button default" href="{{ project.url() }}">&laquo; Back to project</a>
+					</p>
+				{% endif %}
 			</div>
 		</div>
+		{% if not testers %}
+		<div class="box">
+			<h4>Description</h4>
+			<div class="box-content markdown">
+				{{ project.description | markdown }}
+			</div>
+		</div>
+		{% endif %}
 	</p>
 {% endblock content %}

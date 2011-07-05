@@ -3,24 +3,59 @@
 {% block pagetitle %}Profile{% endblock %} 
 
 {% block content %}
-	<h1>{{ user.username }}</h1>
-	<p>
-		<div class="columns">
-			<div class="box">
-				<h4>Details</h4>
-				<p><label>eMail: </label>{{ user.email }}</p>
-				<p><label>registered since: </label>{{ time(user.registered_date) }}</p>
+	<div class="profile">
+		<div class="icon">
+			<img width="64" height="64" src="{{ user.getAvatar(64) }}">
+		</div>
+		<div class="right">
+			
+			<ul class="tabs" style="float: right;">
+			{% if session.username == user.username %}
+				<li><a href="{{ url_for('settings') }}"><span class="icon-16 icon-16-edit"></span>Edit Profile</a></li>
+			{% else %}
+				<li><a href="{{ url_for('new_message', receiver = user.username ) }}"><span class="icon-16 icon-16-send-message"></span>Send message</a></li>
+			{% endif %}
+			</ul>
+			
+			<div class="username">
+				<h1>{{ user.username }}{% if user.realname %} <span class="realname">({{ user.realname }})</span>{% endif %}</h1>
 			</div>
+			<div class="columns">
+				<div class="box">
+					<h4>Details</h4>
+					<div class="box-content">
+						<table class="details">
+							<tr><th>Email</th><td>{{ user.email | mailto }}</td>
+							<tr><th>Member since</th><td>{{ time(user.registered_date) }}</td></tr>
+							{% if user.location %}<tr><th>Location</th><td>{{ user.location }}</td></tr>{% endif %}
+							{% if user.realname %}<tr><th>Real name</th><td>{{ user.realname }}</td></tr>{% endif %}
+							{% if user.website %}<tr><th>Website</th><td>{{ user.website | link(target="_blank") }}</td></tr>{% endif %}
+						</table>
+					</div>
+				</div>
+				<div class="columns-separator"></div>
+				<div class="box">
+					<h4>Info</h4>
+					<div class="box-content">
+						<p>Here some info about reputation etc.</p>
+					</div>
+				</div>
+			</div>
+		
 			<div class="box">
 				<h4>Projects</h4>
-				<p>
-					<ul>
-						{% for project in user.projects %}
-						<li><a href="/{{ user.username }}/{{ project.slug }}">{{ project.title }}</a></li>
-						{% endfor %}
-					</ul>
-				</p>
+				<div class="box-content">
+					{{ render_projects_list(user.projects) }}
+				</div>
+			</div>			
+			
+			<div class="box">
+				<h4>Tested projects</h4>
+				<div class="box-content">
+					{{ render_projects_list(user.tested_projects, True) }}
+				</div>
 			</div>
+			
 		</div>
-	</p>
+	</div>
 {% endblock content %}
