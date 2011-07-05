@@ -254,6 +254,10 @@ ul.tabs.small-tabs li a {
 	padding: 3px 8px;
 }
 
+ul.tabs.standing-tabs li.current a{
+	border-bottom: 1px solid #FFF;
+	margin-bottom: -1px;
+}
 
 a span#inbox-count {
 	background: rgba(0,0,0,0.6);
