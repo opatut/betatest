@@ -7,7 +7,7 @@ def new_project():
 @app.route("/projects")
 @app.route("/projects/interesting")
 def projects():
-	return render_template("projects.html", subpage = "interesting")
+	return render_template("projects.html", subpage = "interesting", delete_tag_endpoint = 'project_tags_remove')
 
 @app.route("/<username>/<project>")
 def project(username, project):
@@ -64,16 +64,16 @@ def project_edit(username, project, subpage = ''):
 			db.session.commit()
 			flash("Added all tags.", "success")	
 
-		return render_template("project-edit.html", user = u, project = p, form = form, tag_form = tag_form)
+		return render_template("project-edit.html", user = u, project = p, form = form, tag_form = tag_form, tags = p.tags)
 
 @app.route("/<username>/<project>/tags/remove/<tag>")
-def project_tags_remove(tag):
-    user = usersession.getCurrentUser()
-    project = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
-    if user.id == project.author_id:
-        models.tag.Tag.getTag(tag).projects.remove(project)
+def project_tags_remove(username, project, tag):
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+    if usersession.getCurrentUser().id == p.author_id:
+        models.tag.Tag.getTag(tag).projects.remove(p)
         db.session.commit()
         flash("Removed tag successfully.")
-        return redirect(url_for("project_edit"))
+        return redirect(url_for("project_edit", username = username, project = project))
     else:
         abort(403)

@@ -63,11 +63,7 @@
 					<h4>Favorite tags</h4>
 					<div class="box-content">
 						<p>
-							<ul class="tags spaced">
-								{% for tag in user.tags %}
-									<li><span class="tag"><a href="/tags/{{tag.tag}}">{{ tag.tag }}</a></span></li>
-								{% endfor %}
-							</ul>
+							{{ tagsList(tags = user.tags) }}
 						</p>
 					</div>
 				</div>

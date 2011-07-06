@@ -1,92 +1,17 @@
-{% macro printTab(mainpage, name, caption, icon) -%}
-	<li {% if name == subpage %}class="current"{% endif %}><a href="/{{mainpage}}/{{ name }}">{% if icon %}<span class="icon-16 icon-16-{{ icon }}"></span>{% endif %}{{ caption }}</a></li>
-{%- endmacro %}
-
-{% macro time(time, class="") -%}
-    <span {% if class != "" %}class="{{class}}" {% endif %}title="{{ time | formattime }}">{{ time | humantime }}</span>
-{%- endmacro %}
-
-{% macro displayMessages() -%}
-{% with messages = get_flashed_messages(with_categories = True) %}
-{% if messages %}
-<ul class="flash-messages">
-{% for category, message in messages %}
-	<li class="flash-{% if category != 'message' %}{{ category }}{% else %}info{% endif %}">{{ message }}</li>
-{% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
-{%- endmacro %}
-
-
-{% macro render_projects_list(projects, small_view = False, highlight = '') -%}
-{% if small_view %}
-<ul class="small-projects-list">		
-{% for project in projects %}
-<li>
-	<div class="icon">
-		<a href="{{ project.url() }}">
-			<img width="16" height="16" src="{{ project.getIcon(16) }}" />
-		</a>
-	</div>
-	<div class="title">
-		<a href="{{ project.url() }}">{{ project.title | search_highlight(highlight) }}</a>
-		<div class="author">
-			by <a class="author" href="{{ project.author.url() }}">{{ project.author.username }}</a>
-		</div>
-	</div>
-</li>
-{% endfor %}
-</ul>
-{% else %}
-<ul class="projects-list">		
-{% for project in projects %}
-<li>
-	<div class="icon">
-		<a href="{{ project.url() }}"><img width="48" height="48" src="{{ project.getIcon(48) }}" /></a>
-	</div>
-	<div class="title"><a href="{{ project.url() }}">{{ project.title }}</a></div>
-	<div class="description">{{ project.description | markdown | wordcrop(40) }}</div>
-	<div class="meta">
-		by <b><a class="author" href="/{{ project.author.username }}">{{ project.author.username }}</a></b> |
-		created <b>{{ time(project.creation_date, "creation-date") }}</b> |
-		<a class="testers" href="{{ project.url() }}/testers"><b>{{ project.testers | length }}</b> tester{% if project.testers | length != 1 %}s{% endif %}</a>
-	</div>
-</li>
-{% endfor %}
-</ul>
-{% endif %}
-{%- endmacro %}
-
-{% macro render_user_list(users, max = 0, highlight = '') -%}
-<ul class="userlist">
-	{% set counter = 0 %}
-	{% for user in users if (counter < max or max == 0) %}
-	{% set counter = counter + 1 %}
-	<li>
-		<a href="{{ user.url() }}">
-			<div class="icon">
-				<img width="16" height="16" src="{{ user.getAvatar(16) }}" />
-			</div>
-			<div class="more">
-				<span class="icon-16 icon-16-more"></span>
-			</div>
-			<div class="username">
-				{{ user.username | search_highlight(highlight) }}
-			</div>
-		</a>
-	</li>
-	{% endfor %}
-</ul>
-{%- endmacro %}
-
+{% from "macros.html" import printTab, time, displayMessages, tagsList, render_projects_list, render_user_list %}
 <html>
 	<head>
 		<title>betatest » {% block pagetitle %}{% endblock %}</title>
 		<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ url_for('static', filename='icons.css') }}" rel="stylesheet" type="text/css" />
 		<script src="{{ url_for('static', filename='jquery.js') }}"> </script>
+		
+		<script>
+			var $ROOT_PATH = {{ request.script_root|tojson|safe }};
+		</script>
+		
 		<script src="{{ url_for('static', filename='messages.js') }}"> </script>
+		<script src="{{ url_for('static', filename='tags.js') }}"> </script>
 	</head>
 	<body>
 		<div id="WRAPPER">

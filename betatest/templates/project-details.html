@@ -22,13 +22,11 @@
 					</td></tr>
 					<tr><th>Created</th><td>{{ time(project.creation_date) }}</td></tr>
 					{% if project.homepage %}<tr><th>Homepage</th><td>{{ project.homepage | link }}</td></tr>{% endif %}
+					{% if project.tags %}
 					<tr><th>Tags</th><td>
-						<ul class="tags">
-							{% for tag in project.tags %}
-								<li><span class="tag"><a href="/tags/{{tag.tag}}">{{ tag.tag }}</a></span></li>
-							{% endfor %}
-						</ul>
+						{{ tagsList(tags = project.tags) }}
 					</td></tr>
+					{% endif %}
 				</table>
 			</div>
 		</div>

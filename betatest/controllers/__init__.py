@@ -7,3 +7,4 @@ import help
 import errors
 import settings
 import search
+import ajax

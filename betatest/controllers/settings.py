@@ -45,6 +45,7 @@ def settings(subpage = ''):
 			user.email = g_form.email.data
 			db.session.commit()
 			flash("Your changes have been saved.", "success")
+		return redirect("settings")
 	
 	if request.method == "POST" and subpage == "password":
 		if pw_form.validate():
@@ -53,6 +54,7 @@ def settings(subpage = ''):
 			flash("Set new password.", "success")
 		else:
 			flash("Could not change password. See form below for details.", "error")
+		return redirect("settings")
 		
 	if request.method == "POST" and subpage == "tags" and tag_form.validate():
 		for tag in re.split("\s*,\s*", tag_form.tag.data):
@@ -61,6 +63,7 @@ def settings(subpage = ''):
 				user.tags.append(t)
 		db.session.commit()
 		flash("Added all tags.", "success")
+		return redirect("settings")
 		
 	return render_template("settings.html", user = usersession.getCurrentUser(), pw_form = pw_form, tag_form = tag_form, g_form = g_form)
 

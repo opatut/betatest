@@ -1,0 +1,7 @@
+{% from "macros.html" import tagsList %}
+
+{% if project %}
+{{ tagsList(endpoint = 'projects_tags_remove', tags = tags, username = username, project = project) }}
+{% else %}
+{{ tagsList(endpoint = 'settings_tags_remove', tags = tags) }}
+{% endif %}
