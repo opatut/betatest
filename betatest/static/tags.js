@@ -20,7 +20,8 @@ $.fn.tagsDeleteButtons = function() {
 				success: function(data){
 					new_list = $(data);
 					list.replaceWith(new_list);
-					new_list.tagsDeleteButtons();
+					list = new_list;
+					list.tagsDeleteButtons();
 					spinner.fadeOut(200);
 				},
 				error: function() {
@@ -61,7 +62,8 @@ $.fn.tags = function() {
 			success: function(data){
 				new_list = $(data);
 				list.replaceWith(new_list);
-				new_list.tagsDeleteButtons();
+				list = new_list;
+				list.tagsDeleteButtons();
 				spinner.fadeOut(200);
 			},
 			error: function() {
