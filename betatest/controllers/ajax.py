@@ -45,7 +45,7 @@ def ajax_remove_user_tag(tag):
 
 
 @app.route("/ajax/tags/autocomplete")
-def ajax_tags_autocomplete():    
+def ajax_tags_autocomplete():
     q = request.args.get("query", "")
     if q:
         tags = models.tag.Tag.query.filter(models.tag.Tag.tag.like("%" + q + "%")).all()
@@ -55,11 +55,11 @@ def ajax_tags_autocomplete():
         json += ']}'
         return json
     return ""
- 
+
 
 
 @app.route("/ajax/users/autocomplete")
-def ajax_users_autocomplete():    
+def ajax_users_autocomplete():
     q = request.args.get("query", "")
     if q:
         users = models.user.User.query.filter(db.or_(

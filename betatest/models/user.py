@@ -3,14 +3,14 @@ from betatest.models.project import Project
 import re
 
 def isBlockedUsername(u):
-	u = u.lower()
-	if re.search("[^a-zA-Z0-9]", u):
-		return False
-	if u in ["admin", "about", "help", "contact", "privacy", "settings", "user", "project", "dashboard", "login", "logout"]:
-		return False
-	if len(u) < 6:
-		return False
-	return True
+    u = u.lower()
+    if re.search("[^a-zA-Z0-9]", u):
+        return False
+    if u in ["admin", "about", "help", "contact", "privacy", "settings", "user", "project", "dashboard", "login", "logout"]:
+        return False
+    if len(u) < 6:
+        return False
+    return True
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,8 +39,8 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User: %r>' % self.username
-        
-    def getNewMessageCount(self): 
+
+    def getNewMessageCount(self):
         i = 0
         for msg in self.inbox:
             if not msg.isread and msg.reply == None:
@@ -49,7 +49,7 @@ class User(db.Model):
 
     def getAvatar(self, size = 32):
         return "http://www.gravatar.com/avatar/{0}?s={1}&d=identicon".format(md5(self.email.lower()).hexdigest(), size)
-        
+
     def findProject(self, slug):
-		return Project.query.filter_by(slug = slug.lower(), author_id = self.id).first()
+        return Project.query.filter_by(slug = slug.lower(), author_id = self.id).first()
 

@@ -20,6 +20,6 @@ from betatest.usersession import *
 from betatest.controllers import *
 
 def setupGlobals(sender):
-	g.usersession = usersession
+    g.usersession = usersession
 
 request_started.connect(setupGlobals)

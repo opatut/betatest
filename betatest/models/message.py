@@ -26,19 +26,19 @@ class Message(db.Model):
 
     def __repr__(self):
         return '<Message: %r>' % self.title
-        
+
     def getThreadRootMessage(self):
         if self.isThreadRoot():
             return self
         else:
             return self.parent.getThreadRootMessage()
-    
+
     def getCompleteThread(self):
         if self.isThreadRoot():
             return self.getFollowingThread()
         else:
             return self.getThreadRootMessage().getFollowingThread()
-    
+
     def getFollowingThread(self):
         if not self.reply:
             return [self]
@@ -46,7 +46,7 @@ class Message(db.Model):
             thread = self.reply.getFollowingThread()
             thread.insert(0, self)
             return thread
-        
+
     def isThreadRoot(self):
         return not self.parent
 

@@ -1,15 +1,15 @@
 from betatest import *
 
 project_tags = db.Table('project_tags', db.Model.metadata,
-	db.Column('project_id', db.Integer, db.ForeignKey('project.id')),
-	db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-	db.UniqueConstraint('project_id', 'tag_id')
+    db.Column('project_id', db.Integer, db.ForeignKey('project.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+    db.UniqueConstraint('project_id', 'tag_id')
 )
 
 user_tags = db.Table('user_tags', db.Model.metadata,
-	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-	db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-	db.UniqueConstraint('user_id', 'tag_id')
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+    db.UniqueConstraint('user_id', 'tag_id')
 )
 
 
@@ -27,17 +27,17 @@ class Tag(db.Model):
 
     def __repr__(self):
         return '<Tag: %r>' % self.tag
-        
+
     @classmethod
     def getTag(self, tag, create = True):
-		first = Tag.query.filter_by(tag = tag.lower()).first()
-		if first:
-			return first
-		elif create:
-			# make a new tag
-			t = Tag(tag)
-			db.session.add(t)
-			db.session.commit()
-			return t
-		else:
-			return None
+        first = Tag.query.filter_by(tag = tag.lower()).first()
+        if first:
+            return first
+        elif create:
+            # make a new tag
+            t = Tag(tag)
+            db.session.add(t)
+            db.session.commit()
+            return t
+        else:
+            return None

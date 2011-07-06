@@ -8,10 +8,10 @@ class LoginForm(Form):
 def login(next = ""):
     if request.method != "POST" and usersession.loginCheck("none"):
         return redirect(next)
-        
+
     if next:
         session["next"] = next
-        
+
     error = None
     form = LoginForm()
     if form.validate_on_submit():
@@ -37,6 +37,6 @@ def login(next = ""):
 
 @app.route('/logout')
 def logout():
-	usersession.logout()
-	flash("You have been logged out.")
-	return redirect(url_for("home"))
+    usersession.logout()
+    flash("You have been logged out.")
+    return redirect(url_for("home"))
