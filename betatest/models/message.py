@@ -12,12 +12,12 @@ class Message(db.Model):
     reply = db.relationship('Message', backref = db.backref('parent', uselist = False), remote_side = 'Message.id')
 
     def __init__(self, title_or_parent, message, sender, receiver):
-        if isinstance(title_or_parent, str):
-            self.title = title_or_parent
-        else:
+        if type(title_or_parent) == Message:
             # parent
             self.parent = title_or_parent.getFollowingThread()[-1]
             self.title = self.parent.title
+        else:
+            self.title = title_or_parent
         self.message = message
         self.send_date = datetime.utcnow()
         self.isread = False
@@ -54,3 +54,6 @@ class Message(db.Model):
         for msg in self.getCompleteThread():
             msg.isread = read
         db.session.commit()
+
+    def url(self):
+         return url_for('show_message', message_id = self.id) + "#reply-" + str(self.id)

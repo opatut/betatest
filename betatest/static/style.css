@@ -123,7 +123,7 @@ ul.flash-messages {
 .flash-success,
 .flash-warning,
 .flash-info,
-span.form-error {
+.form-error {
 	padding: 3px 10px;
 	border-radius: 4px;
 	vertical-align: middle;
@@ -132,7 +132,7 @@ span.form-error {
 }
 
 .flash-error,
-span.form-error {
+.form-error {
 	color: #F00;
 	background: #FCC;
 	border-color: #F00;

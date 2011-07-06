@@ -3,107 +3,121 @@
 {% block page_title %}{{ message.title }}{% endblock %}
 
 {% block buttons %}
-	<li><a href="/dashboard/messages/new"><span class="icon-16 icon-16-new-message"></span>Compose a message</a></li>
+    <li><a href="/dashboard/messages/new"><span class="icon-16 icon-16-new-message"></span>Compose a message</a></li>
 {% endblock %}
 
 {% block dashboard %}
-	{% if message %}
-	<h2>{{ message.title }}</h2>
-	<div class="message-thread">
-		{% for entry in message.getCompleteThread() %}
-		<div class="message">
-			<div class="icon">
-				<img width="32" height="32" src="{{ entry.sender.getAvatar(32) }}">
-			</div>
-			<div class="right">
-				<div class="meta">
-					<a class="author" href="{{ message.sender.url() }}">{{ entry.sender.username }}</a> said {{ time(entry.send_date) }}:
-				</div>
-				<div class="content markdown">
-					{{ entry.message | markdown }}
-				</div>
-			</div>
-		</div>
-	{% endfor %}
-	</div>
-	<h2>Reply</h2>
-	
-	<div class="message-write">
-		<form action="/dashboard/messages/{{message.id}}/reply" method="post">
-			<p><textarea class="compose-message"></textarea></p>
-			<p style="float:right;">Parsed with <a href="/help/messages/compose">Markdown</a></p>
-			<p><input type="submit" value="Send reply"></p>
-		</form>
-	</div>
-	{% elif messages %}
-	<form class="message-list-form" method="post" action="{{ url_for('message_action') }}">
-		<ul class="message-list-ul">
-		{% for message in messages %}
-		{% set is_sender = session.username == message.sender.username %}
-		{% set read = (message.isread or is_sender) %}
-		<li{% if not read %} class="unread"{% endif %}>
-			<div class="selection">
-				<input type="checkbox" class="selection" name="message-{{ message.id }}"/>
-			</div>
-			<div class="icon">
-				{% if is_sender %}	
-				<img width="24" height="24" src="{{ message.receiver.getAvatar(24) }}">
-				{% else %}
-				<img width="24" height="24" src="{{ message.sender.getAvatar(24) }}">
-				{% endif %}
-			</div>
-			<div class="flags">
-				{% if read %}
-				<a href="#" title="Mark as unread"><span class="icon-16 icon-16-old-message"></span></a>
-				{% else %}
-				<a href="#" title="Mark as read"><span class="icon-16 icon-16-new-message"></span></a>
-				{% endif %}
-				<a href="{{ url_for('show_message', message_id = message.id) }}" title="View thread"><span class="icon-16 icon-16-more"></span></a>
-			</div>
-			<div class="title">
-				<a class="message_title" href="{{ url_for('show_message', message_id = message.id) }}">{{ message.title }}</a>
-				<span class="meta">
-					{% if is_sender %}sent{%else%}received{%endif%}
-					{{ time(message.send_date, "send_date") }}
-					
-					{% if is_sender %}
-						to <a class="sender" href="{{ message.receiver.url() }}">{{ message.receiver.username }}</a>
-					{% else %}
-						from <a class="sender" href="{{ message.sender.url() }}">{{ message.sender.username }}</a>
-					{%endif%}
-										
-					{% set replies = message.getCompleteThread() | length - 1 %}
-					{% if replies > 0 %}| {{replies}} repl{%if replies == 1%}y{%else%}ies{%endif%}{%endif%}
-				</span>
-			</div>
-			<div class="message">
-				{{ message.message | markdown | wordcrop(40) }}
-			</div>
-		</li>
-		{% endfor %}
-		</ul>
-		<p class="form-buttons">
-			
-			<input style="float: left;" type="button" name="select_all" class="select_all no-js-hide" value="Select all" />
-			
-			<input type="submit" name="delete" value="Delete" />
-			<input type="submit" name="markunread" value="Mark as unread" />
-			<input type="submit" name="markread" value="Mark as read" class="default"/>
-		</p>
-	</form>
-	{% elif newmessage %}
-		<h2>Compose a message</h2>
-		<div class="message-write">
-			<form class="message-new-form">
-				{{ form.hidden_tag() }}
-				<p>{{ form.receiver.label }}{{ form.receiver(class="input-text user-autocomplete", value = receiver) }}</p>
-				<p>{{ form.subject.label }}{{ form.subject(class="input-text") }}</p>
-				<p>{{ form.message(class="compose-message") }}</p>
-				<p align="right"><input type="submit" value="Send message" class="button default"/></p>
-			</form>
-		</div>
-	{% else %}
-		<p>Invalid call!</p>
-	{% endif %}
+    {% if message %}
+    <h2>{{ message.title }}</h2>
+    <div class="message-thread">
+        {% for entry in message.getCompleteThread() %}
+        <a name="reply-{{ entry.id }}"></a>
+        <div class="message">
+            <div class="icon">
+                <img width="32" height="32" src="{{ entry.sender.getAvatar(32) }}">
+            </div>
+            <div class="right">
+                <div class="meta">
+                    <a class="author" href="{{ message.sender.url() }}">{{ entry.sender.username }}</a> said {{ time(entry.send_date) }}:
+                </div>
+                <div class="content markdown">
+                    {{ entry.message | markdown }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <h2>Reply</h2>
+
+    <div class="message-write">
+        <form action="{{ url_for('show_message', message_id = message.id) }}" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.message(class="compose-message") }}
+                {% for error in form.message.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+            </p>
+            <p style="float:right;">Parsed with <a href="/help/messages/compose">Markdown</a></p>
+            <input type="submit" value="Send reply" class="button default">
+        </form>
+    </div>
+    {% elif messages %}
+    <form class="message-list-form" method="post" action="{{ url_for('message_action') }}">
+        <ul class="message-list-ul">
+        {% for message in messages %}
+        {% set is_sender = session.username == message.sender.username %}
+        {% set read = (message.isread or is_sender) %}
+        <li{% if not read %} class="unread"{% endif %}>
+            <div class="selection">
+                <input type="checkbox" class="selection" name="message-{{ message.id }}"/>
+            </div>
+            <div class="icon">
+                {% if is_sender %}
+                <img width="24" height="24" src="{{ message.receiver.getAvatar(24) }}">
+                {% else %}
+                <img width="24" height="24" src="{{ message.sender.getAvatar(24) }}">
+                {% endif %}
+            </div>
+            <div class="flags">
+                {% if read %}
+                <span title="Read" class="icon-16 icon-16-old-message"></span>
+                {% else %}
+                <span title="Unread" class="icon-16 icon-16-new-message"></span>
+                {% endif %}
+                <a href="{{ message.url() }}" title="View thread"><span class="icon-16 icon-16-more"></span></a>
+            </div>
+            <div class="title">
+                <a class="message_title" href="{{ message.url() }}">{{ message.title }}</a>
+                <span class="meta">
+                    {% if is_sender %}sent{%else%}received{%endif%}
+                    {{ time(message.send_date, "send_date") }}
+
+                    {% if is_sender %}
+                        to <a class="sender" href="{{ message.receiver.url() }}">{{ message.receiver.username }}</a>
+                    {% else %}
+                        from <a class="sender" href="{{ message.sender.url() }}">{{ message.sender.username }}</a>
+                    {%endif%}
+
+                    {% set replies = message.getCompleteThread() | length - 1 %}
+                    {% if replies > 0 %}| {{replies}} repl{%if replies == 1%}y{%else%}ies{%endif%}{%endif%}
+                </span>
+            </div>
+            <div class="message">
+                {{ message.message | markdown | wordcrop(40) }}
+            </div>
+        </li>
+        {% endfor %}
+        </ul>
+        <p class="form-buttons">
+
+            <input style="float: left;" type="button" name="select_all" class="select_all no-js-hide" value="Select all" />
+
+            <input type="submit" name="delete" value="Delete" />
+            <input type="submit" name="markunread" value="Mark as unread" />
+            <input type="submit" name="markread" value="Mark as read" class="default"/>
+        </p>
+    </form>
+    {% elif newmessage %}
+        <h2>Compose a message</h2>
+        <div class="message-write">
+            <form class="message-new-form" method="post" action="{{ url_for('new_message') }}">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.receiver.label }}{{ form.receiver(class="input-text user-autocomplete", value = receiver) }}
+                    {% for error in form.receiver.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+                </p>
+                <p>
+                    {{ form.subject.label }}{{ form.subject(class="input-text") }}
+                    {% for error in form.subject.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+                </p>
+                <p>
+                    {{ form.message(class="compose-message") }}
+                    {% for error in form.message.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+                </p>
+                <p align="right"><input type="submit" value="Send message" class="button default"/></p>
+            </form>
+        </div>
+    {% else %}
+        <p>Invalid call!</p>
+    {% endif %}
 
 {% endblock %}
