@@ -31,7 +31,8 @@
 	</div>
 	</form>
 	
-	<form action="{{ url_for('project_edit', username = project.author.username, project = project.slug, subpage = 'tags') }}" method="post" slug="{{ project.slug }}">
+	<form action="{{ url_for('project_edit', username = project.author.username, project = project.slug, subpage = 'tags') }}" 
+			method="post" project_id="{{ project.id }}">
 		{{ tag_form.hidden_tag() }}
 		<h2>Project tags</h2>
 		<div class="box">
