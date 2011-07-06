@@ -8,42 +8,17 @@
 	margin-right: 5px;
 }
 
-.icon-16-new-message {
-	background-image: url("icons/email.png");
-}
-
-.icon-16-old-message {
-	background-image: url("icons/email_open.png");
-}
-
-.icon-16-send-message {
-	background-image: url("icons/email_go.png");
-}
-
-.icon-16-project {
-	background-image: url("icons/project.png");
-}
-
-.icon-16-add-project {
-	background-image: url("icons/project_add.png");
-}
-
-.icon-16-delete-project {
-	background-image: url("icons/project_delete.png");
-}
-
-.icon-16-edit {
-	background-image: url("icons/edit.png");
-}
-
-.icon-16-feedback {
-	background-image: url("icons/feedback.png");
-}
-
-.icon-16-more {
-	background-image: url("icons/more.png");
-}
-
-.icon-16-spinner {
-	background-image: url("icons/spinner.gif");
-}
+.icon-16-new-message {		background-image: url("icons/email.png"); }
+.icon-16-old-message {		background-image: url("icons/email_open.png"); }
+.icon-16-send-message { 	background-image: url("icons/email_go.png"); }
+.icon-16-project {			background-image: url("icons/project.png"); }
+.icon-16-add-project {		background-image: url("icons/project_add.png"); }
+.icon-16-delete-project {	background-image: url("icons/project_delete.png"); }
+.icon-16-edit {				background-image: url("icons/edit.png"); }
+.icon-16-feedback { 		background-image: url("icons/feedback.png"); }
+.icon-16-more { 			background-image: url("icons/more.png"); }
+.icon-16-spinner { 			background-image: url("icons/spinner.gif"); }
+.icon-16-door-in { 			background-image: url("icons/door_in.png"); }
+.icon-16-door-out { 		background-image: url("icons/door_out.png"); }
+.icon-16-door-open { 		background-image: url("icons/door_open.png"); }
+.icon-16-door-closed { 		background-image: url("icons/door.png"); }
