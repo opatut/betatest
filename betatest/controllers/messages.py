@@ -2,20 +2,12 @@ from betatest import *
 
 @app.route("/dashboard/messages/<int:message_id>")
 def show_message(message_id):
-	user = usersession.getCurrentUser()
-	if user != None:
-		msg = models.message.Message.query.filter_by(id = message_id).first_or_404()
-		# mark as read
-		if user == msg.receiver:
-			msg.markRead(True)
-		# check if allowed to read
-		if user == msg.receiver or user == msg.sender:
-			return render_template("dashboard-messages.html", subpage = 'messages', message = msg)
-		else:
-			abort(403)
-	
-	return redirect(url_for("home"))
-	
+    msg = models.message.Message.query.filter_by(id = message_id).first_or_404()
+    usersession.loginCheck(users = [msg.receiver, msg.sender])
+    if user == msg.receiver:
+        msg.markRead(True)
+    return render_template("dashboard-messages.html", subpage = 'messages', message = msg)
+
 def userlist_check(field):
 	error = ""
 	for user in re.split("[^\w\d]*", field.data):
@@ -32,9 +24,8 @@ class NewMessageForm(Form):
 @app.route("/dashboard/messages/new")
 @app.route("/<receiver>/contact")
 def new_message(receiver = ''):
-	user = usersession.getCurrentUser()
-	if user == None:
-		return render_template("home.html")
+	if not usersession.loginCheck("warning", warning_none = "Please log in to write messages."):
+		return redirect(url_for("login", next = url_for("new_message", receiver = receiver)))
 	
 	form = NewMessageForm()
 	if form.validate_on_submit():
@@ -46,6 +37,8 @@ def new_message(receiver = ''):
 
 @app.route("/dashboard/messages/action", methods=['GET', 'POST'])
 def message_action():
+	usersession.loginCheck()
+    
 	mark_unread = mark_read = False
 	count = 0
 	if request.form:

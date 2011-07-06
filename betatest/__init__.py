@@ -23,4 +23,3 @@ def setupGlobals(sender):
 	g.usersession = usersession
 
 request_started.connect(setupGlobals)
-

@@ -3,6 +3,7 @@ from betatest import *
 @app.route("/ajax/add_project_tag/<int:project_id>/<tag>")
 def ajax_add_project_tag(project_id, tag):
     project = models.project.Project.query.filter_by(id = project_id).first()
+    usersession.loginCheck(user = project.author)
     for tag in re.split("\s*,\s*", tag):
         t = models.tag.Tag.getTag(tag.strip())
         if not t in project.tags and tag:
@@ -12,6 +13,7 @@ def ajax_add_project_tag(project_id, tag):
 
 @app.route("/ajax/add_user_tag/<tag>")
 def ajax_add_user_tag(tag):
+    usersession.loginCheck()
     user = usersession.getCurrentUser()
     for tag in re.split("\s*,\s*", tag):
         t = models.tag.Tag.getTag(tag.strip())
@@ -24,6 +26,7 @@ def ajax_add_user_tag(tag):
 @app.route("/ajax/remove_project_tag/<int:project_id>/<tag>")
 def ajax_remove_project_tag(project_id, tag):
     project = models.project.Project.query.filter_by(id = project_id).first()
+    usersession.loginCheck(user = project.author)
     t = models.tag.Tag.getTag(tag.strip())
     if t in project.tags:
         t.projects.remove(project)
@@ -32,6 +35,7 @@ def ajax_remove_project_tag(project_id, tag):
 
 @app.route("/ajax/remove_user_tag/<tag>")
 def ajax_remove_user_tag(tag):
+    usersession.loginCheck()
     user = usersession.getCurrentUser()
     t = models.tag.Tag.getTag(tag.strip())
     if t in user.tag:

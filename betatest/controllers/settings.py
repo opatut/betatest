@@ -29,13 +29,11 @@ class GeneralSettingsForm(Form):
 @app.route("/settings", methods=['GET', 'POST'])
 @app.route("/settings/<subpage>", methods=['GET', 'POST'])
 def settings(subpage = ''):
+	usersession.loginCheck()
+	
 	tag_form = ChangeTagsForm()
 	g_form = GeneralSettingsForm()
 	pw_form = ChangePasswordForm()
-	
-	user = usersession.getCurrentUser()
-	if not user:
-		return redirect(url_for("home"))
 	
 	if request.method == "POST" and subpage == "general":
 		if g_form.validate():
@@ -70,11 +68,10 @@ def settings(subpage = ''):
 
 @app.route("/settings/tags/remove/<tag>")
 def settings_tags_remove(tag):
-    user = usersession.getCurrentUser()
-    if user:
-        models.tag.Tag.getTag(tag).users.remove(user)
-        db.session.commit()
-        flash("Removed tag successfully.")
-        return redirect(url_for("settings"))
-    else:
-        return redirect(url_for("home"))
+	if not usersession.loginCheck("warning"):
+		return redirect(url_for("home"))
+            
+	models.tag.Tag.getTag(tag).users.remove(user)
+	db.session.commit()
+	flash("Removed tag successfully.")
+	return redirect(url_for("settings"))

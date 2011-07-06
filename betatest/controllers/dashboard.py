@@ -1,14 +1,19 @@
 from betatest import *
 
-
 @app.route("/")
+def home():
+    if usersession.loginCheck("none"):
+        return redirect(url_for("dashboard"))
+    return render_template("home.html")
+
 @app.route("/dashboard")
 @app.route("/dashboard/<page>")
 def dashboard(page = 'projects'):
-	user = usersession.getCurrentUser()
-	if user == None:
-		return render_template("home.html")
+	if not usersession.loginCheck("warning"):
+		return redirect(url_for("home"))
 	
+	user = usersession.getCurrentUser()
+    
 	if page == 'projects':
 		projects = models.project.Project.query.filter_by(author_id = user.id)
 		return render_template("dashboard-projects.html", subpage = page, projects = projects)
