@@ -6,3 +6,4 @@ pip install flask-wtf
 pip install flask-markdown
 pip install blinker
 pip install flask-login
+python db.py
