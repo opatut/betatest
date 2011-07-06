@@ -41,16 +41,15 @@
 				<p>
 					<span class="input-details">Your tags:</span><br />
 					<ul class="tags">
-						<li><span class="tag"><a href="#">game</a></span><a href="#" class="delete"></a></li>
-						<li><span class="tag"><a href="#">c++</a></span><a href="#" class="delete"></a></li>
-						<li><span class="tag"><a href="#">webapp</a></span><a href="#" class="delete"></a></li>
-						<li><span class="tag"><a href="#">desktop</a></span><a href="#" class="delete"></a></li>
-						<li><span class="tag"><a href="#">linux</a></span><a href="#" class="delete"></a></li>
+						{% for tag in user.tags %}
+							<li><span class="tag"><a href="/tags/{{tag.tag}}">{{ tag.tag }}</a></span><a 
+								href="{{ url_for('settings_tags_remove', tag = tag.tag) }}" class="delete"></a></li>
+						{% endfor %}
 					</ul>
 				</p>
 				<p>
 					<span class="input-details">Comma-separated list:</span><br />
-					{{ tag_form.tag(class="input-text") }} <input class="button" type="submit" value="Add" />
+					{{ tag_form.tag(class="input-text", value="") }} <input class="button" type="submit" value="Add" />
 				</p>
 			</div>
 		</div>

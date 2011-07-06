@@ -16,7 +16,7 @@ db.session.add(zetaron)
 db.session.add(svenstaro)
 
 # create projects
-rgj_webapp = models.project.Project("RedditGameJam Webapp", 
+rgj_webapp = models.project.Project("RedditGameJam Web Application", 
 	"A helper webapp for organising the [reddit game jams](http://reddit.com/r/RedditGameJam).", 
 	opatut,
 	"http://redditgamejam.org")
@@ -36,6 +36,30 @@ db.session.add(rgj_webapp)
 db.session.add(betatest)	
 db.session.add(spacegame)	
 db.session.add(ducttape)
+
+# add some tags
+betatest.tags.append(models.tag.Tag.getTag("webapp"))
+betatest.tags.append(models.tag.Tag.getTag("python"))
+
+ducttape.tags.append(models.tag.Tag.getTag("game"))
+ducttape.tags.append(models.tag.Tag.getTag("engine"))
+
+spacegame.tags.append(models.tag.Tag.getTag("sfml"))
+spacegame.tags.append(models.tag.Tag.getTag("c++"))
+spacegame.tags.append(models.tag.Tag.getTag("GAME"))
+
+opatut.tags.append(models.tag.Tag.getTag("GAME"))
+opatut.tags.append(models.tag.Tag.getTag("engine"))
+opatut.tags.append(models.tag.Tag.getTag("webapp"))
+opatut.tags.append(models.tag.Tag.getTag("internet"))
+opatut.tags.append(models.tag.Tag.getTag("c++"))
+
+zetaron.tags.append(models.tag.Tag.getTag("c++"))
+zetaron.tags.append(models.tag.Tag.getTag("game"))
+zetaron.tags.append(models.tag.Tag.getTag("webapp"))
+zetaron.tags.append(models.tag.Tag.getTag("desktop"))
+zetaron.tags.append(models.tag.Tag.getTag("internet"))
+
 
 # add some testers
 ducttape.testers.append(zetaron)

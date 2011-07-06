@@ -32,9 +32,13 @@ def settings(subpage = ''):
 	tag_form = ChangeTagsForm()
 	g_form = GeneralSettingsForm()
 	pw_form = ChangePasswordForm()
+	
+	user = usersession.getCurrentUser()
+	if not user:
+		return redirect(url_for("home"))
+	
 	if request.method == "POST" and subpage == "general":
 		if g_form.validate():
-			user = usersession.getCurrentUser()
 			user.realname = g_form.realname.data
 			user.location = g_form.location.data
 			user.website = g_form.website.data
@@ -44,14 +48,30 @@ def settings(subpage = ''):
 	
 	if request.method == "POST" and subpage == "password":
 		if pw_form.validate():
-			usersession.getCurrentUser().password = sha512(pw_form.password_new.data).hexdigest()
+			user.password = sha512(pw_form.password_new.data).hexdigest()
 			db.session.commit()
 			flash("Set new password.", "success")
 		else:
 			flash("Could not change password. See form below for details.", "error")
 		
 	if request.method == "POST" and subpage == "tags" and tag_form.validate():
-		flash("TODO: Add tag " + tag_form.tag.data, "warning")
-		
+		for tag in re.split("\s*,\s*", tag_form.tag.data):
+			t = models.tag.Tag.getTag(tag.strip())
+			if not t in user.tags:
+				user.tags.append(t)
+		db.session.commit()
+		flash("Added all tags.", "success")
 		
 	return render_template("settings.html", user = usersession.getCurrentUser(), pw_form = pw_form, tag_form = tag_form, g_form = g_form)
+
+
+@app.route("/settings/tags/remove/<tag>")
+def settings_tags_remove(tag):
+    user = usersession.getCurrentUser()
+    if user:
+        models.tag.Tag.getTag(tag).users.remove(user)
+        db.session.commit()
+        flash("Removed tag successfully.")
+        return redirect(url_for("settings"))
+    else:
+        return redirect(url_for("home"))

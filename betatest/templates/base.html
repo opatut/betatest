@@ -43,7 +43,7 @@
 {% for project in projects %}
 <li>
 	<div class="icon">
-		<a href="{{ project.url() }}"><img src="{{ project.getIcon(48) }}" /></a>
+		<a href="{{ project.url() }}"><img width="48" height="48" src="{{ project.getIcon(48) }}" /></a>
 	</div>
 	<div class="title"><a href="{{ project.url() }}">{{ project.title }}</a></div>
 	<div class="description">{{ project.description | markdown | wordcrop(40) }}</div>
@@ -97,7 +97,7 @@
 				<ul class="tabs hanging-tabs">
 					{% if session.logged_in %}
 						{% set l_user = g.usersession.getCurrentUser() %}
-						<li><a href="{{ l_user.url() }}"><img
+						<li><a href="{{ l_user.url() }}"><img  width="14" height="14"
 						 id="tabbar-profile-icon" src="{{ l_user.getAvatar(14) }}"> {{ session.username }}</a></li>
 						
 						<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
