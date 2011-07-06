@@ -47,9 +47,9 @@
 			</div>
 			<div class="icon">
 				{% if is_sender %}	
-				<img src="{{ message.receiver.getAvatar(24) }}">
+				<img width="24" height="24" src="{{ message.receiver.getAvatar(24) }}">
 				{% else %}
-				<img src="{{ message.sender.getAvatar(24) }}">
+				<img width="24" height="24" src="{{ message.sender.getAvatar(24) }}">
 				{% endif %}
 			</div>
 			<div class="flags">
