@@ -48,13 +48,30 @@
 					</div>
 				</div>
 			</div>
-		
-			<div class="box">
-				<h4>Projects</h4>
-				<div class="box-content">
-					{{ render_projects_list(user.projects) }}
+
+			<div class="columns">
+				<div class="box">
+					<h4>Projects</h4>
+					<div class="box-content">
+						{{ render_projects_list(user.projects) }}
+					</div>
 				</div>
-			</div>			
+				
+				<div class="columns-separator"></div>
+				
+				<div class="box" style="width: 160px;">
+					<h4>Favorite tags</h4>
+					<div class="box-content">
+						<p>
+							<ul class="tags spaced">
+								{% for tag in user.tags %}
+									<li><span class="tag"><a href="/tags/{{tag.tag}}">{{ tag.tag }}</a></span></li>
+								{% endfor %}
+							</ul>
+						</p>
+					</div>
+				</div>
+			</div>
 			
 			<div class="box">
 				<h4>Tested projects</h4>

@@ -800,6 +800,10 @@ ul.tags li {
 	padding: 0;
 	margin: 0;
 }
+
+ul.tags.spaced li {
+	margin-bottom: 3px;
+}
 	
 ul.tags li {
 	background: #CDF;

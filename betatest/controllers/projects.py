@@ -27,16 +27,21 @@ class ProjectEditForm(Form):
 	description = TextAreaField('Description')
 	#public = CheckboxInput('Public visible')
 	
-@app.route("/<username>/<project>/edit", methods = ["GET", "POST"])
-def project_edit(username, project):
+class ChangeTagsForm(Form):
+	tag = TextField("", validators=[Required()])	
+
+@app.route("/<username>/<project>/edit", methods=['GET', 'POST'])
+@app.route("/<username>/<project>/edit/<subpage>", methods = ["GET", "POST"])
+def project_edit(username, project, subpage = ''):
 	u = models.user.User.query.filter_by(username = username).first_or_404()
 	if u != usersession.getCurrentUser():
 		abort(403)
 	else:
+		tag_form = ChangeTagsForm()
 		form = ProjectEditForm()
 		p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
 		
-		if form.validate_on_submit():
+		if request.method == "POST" and subpage == "general" and form.validate_on_submit():
 			new_slug = models.project.titleToSlug(form.title.data)
 			if new_slug != p.slug and u.findProject(new_slug):
 				flash("You already have a project with a similar title. Please choose another one.", "error")
@@ -50,4 +55,25 @@ def project_edit(username, project):
 				return redirect(p.url())
 		else:	
 			form.description.data = p.description
-		return render_template("project-edit.html", user = u, project = p, form = form)
+		
+		if request.method == "POST" and subpage == "tags" and tag_form.validate():
+			for tag in re.split("\s*,\s*", tag_form.tag.data):
+				t = models.tag.Tag.getTag(tag.strip())
+				if not t in p.tags:
+					p.tags.append(t)
+			db.session.commit()
+			flash("Added all tags.", "success")	
+
+		return render_template("project-edit.html", user = u, project = p, form = form, tag_form = tag_form)
+
+@app.route("/<username>/<project>/tags/remove/<tag>")
+def project_tags_remove(tag):
+    user = usersession.getCurrentUser()
+    project = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+    if user.id == project.author_id:
+        models.tag.Tag.getTag(tag).projects.remove(project)
+        db.session.commit()
+        flash("Removed tag successfully.")
+        return redirect(url_for("project_edit"))
+    else:
+        abort(403)

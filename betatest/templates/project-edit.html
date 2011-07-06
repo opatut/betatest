@@ -1,7 +1,7 @@
 {% extends "project.html" %}
 
 {% block project_details %}
-	<form method="post" action="{{ url_for('project_edit', username = project.author.username, project = project.slug) }}">
+	<form method="post" action="{{ url_for('project_edit', username = project.author.username, project = project.slug, subpage = 'general') }}">
 	{{ form.hidden_tag() }}
 	<h2>General settings</h2>
 	<div class="box">
@@ -29,6 +29,28 @@
 			<input type="submit" value="Save changes" class="default" />
 		</p>
 	</div>
+	</form>
+	
+	<form action="{{ url_for('project_edit', username = project.author.username, project = project.slug, subpage = 'tags') }}" method="post">
+		{{ tag_form.hidden_tag() }}
+		<h2>Project tags</h2>
+		<div class="box">
+			<div class="box-content">
+				<p>
+					<span class="input-details">Applied tags:</span><br />
+					<ul class="tags">
+						{% for tag in project.tags %}
+							<li><span class="tag"><a href="/tags/{{tag.tag}}">{{ tag.tag }}</a></span><a 
+								href="{{ url_for('settings_tags_remove', tag = tag.tag) }}" class="delete"></a></li>
+						{% endfor %}
+					</ul>
+				</p>
+				<p>
+					<span class="input-details">Comma-separated list:</span><br />
+					{{ tag_form.tag(class="input-text", value="") }} <input class="button" type="submit" value="Add" />
+				</p>
+			</div>
+		</div>
 	</form>
 	
 	<hr class="fat"/>
