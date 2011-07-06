@@ -1,14 +1,14 @@
 {% extends "dashboard.html" %}
 
 {% block buttons %}
-	<li><a href="/projects/new"><span class="icon-16 icon-16-add-project"></span>Create a project</a></li>
+    <li><a href="/projects/new"><span class="icon-16 icon-16-add-project"></span>Create a project</a></li>
 {% endblock %}
 
 {% block dashboard %}
 <div class="box-content">
-	{{ render_projects_list(projects) }}
+    {{ render_projects_list(projects) }}
 </div>
-<p class="form-buttons">	
-	<a href="#">show more &raquo;</a>
+<p class="form-buttons">
+    <a href="#">show more &raquo;</a>
 </p>
 {% endblock dashboard %}

@@ -1,60 +1,60 @@
 {% from "macros.html" import printTab, time, displayMessages, tagsList, render_projects_list, render_user_list with context %}
 <html>
-	<head>
-		<title>betatest » {% block pagetitle %}{% endblock %}</title>
-		<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
-		<link href="{{ url_for('static', filename='icons.css') }}" rel="stylesheet" type="text/css" />
-		<script src="{{ url_for('static', filename='jquery.js') }}"> </script>
-		<script src="{{ url_for('static', filename='jquery.autocomplete.js') }}"> </script>
-		
-		<script>
-			var $ROOT_PATH = {{ request.script_root|tojson|safe }};
-		</script>
-		
-		<script src="{{ url_for('static', filename='messages.js') }}"> </script>
-		<script src="{{ url_for('static', filename='tags.js') }}"> </script>
-	</head>
-	<body>
-		<div id="WRAPPER">
-			<div id="HEADER">
-				<div id="HEADER-TEXT"></div>
-			</div>
-			<div id="TAB-BAR">
-				<ul class="tabs hanging-tabs">
-					{% if session.logged_in %}
-						{% set l_user = g.usersession.getCurrentUser() %}
-						<li><a href="{{ l_user.url() }}"><img  width="14" height="14"
-						 id="tabbar-profile-icon" src="{{ l_user.getAvatar(14) }}"> {{ session.username }}</a></li>
-						
-						<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-						{% set inbox = g.usersession.getCurrentUser().getNewMessageCount() %}
-						<li><a href="{{ url_for('dashboard', page='messages') }}">Inbox{% if inbox %} <span id="inbox-count">{{ inbox }}</span>{% endif %}</a></li>
-						<li><a href="/settings">Account</a></li>
-						<li><a href="{{ url_for('logout') }}">Log Out</a></li>
-					{% else %}
-						<li><a href="{{ url_for('login') }}">Login</a></li>
-					{% endif %}
-				</ul>
-			</div>
-			<div id="SEARCH-BAR">
-				<form action="/search" method="get">
-					<input type="text" placeholder="Search..." name="q" {% if request.endpoint == "search" %}value="{{ request.args.get('q', '') }}" {% endif %}class="input-text search-text" size="40" />
-				</form>
-			</div>
-			
-			
-			<div id="CONTENT">
-				{% block content %}{% endblock %}
-			</div>
-			<div id="FOOTER">
-				<ul class="footer-links">
-					<li><a href="/about">About</a></li>
-					<li><a href="/contact">Contact</a></li>
-					<li><a href="/terms-of-service">Terms of Service</a></li>
-					<li><a href="/privacy">Privacy</a></li>
-					<li><a href="http://github.com/opatut/betatest" target="_blank">Development</a></li>
-				</ul>
-			</div>
-		</div>
-	</body>
+    <head>
+        <title>betatest » {% block pagetitle %}{% endblock %}</title>
+        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename='icons.css') }}" rel="stylesheet" type="text/css" />
+        <script src="{{ url_for('static', filename='jquery.js') }}"> </script>
+        <script src="{{ url_for('static', filename='jquery.autocomplete.js') }}"> </script>
+
+        <script>
+            var $ROOT_PATH = {{ request.script_root|tojson|safe }};
+        </script>
+
+        <script src="{{ url_for('static', filename='messages.js') }}"> </script>
+        <script src="{{ url_for('static', filename='tags.js') }}"> </script>
+    </head>
+    <body>
+        <div id="WRAPPER">
+            <div id="HEADER">
+                <div id="HEADER-TEXT"></div>
+            </div>
+            <div id="TAB-BAR">
+                <ul class="tabs hanging-tabs">
+                    {% if session.logged_in %}
+                        {% set l_user = g.usersession.getCurrentUser() %}
+                        <li><a href="{{ l_user.url() }}"><img  width="14" height="14"
+                         id="tabbar-profile-icon" src="{{ l_user.getAvatar(14) }}"> {{ session.username }}</a></li>
+
+                        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                        {% set inbox = g.usersession.getCurrentUser().getNewMessageCount() %}
+                        <li><a href="{{ url_for('dashboard', page='messages') }}">Inbox{% if inbox %} <span id="inbox-count">{{ inbox }}</span>{% endif %}</a></li>
+                        <li><a href="/settings">Account</a></li>
+                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div id="SEARCH-BAR">
+                <form action="/search" method="get">
+                    <input type="text" placeholder="Search..." name="q" {% if request.endpoint == "search" %}value="{{ request.args.get('q', '') }}" {% endif %}class="input-text search-text" size="40" />
+                </form>
+            </div>
+
+
+            <div id="CONTENT">
+                {% block content %}{% endblock %}
+            </div>
+            <div id="FOOTER">
+                <ul class="footer-links">
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/terms-of-service">Terms of Service</a></li>
+                    <li><a href="/privacy">Privacy</a></li>
+                    <li><a href="http://github.com/opatut/betatest" target="_blank">Development</a></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

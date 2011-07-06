@@ -1,81 +1,81 @@
 {% extends "base.html" %}
 
-{% block pagetitle %}Profile{% endblock %} 
+{% block pagetitle %}Profile{% endblock %}
 
 {% block content %}
-	{{ displayMessages() }}
-	<div class="profile">
-		<div class="icon">
-			<img width="64" height="64" src="{{ user.getAvatar(64) }}">
-		</div>
-		<div class="right">
-			
-			<ul class="tabs" style="float: right;">
-			{% if session.username == user.username %}
-				<li><a href="{{ url_for('settings') }}"><span class="icon-16 icon-16-edit"></span>Edit Profile</a></li>
-			{% else %}
-				<li><a href="{{ url_for('new_message', receiver = user.username ) }}"><span class="icon-16 icon-16-send-message"></span>Send message</a></li>
-			{% endif %}
-			</ul>
-			
-			<div class="username">
-				<h1>{{ user.username }}{% if user.realname %} <span class="realname">({{ user.realname }})</span>{% endif %}</h1>
-			</div>
-			<div class="columns">
-				<div class="box">
-					<h4>Details</h4>
-					<div class="box-content">
-						<table class="details">
-							<tr><th>Email</th><td>{{ user.email | mailto }}</td>
-							<tr><th>Member since</th><td>{{ time(user.registered_date) }}</td></tr>
-							{% if user.location %}<tr><th>Location</th><td>{{ user.location }}</td></tr>{% endif %}
-							{% if user.realname %}<tr><th>Real name</th><td>{{ user.realname }}</td></tr>{% endif %}
-							{% if user.website %}<tr><th>Website</th><td>{{ user.website | link(target="_blank") }}</td></tr>{% endif %}
-						</table>
-					</div>
-				</div>
-				<div class="columns-separator"></div>
-				<div class="box" style="width: 410px">
-					<h4>Reputation &amp; Rating</h4>
-					<div class="box-content">
-						<table class="details">
-							<tr><th>Speed</th><th><div class="progress-bar mini"><div class="progress-bar-inner" style="width: 70%"></div></div></th><td rowspan="4"><div class="profile-rating">9.0</div></td></tr>
-							<tr><th>Reports</th><th><div class="progress-bar mini"><div class="progress-bar-inner" style="width: 50%"></div></div></th></tr>
-							<tr><th>Friendly</th><th><div class="progress-bar mini"><div class="progress-bar-inner" style="width: 98%"></div></div></th></tr>
-							<tr><th>Activity</th><th><div class="progress-bar mini"><div class="progress-bar-inner" style="width: 60%"></div></div></th></tr>
-						</table>
-						
-					</div>
-				</div>
-			</div>
+    {{ displayMessages() }}
+    <div class="profile">
+        <div class="icon">
+            <img width="64" height="64" src="{{ user.getAvatar(64) }}">
+        </div>
+        <div class="right">
 
-			<div class="columns">
-				<div class="box">
-					<h4>Projects</h4>
-					<div class="box-content">
-						{{ render_projects_list(user.projects) }}
-					</div>
-				</div>
-				
-				<div class="columns-separator"></div>
-				
-				<div class="box" style="width: 160px;">
-					<h4>Favorite tags</h4>
-					<div class="box-content">
-						<p>
-							{{ tagsList(tags = user.tags) }}
-						</p>
-					</div>
-				</div>
-			</div>
-			
-			<div class="box">
-				<h4>Tested projects</h4>
-				<div class="box-content">
-					{{ render_projects_list(user.tested_projects, True) }}
-				</div>
-			</div>
-			
-		</div>
-	</div>
+            <ul class="tabs" style="float: right;">
+            {% if session.username == user.username %}
+                <li><a href="{{ url_for('settings') }}"><span class="icon-16 icon-16-edit"></span>Edit Profile</a></li>
+            {% else %}
+                <li><a href="{{ url_for('new_message', receiver = user.username ) }}"><span class="icon-16 icon-16-send-message"></span>Send message</a></li>
+            {% endif %}
+            </ul>
+
+            <div class="username">
+                <h1>{{ user.username }}{% if user.realname %} <span class="realname">({{ user.realname }})</span>{% endif %}</h1>
+            </div>
+            <div class="columns">
+                <div class="box">
+                    <h4>Details</h4>
+                    <div class="box-content">
+                        <table class="details">
+                            <tr><th>Email</th><td>{{ user.email | mailto }}</td>
+                            <tr><th>Member since</th><td>{{ time(user.registered_date) }}</td></tr>
+                            {% if user.location %}<tr><th>Location</th><td>{{ user.location }}</td></tr>{% endif %}
+                            {% if user.realname %}<tr><th>Real name</th><td>{{ user.realname }}</td></tr>{% endif %}
+                            {% if user.website %}<tr><th>Website</th><td>{{ user.website | link(target="_blank") }}</td></tr>{% endif %}
+                        </table>
+                    </div>
+                </div>
+                <div class="columns-separator"></div>
+                <div class="box" style="width: 410px">
+                    <h4>Reputation &amp; Rating</h4>
+                    <div class="box-content">
+                        <table class="details">
+                            <tr><th>Speed</th><th><div class="progress-bar mini"><div class="progress-bar-inner" style="width: 70%"></div></div></th><td rowspan="4"><div class="profile-rating">9.0</div></td></tr>
+                            <tr><th>Reports</th><th><div class="progress-bar mini"><div class="progress-bar-inner" style="width: 50%"></div></div></th></tr>
+                            <tr><th>Friendly</th><th><div class="progress-bar mini"><div class="progress-bar-inner" style="width: 98%"></div></div></th></tr>
+                            <tr><th>Activity</th><th><div class="progress-bar mini"><div class="progress-bar-inner" style="width: 60%"></div></div></th></tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="box">
+                    <h4>Projects</h4>
+                    <div class="box-content">
+                        {{ render_projects_list(user.projects) }}
+                    </div>
+                </div>
+
+                <div class="columns-separator"></div>
+
+                <div class="box" style="width: 160px;">
+                    <h4>Favorite tags</h4>
+                    <div class="box-content">
+                        <p>
+                            {{ tagsList(tags = user.tags) }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <h4>Tested projects</h4>
+                <div class="box-content">
+                    {{ render_projects_list(user.tested_projects, True) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
 {% endblock content %}

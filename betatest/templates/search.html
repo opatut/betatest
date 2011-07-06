@@ -5,54 +5,54 @@
 {% block content %}
     <h1>Search</h1>
     {{ displayMessages() }}
-    
+
     {% if queried %}
     {% set query = request.args.get("q","") %}
     <div class="columns">
-		{% if projects %}
-		<div class="box">
-			<h4>{{ projects | length }} Projects</h4>
-			<div class="box-content">
-				{{ render_projects_list(projects, True, highlight = query) }}
-			</div>
-		</div>
-		{% endif %}
-		
-		{% if projects and users %}<div class="columns-separator"></div>{% endif %}
-		
-		{% if users %}
-		<div class="box">
-			<h4>Users</h4>
-			{{ render_user_list(users, highlight = query) }}
-		</div>
-		{% endif %}
-		
-		{% if not projects and not users %}
-		<div class="box">
-			<h4>No results</h4>
-			<div class="box-content">
-				<p>Sorry, we found neither projects nor users matching your search for <b>{{ query }}</b>.</p>
-			</div>
-		</div>
-		{% endif %}
+        {% if projects %}
+        <div class="box">
+            <h4>{{ projects | length }} Projects</h4>
+            <div class="box-content">
+                {{ render_projects_list(projects, True, highlight = query) }}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if projects and users %}<div class="columns-separator"></div>{% endif %}
+
+        {% if users %}
+        <div class="box">
+            <h4>Users</h4>
+            {{ render_user_list(users, highlight = query) }}
+        </div>
+        {% endif %}
+
+        {% if not projects and not users %}
+        <div class="box">
+            <h4>No results</h4>
+            <div class="box-content">
+                <p>Sorry, we found neither projects nor users matching your search for <b>{{ query }}</b>.</p>
+            </div>
+        </div>
+        {% endif %}
     </div>
     {% else %}
     <div class="box" style="width: 40%; margin: 0 auto;">
-		<div class="box-content">
-			<form action="/search" method="get">
-				<input type="hidden" name="f" value="f" />
-			<p><input type="text" name="q" class="input-text" style="width: 100%"></p>
-			<p style="font-size: 8pt; color: #666;">
-				<input type="checkbox" checked="checked" name="p" style="vertical-align: -2px;" /> Search projects
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="checkbox" checked="checked" name="u" style="vertical-align: -2px;" /> Search users
-			</p>
-			</form>
-		</div>
-		<p class="form-buttons">
-			<input type="reset" value="Reset" />
-			<input type="submit" value="Search" class="default"/>
-		</p>
+        <div class="box-content">
+            <form action="/search" method="get">
+                <input type="hidden" name="f" value="f" />
+            <p><input type="text" name="q" class="input-text" style="width: 100%"></p>
+            <p style="font-size: 8pt; color: #666;">
+                <input type="checkbox" checked="checked" name="p" style="vertical-align: -2px;" /> Search projects
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" checked="checked" name="u" style="vertical-align: -2px;" /> Search users
+            </p>
+            </form>
+        </div>
+        <p class="form-buttons">
+            <input type="reset" value="Reset" />
+            <input type="submit" value="Search" class="default"/>
+        </p>
     </div>
     {% endif %}
 {% endblock %}

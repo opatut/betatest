@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
-{% block pagetitle %}Projects{% endblock %} 
+{% block pagetitle %}Projects{% endblock %}
 
 {% block content %}
-	<div class="profile">
-		<div class="icon">
-			<img width="64" height="64" src="{{ project.getIcon(64) }}" />
-		</div>
-		<div class="right">
-			
-			{% block project_buttons %}{% endblock %}
-			
-			<h1 class="project-title">{{ project.title }}
-			<span class="author">by <a href="{{ project.author.url() }}">{{ project.author.username }}</a></span></h1>
-			
-			{{ displayMessages() }}
-			
-			{% block project_details %}{% endblock %}
-		</div>
-	</div>
-	
+    <div class="profile">
+        <div class="icon">
+            <img width="64" height="64" src="{{ project.getIcon(64) }}" />
+        </div>
+        <div class="right">
+
+            {% block project_buttons %}{% endblock %}
+
+            <h1 class="project-title">{{ project.title }}
+            <span class="author">by <a href="{{ project.author.url() }}">{{ project.author.username }}</a></span></h1>
+
+            {{ displayMessages() }}
+
+            {% block project_details %}{% endblock %}
+        </div>
+    </div>
+
 {% endblock content %}

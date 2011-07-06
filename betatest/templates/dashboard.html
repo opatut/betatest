@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-{% block pagetitle %}Dashboard{% endblock %} 
+{% block pagetitle %}Dashboard{% endblock %}
 
 {% block content %}
-	<h1>Dashboard</h1>
-	{{ displayMessages() }}
-	<p>
-		
-		<ul class="tabs small-tabs" id="main-buttons" style="text-align: right; margin-bottom: -10px;">
-			{% block buttons %}{% endblock %}
-		</ul>
-		
-		<ul class="tabs standing-tabs" id="main-tabs">
-			{% for name, caption in [("projects","Your Projects"),("tested","Tested projects"),("messages","Messages"),("feedback","Feedback")] %}
-				{{ printTab("dashboard", name, caption) }}
-			{% endfor %}
-		</ul>
-		
-		<div class="box" style="border-top-left-radius: 0;" id="main-box">
-			{% block dashboard %}{% endblock %}
-		</div>
-	</p>
+    <h1>Dashboard</h1>
+    {{ displayMessages() }}
+    <p>
+
+        <ul class="tabs small-tabs" id="main-buttons" style="text-align: right; margin-bottom: -10px;">
+            {% block buttons %}{% endblock %}
+        </ul>
+
+        <ul class="tabs standing-tabs" id="main-tabs">
+            {% for name, caption in [("projects","Your Projects"),("tested","Tested projects"),("messages","Messages"),("feedback","Feedback")] %}
+                {{ printTab("dashboard", name, caption) }}
+            {% endfor %}
+        </ul>
+
+        <div class="box" style="border-top-left-radius: 0;" id="main-box">
+            {% block dashboard %}{% endblock %}
+        </div>
+    </p>
 {% endblock content %}

@@ -1,36 +1,36 @@
-{% extends "base.html" %}	
+{% extends "base.html" %}
 {% block pagetitle %}Login{% endblock %}
 {% block content %}
 
 {{ displayMessages() }}
 <p>
-	{% if not session.logged_in %}
-	<form action="{{ url_for('login') }}" method="post" class="login-form box">
-		<h4>Login</h4>
-		{{ form.hidden_tag() }}
-		<p>
-			{{ form.username.label }}{{ form.username(class="input-text") }}
-			<label> </label>{% for error in form.username.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
-		</p>
-		<p>
-			{{ form.password.label }}{{ form.password(class="input-password") }}<br />
-			<label> </label>{% for error in form.password.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
-		</p>
-		{% if error %}
-		<p>
-			<label> </label><span class="form-error">{{ error }}</p>
-		</p>
-		{% endif %}
-		<p class="form-buttons">			
-			<span style="font-size:8pt; float: left; text-align: left;">
-				Are you <a href="#">not registered</a> or <br /> did you <a href="#">forget your password</a>?
-			</span>
-			<input type="submit" value="Login">
-		</p>
-	</form>
-	{% else %}
-	You are already logged in!
-	<a href="{{ url_for('logout')}}" class="button">Logout</a>
-	{% endif %}
+    {% if not session.logged_in %}
+    <form action="{{ url_for('login') }}" method="post" class="login-form box">
+        <h4>Login</h4>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}{{ form.username(class="input-text") }}
+            <label> </label>{% for error in form.username.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}{{ form.password(class="input-password") }}<br />
+            <label> </label>{% for error in form.password.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </p>
+        {% if error %}
+        <p>
+            <label> </label><span class="form-error">{{ error }}</p>
+        </p>
+        {% endif %}
+        <p class="form-buttons">
+            <span style="font-size:8pt; float: left; text-align: left;">
+                Are you <a href="#">not registered</a> or <br /> did you <a href="#">forget your password</a>?
+            </span>
+            <input type="submit" value="Login">
+        </p>
+    </form>
+    {% else %}
+    You are already logged in!
+    <a href="{{ url_for('logout')}}" class="button">Logout</a>
+    {% endif %}
 </p>
 {% endblock %}
