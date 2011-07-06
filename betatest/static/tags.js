@@ -82,4 +82,16 @@ $.fn.tags = function() {
 
 $(document).ready(function() {
 	$('.tags').tags();
+	
+	a = $('.tags-autocomplete').autocomplete({ 
+		serviceUrl:'/ajax/tags/autocomplete',
+		minChars: 1, 
+		delimiter: /(,|;)\s*/,
+		maxHeight: 200,
+		zIndex: 9999,
+		noCache: false,
+		onSelect: function(value, data) { $(this).closest("form").submit(); }
+	});
+	a.enable();
+	
 });

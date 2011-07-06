@@ -52,5 +52,14 @@ $(document).ready(function() {
 	})
 	
 	$(".no-js-hide").css("visibility","visible");
+
+	$('.user-autocomplete').autocomplete({ 
+		serviceUrl:'/ajax/users/autocomplete',
+		minChars: 1, 
+		// delimiter: /(,|;)\s*/,
+		maxHeight: 200,
+		zIndex: 9999,
+		noCache: false
+	});
 	
 });

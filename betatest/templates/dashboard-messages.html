@@ -96,10 +96,10 @@
 		<div class="message-write">
 			<form class="message-new-form">
 				{{ form.hidden_tag() }}
-				<p>{{ form.receiver.label }}{{ form.receiver(class="input-text", value = receiver) }}</p>
+				<p>{{ form.receiver.label }}{{ form.receiver(class="input-text user-autocomplete", value = receiver) }}</p>
 				<p>{{ form.subject.label }}{{ form.subject(class="input-text") }}</p>
 				<p>{{ form.message(class="compose-message") }}</p>
-				<p><input type="submit" value="Send message" /></p>
+				<p align="right"><input type="submit" value="Send message" class="button default"/></p>
 			</form>
 		</div>
 	{% else %}
