@@ -1,11 +1,13 @@
 {% extends "project.html" %}
 
 {% block project_buttons %}
-    {% if user.username == project.author.username %}
-        <ul class="tabs" style="float: right;">
-            <li><a href="{{ url_for('project_edit', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-edit"></span>Edit Project</a></li>
-        </ul>
+<ul class="tabs" style="float: right;">
+    {% if session.username == project.author.username %}
+    <li><a href="{{ url_for('project_edit', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-edit"></span>Edit Project</a></li>
+    {% else  %}
+    <li><a href="{{ url_for('project_apply', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-door-in"></span>Send Application</a></li>
     {% endif %}
+</ul>
 {% endblock %}
 
 {% block project_details %}
@@ -32,22 +34,33 @@
         </div>
         <div class="columns-separator"></div>
         {% endif %}
-        <div class="box" style="width: 200px">
-            <h4>Testers</h4>
-            {% if testers %}
-                {{ render_user_list(project.testers) }}
-            {% else %}
-                {{ render_user_list(project.testers, 10) }}
-            {% endif %}
+        <div style="width: 200px">
+            <div class="box">
+                <h4>Testers</h4>
+                {% if testers %}
+                    {{ render_user_list(project.testers) }}
+                {% else %}
+                    {{ render_user_list(project.testers, 10) }}
+                {% endif %}
 
-            {% if not testers and project.testers | length > 10 %}
+                {% if not testers and project.testers | length > 10 %}
+                    <p class="form-buttons">
+                        <a class="button" href="{{ url_for('project_testers', username = project.author.username, project = project.slug) }}">Show all</a>
+                    </p>
+                {% elif testers %}
+                    <p class="form-buttons">
+                        <a class="button default" href="{{ project.url() }}">&laquo; Back to project</a>
+                    </p>
+                {% endif %}
+            </div>
+            {% if session.username == project.author.username and project.applications %}
+            <div class="box">
+                <h4>Applications</h4>
+                {{ render_user_list(project.getApplicants(), 10, href = url_for('project_application_details', username = project.author.username, project = project.slug, applicant = '{0}') ) }}
                 <p class="form-buttons">
-                    <a class="button" href="{{ url_for('project_testers', username = project.author.username, project = project.slug) }}">Show all</a>
+                    <a class="button" href="{{ url_for('project_applications', username = project.author.username, project = project.slug) }}">Show more &raquo;</a>
                 </p>
-            {% elif testers %}
-                <p class="form-buttons">
-                    <a class="button default" href="{{ project.url() }}">&laquo; Back to project</a>
-                </p>
+            </div>
             {% endif %}
         </div>
     </div>

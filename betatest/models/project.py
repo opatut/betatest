@@ -29,6 +29,7 @@ class Project(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     creation_date = db.Column(db.DateTime)
     testers = db.relationship("User", secondary = project_testers, backref = "tested_projects")
+    applications = db.relationship("Application", backref = "project")
 
     def __init__(self, title, description, author, homepage = ''):
         self.title = title
@@ -50,5 +51,11 @@ class Project(db.Model):
 
     def getIcon(self, size = 32):
         return "http://www.gravatar.com/avatar/{0}?s={1}&d=identicon".format(md5(self.slug).hexdigest(), size)
+        
+    def getApplicants(self):
+        applicants = []
+        for application in self.applications:
+            applicants.append(application.user)
+        return applicants
 
 
