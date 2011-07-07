@@ -46,12 +46,10 @@ class ApplicationStatus(Data):
 
     def _render(self):
         a = self.getApplication()
-        if self.status is "created":
-            return render_template("notifications/application_created.html", application = a, notification = self.notification)
-        elif self.status in ["accepted", "declined"]:
-            return render_template("notifications/application_created.html", application = a, notification = self.notification)
-
-            # return "Your application for " + a.project.title + " has been " + self.status
+        if self.status in ["created", "accepted", "declined"]:
+            return render_template("notifications/application_" + self.status + ".html",
+                application = a,
+                notification = self.notification)
         else:
             abort_reason(500, "Invalid status (%s) for ApplicationStatus in Notification." % self.status) # internal server error
 
