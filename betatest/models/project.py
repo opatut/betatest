@@ -30,6 +30,7 @@ class Project(db.Model):
     creation_date = db.Column(db.DateTime)
     testers = db.relationship("User", secondary = project_testers, backref = "tested_projects")
     applications = db.relationship("Application", backref = "project")
+    reports = db.relationship("Report", backref = "project")
 
     def __init__(self, title, description, author, homepage = ''):
         self.title = title

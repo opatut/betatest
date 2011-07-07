@@ -1,0 +1,15 @@
+{% extends "project.html" %}
+
+{% block project_buttons %}{% endblock %}
+
+{% block project_details %}
+<form action="{{ url_for('project_apply', username = project.author.username, project = project.slug) }}" method="post">
+<div class="box">
+    <h4>{{ report.subject }}</h4>
+    <div class="box-content">
+        <p>{{ report.report | markdown }}</p>
+    </div>
+</div>
+</form>
+{% endblock %}
+

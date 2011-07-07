@@ -133,3 +133,34 @@ def project_application_details(username, project, applicant):
         application_sender = models.user.User.query.filter_by(username = applicant).first_or_404()
         a = models.application.Application.query.filter_by(project_id = p.id, user_id = application_sender.id).first_or_404()
         return render_template("project-application-details.html", project = p, application = a)
+
+class ProjectReportForm(Form):
+    subject = TextField("Subject:", validators=[Required()])
+    report = TextAreaField("Your Report", validators=[Required()])
+
+@app.route("/<username>/<project>/report")
+def project_report(username, project):
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+    users = [p.testers]
+    users.append(u)
+    usersession.loginCheck(users)
+    form = ProjectReportForm()
+    
+    if form.validate_on_submit():
+        r = models.report.Report(form.report.data, form.subject.data, p.id)
+        db.session.commit()
+        flash("Report has ben successfully submited.", "success")
+        return redirect(p.url())
+    
+    return render_template("project-report.html", project = p, form = form)
+
+@app.route("/<username>/<project>/reports")
+def project_reports(username, project):
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+    users = [p.testers]
+    users.append(u)
+    usersession.loginCheck(users)
+    
+    return render_template("project-reports.html", project = p)

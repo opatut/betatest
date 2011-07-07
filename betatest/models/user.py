@@ -57,4 +57,3 @@ class User(db.Model):
     
     def hasAppliedForProject(self, id):
         return Application.query.filter_by(project_id = id, user_id = self.id).first() == None
-
