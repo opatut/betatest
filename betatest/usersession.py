@@ -23,7 +23,7 @@ def loginCheck(action = "error", # error | warning | none
     logged = getCurrentUser()
     if (logged == None) or (users and not logged in users):
         if action == "error":
-            abort(error_code)
+            abort_reason(error_code, warning_none if not users else warning_wrong)
         elif action == "warning":
             flash((warning_none if not users else warning_wrong), "warning")
         return False

@@ -1,0 +1,13 @@
+{% set icon_size = 24 %}
+<div class="icon">
+    <img width="{{ icon_size }}" height="{{ icon_size }}" src="{% block icon %}{% endblock %}" />
+</div>
+<div class="flags">
+    <a href="{{ url_for('delete_notification', id = notification.id) }}"><span class="icon-16 icon-16-delete"></span></a>
+</div>
+<div class="caption">
+    {% block caption %}{% endblock %}
+</div>
+<div class="text">
+    {% block text %}{% endblock %}
+</div>

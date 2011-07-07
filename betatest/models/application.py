@@ -14,12 +14,18 @@ class Application(db.Model):
         'read',
         'unread'
     ))
-    
+
     def __init__(self, project, text):
         self.project = project
         self.text = text
         self.creation_date = datetime.utcnow()
         self.status = 'unread'
-    
+
     def __repr__(self):
         return "<Application %r>" % self.id
+
+    def url(self):
+        return url_for('project_application_details',
+            username = self.project.author.username,
+            project = self.project.slug,
+            applicant = self.user.username)

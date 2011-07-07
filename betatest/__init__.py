@@ -14,6 +14,10 @@ app.config['SECRET_KEY'] = 'aio3ujhrsdflncm239mlehasudkj<bkm'
 db = SQLAlchemy(app)
 Markdown(app, safe_mode="escape")
 
+def abort_reason(code, reason):
+    session["abort_reason"] = reason
+    abort(code)
+
 from betatest.filters import *
 from betatest.models import *
 from betatest.usersession import *

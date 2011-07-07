@@ -1,0 +1,12 @@
+{% extends "notifications/base.html" %}
+
+{% block icon %}{{ application.project.getIcon(icon_size) }}{% endblock %}
+
+{% block caption %}
+    <a href="{{ application.user.url() }}">{{ application.user.username }}</a>
+    <span class="meta">applied for your project <a href="{{ application.project.url() }}">{{ application.project.title }}</a></span>
+{% endblock %}
+
+{% block text %}
+    <a href="{{ application.url() }}">View this application &raquo;</a>
+{% endblock %}

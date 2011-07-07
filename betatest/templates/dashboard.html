@@ -7,12 +7,12 @@
     {{ displayMessages() }}
     <p>
 
-        <ul class="tabs small-tabs" id="main-buttons" style="text-align: right; margin-bottom: -10px;">
+        <ul class="tabs small-tabs" id="main-buttons">
             {% block buttons %}{% endblock %}
         </ul>
 
         <ul class="tabs standing-tabs" id="main-tabs">
-            {% for name, caption in [("projects","Your Projects"),("tested","Tested projects"),("messages","Messages"),("feedback","Feedback")] %}
+            {% for name, caption in [("projects","Your Projects"),("tested","Tested projects"),("notifications","Notifications"),("messages","Messages"),("feedback","Feedback")] %}
                 {{ printTab("dashboard", name, caption) }}
             {% endfor %}
         </ul>

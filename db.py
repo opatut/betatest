@@ -16,25 +16,25 @@ db.session.add(zetaron)
 db.session.add(svenstaro)
 
 # create projects
-rgj_webapp = models.project.Project("RedditGameJam Web Application", 
-	"A helper webapp for organising the [reddit game jams](http://reddit.com/r/RedditGameJam).", 
-	opatut,
-	"http://redditgamejam.org")
-betatest = models.project.Project("Betatest Backend", 
-	"The betatest.net website really needs an analytics tool backend...", 
-	zetaron,
-	"http://betatest.net")
-spacegame = models.project.Project("Space game", 
-	"Awesome game. Just a space shooter.", 
-	opatut)
-ducttape = models.project.Project("Ducttape Game Engine", 
-	"The most awesome game engine. It's magic inside!", 
-	svenstaro,
-	"http://ducttape.org")
-	
-db.session.add(rgj_webapp)	
-db.session.add(betatest)	
-db.session.add(spacegame)	
+rgj_webapp = models.project.Project("RedditGameJam Web Application",
+        "A helper webapp for organising the [reddit game jams](http://reddit.com/r/RedditGameJam).",
+        opatut,
+        "http://redditgamejam.org")
+betatest = models.project.Project("Betatest Backend",
+        "The betatest.net website really needs an analytics tool backend...",
+        zetaron,
+        "http://betatest.net")
+spacegame = models.project.Project("Space game",
+        "Awesome game. Just a space shooter.",
+        opatut)
+ducttape = models.project.Project("Ducttape Game Engine",
+        "The most awesome game engine. It's magic inside!",
+        svenstaro,
+        "http://ducttape.org")
+
+db.session.add(rgj_webapp)
+db.session.add(betatest)
+db.session.add(spacegame)
 db.session.add(ducttape)
 
 # add some tags
@@ -91,13 +91,13 @@ msg_3 = models.message.Message("Message 3", '''
 ##### Fifth Headline
 ###### Sixth Headline
 
-This is a paragraph. It contains a [link](http://google.de) and also some escaped <html>. Furthermore, 
+This is a paragraph. It contains a [link](http://google.de) and also some escaped <html>. Furthermore,
 there is some ```inline-code```, some **bold** and *italic* text.
 
 1. This is a numbered list.
 
 3. It is numbered in order.
-    
+
     You can have paragraphs within it.
 
 6. It doesn't matter if you order it correct.
@@ -146,15 +146,26 @@ reply_3_3.reply = reply_3_4
 # add some applications
 application1 = models.application.Application(rgj_webapp, "I'd like to do this kind of stupid test job.")
 application1.user = zetaron
+db.session.add(application1)
 
 application2 = models.application.Application(rgj_webapp, "I'd like to do this kind of stupid test job.")
 application2.user = opatut
+db.session.add(application2)
 
 application3 = models.application.Application(betatest, "I'd like to do this kind of stupid test job.")
 application3.user = opatut
+db.session.add(application3)
 
 application4 = models.application.Application(betatest, "I'd like to do this kind of stupid test job.")
 application4.user = svenstaro
+db.session.add(application4)
+
+# some notifications
+status = models.notification.ApplicationStatus("accepted", application3)
+n1 = models.notification.Notification(opatut, status)
+db.session.add(n1)
+
 
 # close
 db.session.commit()
+

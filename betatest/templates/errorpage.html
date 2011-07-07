@@ -4,7 +4,6 @@
 
 {% block content %}
     <h1>{{ error.code }} - {{ error.name }}</h1>
-
     <div class="box">
     {% if error.code == 404 %}
         <h4>You've found a page that does not exist.</h4>
@@ -13,8 +12,25 @@
         </div>
     {% elif error.code == 403 %}
         We don't want you to see this.
+    {% elif error.code == 500 %}
+        <h4>497... 498... 499... 500. That means we failed!</h4>
+        <div class="box-content">
+            <p>We did something wrong. We're sorry, but what you did crashed our server. Kind of.</p>
+            <p>It might help to try <strong>it</strong> again - whatever "it" may be.</p>
+            <p>We don't know what really happened, but some internal server thing failed. You may want to
+            contact us and tell us what you did to make our service fail - this is probably the only way you can help at the moment.</p>
+        </div>
+        <p class="form-buttons no-js-hide">
+            <a href="#" onclick="javascript: location.reload(true)" class="button default" title="Refresh the page">I wanna try to try <i>it</i> again.</a>
+        </p>
     {% else %}
         Something wrong happened.
     {% endif %}
     </div>
+
+    {% if session.abort_reason %}
+    <p style="color: #666">
+        Details: {{ session.pop("abort_reason") }}
+    </p>
+    {% endif %}
 {% endblock %}

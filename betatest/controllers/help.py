@@ -14,8 +14,8 @@ def help(page = 'index'):
     if page in about_pages:
         filename = sys.path[0] + "/betatest/pages/" + page + ".md"
         if not os.path.isfile(filename):
-            abort(404)
+            abort_reason(404, "Help page not found.")
         md = file.read(open(filename , "r"))
         return render_template("static.html", title = about_pages[page], content = md)
     else:
-        abort(404)
+        abort_reason(404, "Invalid help page.")

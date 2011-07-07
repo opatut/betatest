@@ -40,11 +40,10 @@
                         {% set l_user = g.usersession.getCurrentUser() %}
                         <li><a href="{{ l_user.url() }}"><img  width="14" height="14"
                          id="tabbar-profile-icon" src="{{ l_user.getAvatar(14) }}"> {{ session.username }}</a></li>
-
                         <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
                         {% set inbox = g.usersession.getCurrentUser().getNewMessageCount() %}
                         <li><a href="{{ url_for('dashboard', page='messages') }}">Inbox{% if inbox %} <span id="inbox-count">{{ inbox }}</span>{% endif %}</a></li>
-                        <li><a href="/settings">Account</a></li>
+                        <li><a href="{{ url_for('dashboard', page='notifications') }}">Notifications</a></li>
                         <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                     {% else %}
                         <li><a href="{{ url_for('login') }}">Register</a></li>

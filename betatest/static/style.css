@@ -278,7 +278,7 @@ ul.tabs li {
 }
 
 .box p.form-buttons input,
-.box p.form-buttons a.button,
+a.button,
 input.button,
 ul.tabs li a {
     background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#DDD));
@@ -295,7 +295,7 @@ ul.tabs li a {
 }
 
 .box p.form-buttons input.red,
-.box p.form-buttons a.button.red,
+a.button.red,
 input.button.red,
 ul.tabs li a.red {
     background: -webkit-gradient(linear, left top, left bottom, from(#F00), to(#900));
@@ -306,7 +306,7 @@ ul.tabs li a.red {
 
 .box p.form-buttons input.default,
 input.button.default,
-.box p.form-buttons a.button.default {
+a.button.default {
     background: -webkit-gradient(linear, left top, left bottom, from(#9AF), to(#37F));
     border-color: #558;
     color: #FFF;
@@ -319,21 +319,21 @@ ul.tabs li a:hover {
 
 .box p.form-buttons input:hover,
 input.button:hover,
-.box p.form-buttons a.button:hover {
+a.button:hover {
     color: #222;
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
 
 .box p.form-buttons input.red:hover,
 input.button.red:hover,
-.box p.form-buttons a.button.red:hover {
+a.button.red:hover {
     color: #FFF;
     background: -webkit-gradient(linear, left top, left bottom, from(#F44), to(#C00));
 }
 
 .box p.form-buttons input.default:hover,
 input.button.default:hover,
-.box p.form-buttons a.button.default:hover {
+a.button.default:hover {
     color: #FFF;
     background: -webkit-gradient(linear, left top, left bottom, from(#ACF), to(#48F));
 }
@@ -492,6 +492,11 @@ ul.small-projects-list li div.title div.author {
     color: #666;
 }
 
+#main-buttons {
+    float: right;
+    margin-top: -3px;
+}
+
 
 
 #FOOTER {
@@ -531,19 +536,24 @@ form.login-form label {
     padding-right: 10px;
 }
 
+ul.notifications-list,
 ul.message-list-ul {
     list-style: none;
     padding: 0;
     margin: 10px;
 }
 
+ul.notifications-list > li,
 ul.message-list-ul > li {
     margin-top: 2px;
     background: #EEF;
     -webkit-transition: background 0.2s linear;
     padding: 4px 10px;
-    cursor: pointer;
     border-radius: 4px;
+}
+
+ul.message-list-ul > li {
+    cursor: pointer;
 }
 
 ul.message-list-ul li.unread {
@@ -568,16 +578,19 @@ ul.message-list-ul li .selection {
     margin-right: 5px;
 }
 
+ul.notifications-list li .flags,
 ul.message-list-ul li .flags {
     float: right;
     margin-top: 9px;
 }
 
+ul.notifications-list li .caption,
 ul.message-list-ul li .title {
     font-size: 11pt;
     font-weight: bold;
 }
 
+ul.notifications-list li .icon,
 ul.message-list-ul li .icon {
     float: left;
     margin-top: 3px;
@@ -589,11 +602,19 @@ ul.message-list-ul li .title {
     margin-right: 100px;
 }
 
+ul.notifications-list li .caption,
+ul.notifications-list li .text {
+    margin-left: 36px;
+    margin-right: 36px;
+}
+
+ul.notifications-list li .meta,
 ul.message-list-ul li .meta {
     font-size: 9pt;
     color: #888;
 }
 
+ul.notifications-list li .text,
 ul.message-list-ul li .message {
     color: #444;
     margin-top: 2px;

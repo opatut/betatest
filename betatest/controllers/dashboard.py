@@ -29,5 +29,17 @@ def dashboard(page = 'projects'):
     elif page == 'feedback':
         projects = models.project.Project.query.all()
         return render_template("dashboard-feedback.html", subpage = page, projects = projects)
+    elif page == 'notifications':
+        return render_template("dashboard-notifications.html", subpage = page)
 
+    return redirect(url_for("home"))
+
+@app.route("/dashboard/notifications/delete/<int:id>")
+def delete_notification(id):
+    flash("Todo: delete notification", "warning")
+    return redirect(url_for("home"))
+
+@app.route("/dashboard/notifications/delete_all")
+def delete_all_notifications():
+    flash("Todo: delete all notifications", "warning")
     return redirect(url_for("home"))

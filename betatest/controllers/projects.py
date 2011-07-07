@@ -82,7 +82,7 @@ def project_tags_remove(username, project, tag):
         flash("Removed tag successfully.")
         return redirect(url_for("project_edit", username = username, project = project))
     else:
-        abort(403)
+        abort_reason(403, "You are not the author of this project.")
 
 class ProjectApplicationForm(Form):
     text = TextAreaField("Your application letter", validators=[Required(message = "You need to write the application yourself :-P")])
@@ -147,14 +147,14 @@ def project_report(username, project):
     users.append(u)
     usersession.loginCheck(users)
     form = ProjectReportForm()
-    
+
     if form.validate_on_submit():
         r = models.report.Report(form.report.data, form.subject.data, p.id)
         db.session.add(r)
         db.session.commit()
         flash("Report has ben successfully submited.", "success")
         return redirect(url_for('project_reports', username = username, project = project))
-    
+
     return render_template("project-report.html", project = p, form = form)
 
 @app.route("/<username>/<project>/reports")
@@ -164,5 +164,5 @@ def project_reports(username, project):
     users = [p.testers]
     users.append(u)
     usersession.loginCheck(users)
-    
+
     return render_template("project-reports.html", project = p)

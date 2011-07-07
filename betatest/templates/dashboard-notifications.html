@@ -1,0 +1,25 @@
+{% extends "dashboard.html" %}
+
+{% block page_title %}{{ message.title }}{% endblock %}
+
+{% block buttons %}
+    <li><a href="{{ url_for('delete_all_notifications') }}"><span class="icon-16 icon-16-delete"></span>Delete all</a></li>
+{% endblock %}
+
+{% block dashboard %}
+
+    {% set notifications = g.usersession.getCurrentUser().notifications.all() %}
+    {% if not notifications %}
+    <div class="box-content">
+        <p>You don't have any notifications.</p>
+    </div>
+    {% else %}
+    <ul class="notifications-list">
+    {% for notification in notifications %}
+        <li>
+        {{ notification.render() | safe }}
+        </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}
