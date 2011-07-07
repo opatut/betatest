@@ -68,13 +68,13 @@
 {% endif %}
 {%- endmacro %}
 
-{% macro render_user_list(users, max = 0, highlight = '') -%}
+{% macro render_user_list(users, max = 0, highlight = '', href = '{0}') -%}
 <ul class="userlist">
     {% set counter = 0 %}
     {% for user in users if (counter < max or max == 0) %}
     {% set counter = counter + 1 %}
     <li>
-        <a href="{{ user.url() }}">
+        <a href="{% if href %}{{ href.replace('%7B0%7D', '{0}').format(user.username) }}{% else %}{{ user.url() }}{% endif %}">
             <div class="icon">
                 <img width="16" height="16" src="{{ user.getAvatar(16) }}" />
             </div>
