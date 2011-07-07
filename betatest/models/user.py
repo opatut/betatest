@@ -24,6 +24,7 @@ class User(db.Model):
     projects = db.relationship('Project', backref='author', lazy='dynamic')
     outbox = db.relationship('Message', backref='sender', lazy='dynamic', primaryjoin='Message.sender_id == User.id')
     inbox = db.relationship('Message', backref='receiver', lazy='dynamic', primaryjoin='Message.receiver_id == User.id')
+    user = db.relationship('Notification', backref = 'user', lazy = 'dynamic')
 
     def __init__(self, username, password, email, realname = '', location = '', website = ''):
         self.username = username
