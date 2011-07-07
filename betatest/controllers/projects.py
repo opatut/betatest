@@ -166,3 +166,14 @@ def project_reports(username, project):
     usersession.loginCheck(users)
     
     return render_template("project-reports.html", project = p)
+
+@app.route("/<username>/<project>/report/<int:id>")
+def project_report_details(username, project, id):
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+    users = [p.testers]
+    users.append(u)
+    usersession.loginCheck(users)
+    r = models.report.Report.query.filter_by(project_id = p.id, id = id).first_or_404()
+    
+    return render_template("project-report-details.html", project = p, report = r)

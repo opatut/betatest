@@ -7,7 +7,7 @@
 {% if project.reports %}
 {% for report in project.reports %}
 <div class="box">
-    <h4>{{ report.subject }}</h4>
+    <h4><a href="{{ url_for('project_report_details', username = project.author.username, project = project.slug, id = report.id) }}">{{ report.subject }}</a></h4>
     <div class="box-content">
         <p>{{ report.report | markdown }}</p>
     </div>

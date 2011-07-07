@@ -1,0 +1,14 @@
+{% extends "project.html" %}
+
+{% block project_buttons %}{% endblock %}
+
+{% block project_details %}
+<h2>{{ report.subject }}</h2>
+<div class="box">
+    <div class="box-content">
+        <p>{{ report.report | markdown }}</p>
+    </div>
+</div>
+{% endblock %}
+
+
