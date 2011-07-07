@@ -7,7 +7,9 @@
         <div class="icon">
             <img width="64" height="64" src="{{ project.getIcon(64) }}" />
             {% block project_links %}
+            {% if g.usersession.getCurrentUser() in project.testers or session.username == project.author.username %}
             <p><a href="{{ url_for('project_reports', username = project.author.username, project = project.slug) }}">({{ project.reports | length }}) Reports</a></p>
+            {% endif %}
             {% endblock %}
         </div>
         <div class="right">
