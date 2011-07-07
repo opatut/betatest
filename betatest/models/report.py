@@ -6,6 +6,7 @@ class Report(db.Model):
     report = db.Column(db.Text)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     
-    def __init__(self, report, project_id):
+    def __init__(self, report, subject, project_id):
         self.report = report
+        self.subject = subject
         self.project_id = project_id

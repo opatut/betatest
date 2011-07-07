@@ -6,12 +6,15 @@
     <div class="profile">
         <div class="icon">
             <img width="64" height="64" src="{{ project.getIcon(64) }}" />
+            {% block project_links %}
+            <p><a href="{{ url_for('project_reports', username = project.author.username, project = project.slug) }}">({{ project.reports | length }}) Reports</a></p>
+            {% endblock %}
         </div>
         <div class="right">
 
             {% block project_buttons %}{% endblock %}
 
-            <h1 class="project-title"><a class="h1" href="{{project.url()}}">{{ project.title }}</a>
+            <h1 class="project-title"><a class="h1" href="{{ project.url() }}">{{ project.title }}</a>
             <span class="author">by <a href="{{ project.author.url() }}">{{ project.author.username }}</a></span></h1>
 
             {{ displayMessages() }}

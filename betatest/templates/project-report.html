@@ -3,7 +3,7 @@
 {% block project_buttons %}{% endblock %}
 
 {% block project_details %}
-<form action="{{ url_for('project_apply', username = project.author.username, project = project.slug) }}" method="post">
+<form action="{{ url_for('project_report', username = project.author.username, project = project.slug) }}" method="post">
 <div class="box">
     <h4>{{ form.report.label }}</h4>
     <div class="box-content">

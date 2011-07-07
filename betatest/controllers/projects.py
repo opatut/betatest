@@ -139,7 +139,7 @@ class ProjectReportForm(Form):
     subject = TextField("Subject:", validators=[Required()])
     report = TextAreaField("Your Report", validators=[Required()])
 
-@app.route("/<username>/<project>/report")
+@app.route("/<username>/<project>/report", methods=["GET", "POST"])
 def project_report(username, project):
     u = models.user.User.query.filter_by(username = username).first_or_404()
     p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
@@ -150,9 +150,10 @@ def project_report(username, project):
     
     if form.validate_on_submit():
         r = models.report.Report(form.report.data, form.subject.data, p.id)
+        db.session.add(r)
         db.session.commit()
         flash("Report has ben successfully submited.", "success")
-        return redirect(p.url())
+        return redirect(url_for('project_reports', username = username, project = project))
     
     return render_template("project-report.html", project = p, form = form)
 
