@@ -14,8 +14,9 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
-h1 {
+h1, a.h1 {
     margin-bottom: 8px;
+    color: #444;
 }
 
 h2 {
@@ -100,14 +101,6 @@ textarea.compose-message {
     height: 200px;
 }
 
-input.search-text {
-    border-color: #e5e5e5;
-}
-
-input.search-text:focus {
-    border-color: #CCC;
-}
-
 input.form-error {
     border-color: #F00;
 }
@@ -154,13 +147,6 @@ ul.flash-messages {
     color: #00A;
     background: #CCF;
     border-color: #00A;
-}
-
-
-
-input.search-text {
-    background: #FFF url("search.png") 6px center no-repeat;
-    padding-left: 24px;
 }
 
 #WRAPPER {
@@ -239,7 +225,38 @@ input.search-text {
 }
 
 div#TAB-BAR {
-    text-align: right;
+    display: table;
+    width: 100%;
+    white-space:nowrap;
+}
+
+div#TAB-BAR > * {
+    display: table-cell;
+    vertical-align: top;
+    width: 100px;
+}
+
+div#SEARCH-BAR {
+    width: 100%;
+    padding: 0 3px;
+}
+
+input.search-text {
+    background: #FFF url("search.png") 6px center no-repeat;
+
+    padding: 2px 10px 2px 26px;
+
+    border-color: #e5e5e5;
+    width: 100%;
+    max-width: 300px;
+}
+
+input.search-text:focus {
+    border-color: #CCC;
+}
+
+div#TAB-BAR ul {
+    padding-top: 4px;
 }
 
 a img {
@@ -665,10 +682,6 @@ div.markdown h1 {
 .project-title .author {
     font-size: 0.7em;
     color: #666;
-}
-
-h1 {
-    color: #444;
 }
 
 .profile .username .realname {

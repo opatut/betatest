@@ -8,9 +8,9 @@ def new_project():
     return render_template("projects-new.html", subpage = "new")
 
 @app.route("/projects")
-@app.route("/projects/interesting")
-def projects():
-    return render_template("projects.html", subpage = "interesting", delete_tag_endpoint = 'project_tags_remove')
+@app.route("/projects/<tab>")
+def projects(tab = "list"):
+    return render_template("projects.html", subpage = tab, delete_tag_endpoint = 'project_tags_remove')
 
 @app.route("/<username>/<project>")
 def project(username, project):

@@ -11,7 +11,7 @@
 
             {% block project_buttons %}{% endblock %}
 
-            <h1 class="project-title">{{ project.title }}
+            <h1 class="project-title"><a class="h1" href="{{project.url()}}">{{ project.title }}</a>
             <span class="author">by <a href="{{ project.author.url() }}">{{ project.author.username }}</a></span></h1>
 
             {{ displayMessages() }}

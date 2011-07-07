@@ -3,15 +3,19 @@
 {% block pagetitle %}Home{% endblock %}
 
 {% block content %}
+    {% if source == "tag" %}
+    <h1>Tag: {{ tag.tag }}</h1>
+    {% else %}
     <h1>Search</h1>
+    {% endif %}
     {{ displayMessages() }}
 
-    {% if queried %}
+    {% if source %}
     {% set query = request.args.get("q","") %}
     <div class="columns">
         {% if projects %}
         <div class="box">
-            <h4>{{ projects | length }} Projects</h4>
+            <h4>{{ projects | length }} Project{% if projects | length != 1 %}s{% endif %} </h4>
             <div class="box-content">
                 {{ render_projects_list(projects, True, highlight = query) }}
             </div>
@@ -22,7 +26,7 @@
 
         {% if users %}
         <div class="box">
-            <h4>Users</h4>
+            <h4>{{ users | length }} User{% if users | length != 1 %}s{% endif %} </h4>
             {{ render_user_list(users, highlight = query) }}
         </div>
         {% endif %}
@@ -37,22 +41,22 @@
         {% endif %}
     </div>
     {% else %}
+    <form action="/search" method="get">
     <div class="box" style="width: 40%; margin: 0 auto;">
         <div class="box-content">
-            <form action="/search" method="get">
-                <input type="hidden" name="f" value="f" />
+            <input type="hidden" name="f" value="f" />
             <p><input type="text" name="q" class="input-text" style="width: 100%"></p>
             <p style="font-size: 8pt; color: #666;">
                 <input type="checkbox" checked="checked" name="p" style="vertical-align: -2px;" /> Search projects
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="checkbox" checked="checked" name="u" style="vertical-align: -2px;" /> Search users
             </p>
-            </form>
         </div>
         <p class="form-buttons">
             <input type="reset" value="Reset" />
             <input type="submit" value="Search" class="default"/>
         </p>
     </div>
+    </form>
     {% endif %}
 {% endblock %}

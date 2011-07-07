@@ -24,6 +24,18 @@
             </a>
             <div id="TAB-BAR">
                 <ul class="tabs hanging-tabs">
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('projects') }}">Projects</a></li>
+                </ul>
+
+                <div id="SEARCH-BAR">
+                    <form action="/search" method="get">
+                        <input type="text" placeholder="Search..." name="q" {% if request.endpoint == "search" %}value="{{ request.args.get('q', '') }}" {% endif %}class="input-text search-text" size="40" />
+                    </form>
+                </div>
+
+
+                <ul class="tabs hanging-tabs" style="text-align: right">
                     {% if session.logged_in %}
                         {% set l_user = g.usersession.getCurrentUser() %}
                         <li><a href="{{ l_user.url() }}"><img  width="14" height="14"
@@ -40,11 +52,6 @@
                     {% endif %}
                 </ul>
             </div>
-            <div id="SEARCH-BAR">
-                <form action="/search" method="get">
-                    <input type="text" placeholder="Search..." name="q" {% if request.endpoint == "search" %}value="{{ request.args.get('q', '') }}" {% endif %}class="input-text search-text" size="40" />
-                </form>
-            </div>
 
 
             <div id="CONTENT">
@@ -52,10 +59,11 @@
             </div>
             <div id="FOOTER">
                 <ul class="footer-links">
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                    <li><a href="/terms-of-service">Terms of Service</a></li>
-                    <li><a href="/privacy">Privacy</a></li>
+                    <li><a href="{{ url_for('help', page = 'about') }}">About</a></li>
+                    <li><a href="{{ url_for('help') }}">Help</a></li>
+                    <li><a href="{{ url_for('help', page = 'contact') }}">Contact</a></li>
+                    <li><a href="{{ url_for('help', page = 'tos') }}">Terms of Service</a></li>
+                    <li><a href="{{ url_for('help', page = 'privacy') }}">Privacy</a></li>
                     <li><a href="http://github.com/opatut/betatest" target="_blank">Development</a></li>
                 </ul>
             </div>

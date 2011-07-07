@@ -8,12 +8,13 @@ about_pages = {
     "privacy"    : "Privacy",
 }
 
-@app.route("/about")
 @app.route("/help")
 @app.route("/help/<path:page>")
-def help(page = 'about'):
+def help(page = 'index'):
     if page in about_pages:
         filename = sys.path[0] + "/betatest/pages/" + page + ".md"
+        if not os.path.isfile(filename):
+            abort(404)
         md = file.read(open(filename , "r"))
         return render_template("static.html", title = about_pages[page], content = md)
     else:
