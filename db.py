@@ -142,5 +142,19 @@ reply_3_1.reply = reply_3_2
 reply_3_2.reply = reply_3_3
 reply_3_3.reply = reply_3_4
 
+
+# add some applications
+application1 = models.application.Application(rgj_webapp, "I'd like to do this kind of stupid test job.")
+application1.user = zetaron
+
+application2 = models.application.Application(rgj_webapp, "I'd like to do this kind of stupid test job.")
+application2.user = opatut
+
+application3 = models.application.Application(betatest, "I'd like to do this kind of stupid test job.")
+application3.user = opatut
+
+application4 = models.application.Application(betatest, "I'd like to do this kind of stupid test job.")
+application4.user = svenstaro
+
 # close
 db.session.commit()

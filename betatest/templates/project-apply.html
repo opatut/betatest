@@ -1,0 +1,20 @@
+{% extends "project.html" %}
+
+{% block project_buttons %}{% endblock %}
+
+{% block project_details %}
+<form action="{{ url_for('project_apply', username = project.author.username, project = project.slug) }}" method="post">
+<div class="box">
+    <h4>{{ form.text.label }}</h4>
+    <div class="box-content">
+        {{ form.hidden_tag() }}
+        {% for error in form.text.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+        <p>{{ form.text(class="compose-message") }}</p>
+    </div>
+    <p class="form-buttons">
+        <span style="float: left;">Parsed with <a href="/help/messages/compose">Markdown</a></span>
+        <input type="submit" value="Send Application" class="button default" />
+    </p>
+</div>
+</form>
+{% endblock %}
