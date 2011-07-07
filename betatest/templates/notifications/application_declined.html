@@ -1,0 +1,12 @@
+{% extends "notifications/base.html" %}
+
+{% block icon %}{{ application.project.getIcon(icon_size) }}{% endblock %}
+
+{% block caption %}
+    <a href="{{ application.project.author.url() }}">{{ application.project.author.username }}</a>
+    <span class="meta">declined your application for <a href="{{ application.project.url() }}">{{ application.project.title }}</a></span>
+{% endblock %}
+
+{% block text %}
+    <a href="{{ url_for('new_message', receiver = application.project.author.username) }}">Write a message &raquo;</a>
+{% endblock %}

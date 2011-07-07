@@ -161,7 +161,7 @@ application4.user = svenstaro
 db.session.add(application4)
 
 # some notifications
-status = models.notification.ApplicationStatus("accepted", application3)
+status = models.notification.ApplicationStatus("declined", application3)
 n1 = models.notification.Notification(opatut, status)
 db.session.add(n1)
 

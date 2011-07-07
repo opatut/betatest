@@ -36,10 +36,24 @@ def dashboard(page = 'projects'):
 
 @app.route("/dashboard/notifications/delete/<int:id>")
 def delete_notification(id):
-    flash("Todo: delete notification", "warning")
-    return redirect(url_for("home"))
+    n = models.notification.Notification.query.filter_by(id = id).first_or_404()
+    usersession.loginCheck("error", users = [n.user])
+    db.session.delete(n)
+    db.session.commit()
+    flash("Deleted notification.", "success")
+    return redirect(url_for("dashboard", page = "notifications"))
 
 @app.route("/dashboard/notifications/delete_all")
 def delete_all_notifications():
-    flash("Todo: delete all notifications", "warning")
-    return redirect(url_for("home"))
+    if not usersession.loginCheck("warning"):
+        return redirect(url_for("login"))
+    nots = usersession.getCurrentUser().notifications
+    count = len(nots.all())
+    for n in nots:
+        db.session.delete(n)
+    db.session.commit()
+    if count > 0:
+        flash("Deleted all %s notifications." % count, "success")
+    else:
+        flash("You had no notifications to delete.", "info")
+    return redirect(url_for("dashboard", page = "notifications"))
