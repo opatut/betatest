@@ -36,3 +36,5 @@ class Notification(db.Model):
         self.text = text
         self.object = object
 
+    def __repr__(self):
+        return "<Notification %s>" % self.id

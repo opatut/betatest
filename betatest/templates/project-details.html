@@ -5,7 +5,9 @@
     {% if session.username == project.author.username %}
     <li><a href="{{ url_for('project_edit', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-edit"></span>Edit Project</a></li>
     {% else  %}
+    {% if g.usersession.getCurrentUser().hasAppliedForProject(project.id) %}
     <li><a href="{{ url_for('project_apply', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-door-in"></span>Send Application</a></li>
+    {% endif %}
     {% endif %}
 </ul>
 {% endblock %}

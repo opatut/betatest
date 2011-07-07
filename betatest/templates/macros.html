@@ -68,7 +68,7 @@
 {% endif %}
 {%- endmacro %}
 
-{% macro render_user_list(users, max = 0, highlight = '', href = '{0}') -%}
+{% macro render_user_list(users, max = 0, highlight = '', href = '') -%}
 <ul class="userlist">
     {% set counter = 0 %}
     {% for user in users if (counter < max or max == 0) %}

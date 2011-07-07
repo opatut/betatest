@@ -1,5 +1,6 @@
 from betatest import *
 from betatest.models.project import Project
+from betatest.models.application import Application
 import re
 
 def isBlockedUsername(u):
@@ -54,4 +55,7 @@ class User(db.Model):
 
     def findProject(self, slug):
         return Project.query.filter_by(slug = slug.lower(), author_id = self.id).first()
+
+    def hasAppliedForProject(self, id):
+        return Application.query.filter_by(project_id = id, user_id = self.id).first() == None
 
