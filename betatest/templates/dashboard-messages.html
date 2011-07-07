@@ -41,6 +41,11 @@
         </form>
     </div>
     {% elif messages %}
+    {% if not messages.all() %}
+    <div class="box-content">
+        <p>You do not have any messages in your inbox.</p>
+    </div>
+    {% else %}
     <form class="message-list-form" method="post" action="{{ url_for('message_action') }}">
         <ul class="message-list-ul">
         {% for message in messages %}
@@ -96,6 +101,7 @@
             <input type="submit" name="markread" value="Mark as read" class="default"/>
         </p>
     </form>
+    {% endif %}
     {% elif newmessage %}
         <h2>Compose a message</h2>
         <div class="message-write">

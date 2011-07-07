@@ -49,7 +49,7 @@ def new_message(receiver = ''):
         db.session.add(m)
         db.session.commit()
         flash("Your message has been sent.")
-        return redirect(url_for("dashboard", subpage = "messages"))
+        return redirect(m.url())
 
     return render_template("dashboard-messages.html", subpage = 'messages', newmessage = True, form = form, receiver = receiver)
 
