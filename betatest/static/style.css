@@ -319,21 +319,21 @@ ul.tabs li a:hover {
 
 .box p.form-buttons input:hover,
 input.button:hover,
-.box p.form-buttons a:hover {
+.box p.form-buttons a.button:hover {
     color: #222;
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
 
 .box p.form-buttons input.red:hover,
 input.button.red:hover,
-.box p.form-buttons a.red:hover {
+.box p.form-buttons a.button.red:hover {
     color: #FFF;
     background: -webkit-gradient(linear, left top, left bottom, from(#F44), to(#C00));
 }
 
 .box p.form-buttons input.default:hover,
 input.button.default:hover,
-.box p.form-buttons a.default:hover {
+.box p.form-buttons a.button.default:hover {
     color: #FFF;
     background: -webkit-gradient(linear, left top, left bottom, from(#ACF), to(#48F));
 }
