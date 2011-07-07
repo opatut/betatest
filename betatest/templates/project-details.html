@@ -3,7 +3,7 @@
 {% block project_buttons %}
 <ul class="tabs" style="float: right;">
     {% if g.usersession.getCurrentUser() in project.testers or g.usersession.getCurrentUser().username == project.author.username %}
-    <li><a href="{{ url_for('project_report', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-new-report"></span>Write Report</a></li>
+    <li><a href="{{ url_for('project_report', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-report-add"></span>Write Report</a></li>
     {% endif %}
     
     {% if session.username == project.author.username %}
