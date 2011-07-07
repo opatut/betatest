@@ -25,6 +25,7 @@ class User(db.Model):
     projects = db.relationship('Project', backref='author', lazy='dynamic')
     outbox = db.relationship('Message', backref='sender', lazy='dynamic', primaryjoin='Message.sender_id == User.id')
     inbox = db.relationship('Message', backref='receiver', lazy='dynamic', primaryjoin='Message.receiver_id == User.id')
+    user = db.relationship('Notification', backref = 'user', lazy = 'dynamic')
     applications = db.relationship('Application', backref='user')
 
     def __init__(self, username, password, email, realname = '', location = '', website = ''):
@@ -54,6 +55,6 @@ class User(db.Model):
 
     def findProject(self, slug):
         return Project.query.filter_by(slug = slug.lower(), author_id = self.id).first()
-    
+
     def hasAppliedForProject(self, id):
         return Application.query.filter_by(project_id = id, user_id = self.id).first() == None

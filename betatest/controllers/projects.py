@@ -16,7 +16,7 @@ def projects(tab = "list"):
 @app.route("/<username>/<project>")
 def project(username, project):
     u = models.user.User.query.filter_by(username = username).first_or_404()
-    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()    
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
     return render_template("project-details.html", user = u, project = p)
 
 @app.route("/<username>/<project>/testers")
@@ -88,7 +88,7 @@ class ProjectApplicationForm(Form):
     text = TextAreaField("Your application letter", validators=[Required(message = "You need to write the application yourself :-P")])
 
 @app.route("/<username>/<project>/apply", methods=["GET", "POST"])
-def project_apply(username, project):    
+def project_apply(username, project):
     if not usersession.loginCheck("warning"):
         return redirect(url_for('login', next = url_for('project_apply', username = username, project = project)))
 
@@ -96,8 +96,9 @@ def project_apply(username, project):
     user = usersession.getCurrentUser()
     u = models.user.User.query.filter_by(username = username).first_or_404()
     p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+
     a = models.application.Application.query.filter_by(user_id = user.id, project_id = p.id).first()
-    
+
     if a:
         if a.status == 'unread':
             flash("You allready have applied for this project.", "error")
@@ -105,7 +106,7 @@ def project_apply(username, project):
         elif a.status == 'accepted':
             flash("You are allready tester of this project.", "error")
             return redirect(p.url())
-    
+
     if form.validate_on_submit():
         if user.username == u.username:
             flash("You can't apply to your own project.", "error")
@@ -123,7 +124,7 @@ def project_applications(username, project, applicant = None):
     usersession.loginCheck(users = [u])
     p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
     return render_template("project-applications.html", project = p)
-        
+
 
 @app.route("/<username>/<project>/applications/<applicant>")
 def project_application_details(username, project, applicant):
