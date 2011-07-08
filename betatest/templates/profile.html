@@ -56,7 +56,8 @@
                         {{ render_projects_list(user.projects) }}
                     </div>
                 </div>
-
+                
+                {% if user.tags %}
                 <div class="columns-separator"></div>
 
                 <div class="box" style="width: 160px;">
@@ -67,6 +68,7 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
             </div>
 
             <div class="box">
