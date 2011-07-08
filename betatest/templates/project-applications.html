@@ -3,28 +3,33 @@
 {% block project_buttons %}{% endblock %}
 
 {% block project_details %}
-{% for application in project.applications %}
 <div class="box">
-    <h4>About the user</h4>
-    <div class="box-content">
-        <table class="details">
-            <tr>
-                <th>Username</th>
-                <td>{{ application.user.username }}</td>
-            </tr>
-            <tr>
-                <th>Realname</th>
-                <td>{{ application.user.realname }}</td>
-            </tr>
-        </table>
-    </div>
+    <h4>Tester applications</h4>
+    <ul class="notifications-list">
+    {% for application in project.applications %}
+        <li>
+            {% set icon_size = 24 %}
+            <div class="icon">
+                <a href="{{ application.user.url() }}" class="tooltip" title="View the profile of {{ application.user.username }}">
+                <img width="{{ icon_size }}" height="{{ icon_size }}" src="{{ application.user.getAvatar(icon_size) }}" />
+                </a>
+            </div>
+            <div class="flags">
+                <a href="{{ application.url() }}" title="Show application details"><span class="icon-16 icon-16-more"></span></a>
+            </div>
+            <div class="caption">
+                <a href="{{ application.user.url() }}">{{ application.user.username }}</a>
+                <span class="meta">applied {{ time(application.creation_date) }}:</span>
+            </div>
+            <div class="text">
+                <a href="{{ application.url() }}" class="tooltip" title="Show application details">
+                {{ application.text | markdown | striphtml | wordcrop(40) }}
+                </a>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+
 </div>
-<div class="box">
-    <h4>Application letter</h4>
-    <div class="box-content">
-        <p>{{ application.text | markdown}}</p>
-    </div>
-</div>
-{% endfor %}
 {% endblock %}
 

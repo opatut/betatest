@@ -537,6 +537,7 @@ form.login-form label {
 }
 
 ul.notifications-list,
+ul.applications-list,
 ul.message-list-ul {
     list-style: none;
     padding: 0;
@@ -544,6 +545,7 @@ ul.message-list-ul {
 }
 
 ul.notifications-list > li,
+ul.applications-list > li,
 ul.message-list-ul > li {
     margin-top: 2px;
     background: #EEF;
@@ -579,18 +581,21 @@ ul.message-list-ul li .selection {
 }
 
 ul.notifications-list li .flags,
+ul.applications-list li .flags,
 ul.message-list-ul li .flags {
     float: right;
     line-height: 42px;
 }
 
 ul.notifications-list li .caption,
+ul.applications-list li .caption,
 ul.message-list-ul li .title {
     font-size: 11pt;
     font-weight: bold;
 }
 
 ul.notifications-list li .icon,
+ul.applications-list li .icon,
 ul.message-list-ul li .icon {
     float: left;
     margin-top: 3px;
@@ -608,16 +613,28 @@ ul.notifications-list li .text {
     margin-right: 36px;
 }
 
+ul.applications-list li .caption,
+ul.applications-list li .text {
+    margin-left: 36px;
+    margin-right: 200px;
+}
+
 ul.notifications-list li .meta,
+ul.applications-list li .meta,
 ul.message-list-ul li .meta {
     font-size: 9pt;
     color: #888;
 }
 
 ul.notifications-list li .text,
+ul.applications-list li .text,
 ul.message-list-ul li .message {
     color: #444;
     margin-top: 2px;
+}
+
+ul.applications-list p {
+    margin: 0;
 }
 
 div.message-thread-participants {
@@ -739,6 +756,10 @@ table.details th {
     text-align: left;
     font-weight: normal;
     color: #888;
+}
+
+table.details p {
+    margin: 0;
 }
 
 table.details td,

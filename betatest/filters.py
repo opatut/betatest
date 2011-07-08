@@ -57,3 +57,9 @@ def search_highlight(s, q):
         return s
     s = re.sub("(" + q + ")", '<span class="highlight">\g<0></span>', s, flags = re.IGNORECASE)
     return Markup(s)
+
+
+@app.template_filter()
+def striphtml(s):
+    return re.sub("<[^>]*>", "", s)
+
