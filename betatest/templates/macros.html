@@ -1,3 +1,11 @@
+{% macro includeCSS(filename) %}
+        <link href="{{ url_for('static', filename='css/' + filename) }}" rel="stylesheet" type="text/css" />
+{% endmacro %}
+
+{% macro includeJS(filename) %}
+        <script src="{{ url_for('static', filename='js/' + filename) }}"> </script>
+{% endmacro %}
+
 {% macro printTab(mainpage, name, caption, icon) -%}
     <li {% if name == subpage %}class="current"{% endif %}><a href="/{{mainpage}}/{{ name }}">{% if icon %}<span class="icon-16 icon-16-{{ icon }}"></span>{% endif %}{{ caption }}</a></li>
 {%- endmacro %}
