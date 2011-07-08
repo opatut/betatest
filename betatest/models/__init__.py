@@ -5,3 +5,4 @@ import project
 import report
 import tag
 import user
+import messagethread

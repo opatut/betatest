@@ -7,30 +7,42 @@
 {% endblock %}
 
 {% block dashboard %}
-    {% if message %}
-    <h2>{{ message.title }}</h2>
+    {% if thread %}
+
+    <div class="columns">
+        <h2 style="min-width: 400px;">
+            {{ thread.subject }}
+        </h2>
+        <div class="column-separator"></div>
+        <div class="icon message-thread-participants">
+            {% for p in thread.participants %}
+            <a href="{{ p.url() }}" title="{{ p.username }}"><img width="16" height="16" src="{{ p.getAvatar(16) }}" /></a>
+            {% endfor %}
+        </div>
+    </div>
+    <hr />
     <div class="message-thread">
-        {% for entry in message.getCompleteThread() %}
-        <a name="reply-{{ entry.id }}"></a>
+        {% for message in thread.messages %}
+        <a name="reply-{{ message.id }}"></a>
         <div class="message">
             <div class="icon">
-                <img width="32" height="32" src="{{ entry.sender.getAvatar(32) }}">
+                <a href="{{ message.sender.url() }}"><img width="32" height="32" src="{{ message.sender.getAvatar(32) }}"></a>
             </div>
             <div class="right">
                 <div class="meta">
-                    <a class="author" href="{{ message.sender.url() }}">{{ entry.sender.username }}</a> said {{ time(entry.send_date) }}:
+                    <a class="author" href="{{ message.sender.url() }}">{{ message.sender.username }}</a> said {{ time(message.send_date) }}:
                 </div>
                 <div class="content markdown">
-                    {{ entry.message | markdown }}
+                    {{ message.message | markdown }}
                 </div>
             </div>
         </div>
-    {% endfor %}
+        {% endfor %}
     </div>
     <h2>Reply</h2>
 
     <div class="message-write">
-        <form action="{{ url_for('show_message', message_id = message.id) }}" method="post">
+        <form action="{{ url_for('show_message', thread_id = thread.id) }}" method="post">
             {{ form.hidden_tag() }}
             <p>
                 {{ form.message(class="compose-message") }}
@@ -40,17 +52,17 @@
             <input type="submit" value="Send reply" class="button default">
         </form>
     </div>
-    {% elif messages %}
-    {% if not messages.all() %}
+    {% elif threads %}
+    {% if not threads %}
     <div class="box-content">
         <p>You do not have any messages in your inbox.</p>
     </div>
     {% else %}
     <form class="message-list-form" method="post" action="{{ url_for('message_action') }}">
         <ul class="message-list-ul">
-        {% for message in messages %}
-        {% set is_sender = session.username == message.sender.username %}
-        {% set read = (message.isread or is_sender) %}
+        {% for thread in threads %}
+        {% set read = not (c_user in thread.users_unread) %}
+        {% set message = thread.messages[-1] %}
         <li{% if not read %} class="unread"{% endif %}>
             <div class="selection">
                 <input type="checkbox" class="selection" name="message-{{ message.id }}"/>
@@ -71,7 +83,7 @@
                 <a href="{{ message.url() }}" title="View thread"><span class="icon-16 icon-16-more"></span></a>
             </div>
             <div class="title">
-                <a class="message_title" href="{{ message.url() }}">{{ message.title }}</a>
+                <a class="message_title" href="{{ message.url() }}">{{ message.thread.subject }}</a>
                 <span class="meta">
                     {% if is_sender %}sent{%else%}received{%endif%}
                     {{ time(message.send_date, "send_date") }}
@@ -82,7 +94,7 @@
                         from <a class="sender" href="{{ message.sender.url() }}">{{ message.sender.username }}</a>
                     {%endif%}
 
-                    {% set replies = message.getCompleteThread() | length - 1 %}
+                    {% set replies = message.thread.messages | length - 1 %}
                     {% if replies > 0 %}| {{replies}} repl{%if replies == 1%}y{%else%}ies{%endif%}{%endif%}
                 </span>
             </div>

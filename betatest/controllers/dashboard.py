@@ -21,11 +21,7 @@ def dashboard(page = 'projects'):
         projects = models.project.Project.query.filter(models.project.Project.testers.contains(user) == True)
         return render_template("dashboard-projects.html", subpage = page, projects = projects)
     elif page == 'messages':
-        messages = models.message.Message.query.filter(db.and_(
-                db.or_(models.message.Message.receiver_id == user.id,
-                        models.message.Message.sender_id == user.id),
-                models.message.Message.reply == None)).order_by(models.message.Message.send_date.desc())
-        return render_template("dashboard-messages.html", subpage = page, messages = messages)
+        return render_template("dashboard-messages.html", subpage = page, threads = user.participating_message_threads)
     elif page == 'feedback':
         projects = models.project.Project.query.all()
         return render_template("dashboard-feedback.html", subpage = page, projects = projects)

@@ -23,8 +23,9 @@ class User(db.Model):
     email = db.Column(db.String(256), unique=True)
     registered_date = db.Column(db.DateTime)
     projects = db.relationship('Project', backref='author', lazy='dynamic')
-    outbox = db.relationship('Message', backref='sender', lazy='dynamic', primaryjoin='Message.sender_id == User.id')
-    inbox = db.relationship('Message', backref='receiver', lazy='dynamic', primaryjoin='Message.receiver_id == User.id')
+   # outbox = db.relationship('Message', backref='sender', lazy='dynamic', primaryjoin='Message.sender_id == User.id')
+   # inbox = db.relationship('Message', backref='receiver', lazy='dynamic', primaryjoin='Message.receiver_id == User.id')
+    sent_messages = db.relationship('Message', backref='sender', lazy='dynamic', primaryjoin='Message.sender_id == User.id')
     notifications = db.relationship('Notification', backref = 'user', lazy = 'dynamic')
     applications = db.relationship('Application', backref='user')
 
@@ -45,9 +46,8 @@ class User(db.Model):
 
     def getNewMessageCount(self):
         i = 0
-        for msg in self.inbox:
-            if not msg.isread and msg.reply == None:
-                i += 1
+        for msg in self.participating_message_threads:
+            i += 1
         return i
 
     def getAvatar(self, size = 32):

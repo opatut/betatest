@@ -56,7 +56,7 @@ $(document).ready(function() {
     $('.user-autocomplete').autocomplete({
         serviceUrl:'/ajax/users/autocomplete',
         minChars: 1,
-        // delimiter: /(,|;)\s*/,
+        delimiter: /\s*[^a-zA-Z0-9_-]+\s*/,
         maxHeight: 200,
         zIndex: 9999,
         noCache: false
