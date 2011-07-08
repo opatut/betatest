@@ -881,7 +881,7 @@ ul.tags li {
 }
 
 ul.tags li a.delete {
-    background: url("../gfx/icons/cross.png");
+    background: url("../gfx/icons/tag_delete_button.png");
     vertical-align: -2px;
     margin-left: 4px;
     width: 12px;
