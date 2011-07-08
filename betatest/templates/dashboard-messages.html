@@ -16,7 +16,7 @@
         <div class="column-separator"></div>
         <div class="icon message-thread-participants">
             {% for p in thread.participants %}
-            <a href="{{ p.url() }}" title="{{ p.username }}"><img width="16" height="16" src="{{ p.getAvatar(16) }}" /></a>
+            <a class="tooltip" href="{{ p.url() }}" title="{{ p.username }}"><img width="16" height="16" src="{{ p.getAvatar(16) }}" /></a>
             {% endfor %}
         </div>
     </div>
@@ -75,6 +75,13 @@
                 {% endif %}
             </div>
             <div class="flags">
+                <div class="icon message-list-participants">
+                    {% set count = 0 %}
+                    {% for p in thread.participants if not p == message.sender if count < 5 %}
+                    {% set count = count + 1 %}
+                    <a href="{{ p.url() }}" title="{{ p.username }}" class="tooltip"><img width="16" height="16" src="{{ p.getAvatar(16) }}" /></a>
+                    {% endfor %}
+                </div>
                 {% if read %}
                 <span title="Read" class="icon-16 icon-16-old-message"></span>
                 {% else %}

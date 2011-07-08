@@ -581,7 +581,7 @@ ul.message-list-ul li .selection {
 ul.notifications-list li .flags,
 ul.message-list-ul li .flags {
     float: right;
-    margin-top: 9px;
+    line-height: 42px;
 }
 
 ul.notifications-list li .caption,
@@ -624,8 +624,13 @@ div.message-thread-participants {
     text-align: right;
     padding-right: 20px;
 }
+
 div.message-thread-participants img {
     margin-bottom: 3px;
+}
+
+div.message-list-participants {
+    margin-right: 10px;
 }
 
 div.message-thread div.message {
@@ -649,7 +654,7 @@ div.message-thread div.message div.meta {
 
 div.message-thread div.message div.meta a.author {
     font-size: 11pt;
-}
+}+
 
 div.message-write {
     margin: 20px 80px;
@@ -951,4 +956,20 @@ ul.message-list-ul li .message *  {
     background: none;
     letter-spacing: 0;
     line-height: 1.3em;
+}
+
+#tooltip {
+    position: absolute;
+    z-index: 3000;
+    border: 1px solid #000;
+    background-color: rgba(0,0,0,0.9);
+    border-radius: 5px;
+    padding: 5px 10px;
+    opacity: 0.85;
+    color: #FFF;
+}
+#tooltip h3, #tooltip div {
+    font-size: 8pt;
+    font-weight: normal;
+    margin: 0;
 }

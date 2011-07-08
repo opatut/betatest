@@ -24,7 +24,7 @@ def show_message(thread_id):
     user = usersession.getCurrentUser()
 
     if user in thread.users_unread:
-        thread.users_unread.delete(user)
+        thread.users_unread.remove(user)
         db.session.commit()
 
     if form.validate_on_submit():
