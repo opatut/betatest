@@ -19,6 +19,6 @@ zetaron
     - registration
   - TRAY
     - test reports
-    - tester applications accept / decline
+    - tester applications accept / decline (remember the links in the application list)
     - inbox count auto refresh [AJAX]
     - inbox filter / search [JS]
