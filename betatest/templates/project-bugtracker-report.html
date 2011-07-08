@@ -1,0 +1,22 @@
+{% extends "project.html" %}
+
+{% block project_buttons %}{% endblock %}
+
+{% block project_details %}
+<form action="{{ url_for('project_bugtracker_report', username = project.author.username, project = project.slug) }}" method="post">
+<div class="box">
+    <h4>Bug report</h4>
+    <div class="box-content">
+        {{ form.hidden_tag() }}
+        <p>{{ form.subject.label }}{{ form.subject(class="input-text") }}{% for error in form.subject.errors %}<div class="form-error">{{ error }}</div>{% endfor %}</p>
+        {% for error in form.text.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+        <p>{{ form.text(class="compose-message") }}</p>
+    </div>
+    <p class="form-buttons">
+        <span style="float: left;">Parsed with <a href="/help/messages/compose">Markdown</a></span>
+        <input type="submit" value="Report" class="button default" />
+    </p>
+</div>
+</form>
+{% endblock %}
+
