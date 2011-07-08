@@ -29,3 +29,6 @@ class Application(db.Model):
             username = self.project.author.username,
             project = self.project.slug,
             applicant = self.user.username)
+
+    def delete(self):
+        db.session.delete(self)

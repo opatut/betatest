@@ -52,11 +52,16 @@ class Project(db.Model):
 
     def getIcon(self, size = 32):
         return "http://www.gravatar.com/avatar/{0}?s={1}&d=identicon".format(md5(self.slug).hexdigest(), size)
-        
+
     def getApplicants(self):
         applicants = []
         for application in self.applications:
             applicants.append(application.user)
         return applicants
 
-
+    def delete(self):
+        for report in self.reports:
+            report.delete()
+        for application in self.applications:
+            application.delete()
+        db.session.delete(self)

@@ -41,3 +41,6 @@ class Tag(db.Model):
             return t
         else:
             return None
+
+    def delete(self):
+        db.session.delete(self)

@@ -67,15 +67,21 @@
             </p>
         </div>
         <div class="columns-separator"></div>
-        <div class="box" style="width: 1px;">
-            <h4>Delete project</h4>
-            <div class="box-content">
-                <p>A deleted project cannot be recovered. Enter your password below if you are sure.</p>
-                <p><input type="password" class="input-password" style="width: 100%;" placeholder="Your password here..."/></p>
+        <div style="width: 1px;">
+            <form action="{{ url_for('delete_project', username = project.author.username, project = project.slug) }}" method="post">
+            <div class="box">
+                    {{ delete_form.hidden_tag() }}
+                    <h4>Delete project</h4>
+                    <div class="box-content">
+                        <p>A deleted project cannot be recovered. Enter your password below if you are sure.</p>
+                        <p>{{ delete_form.password(class="input-password", style="width: 100%;", placeholder="Your password here...") }}</p>
+                        {% for error in delete_form.password.errors %}<p><div class="form-error">{{ error }}</div></p>{% endfor %}
+                    </div>
+                    <p class="form-buttons">
+                        <input type="submit" class="red" value="Delete project" />
+                    </p>
             </div>
-            <p class="form-buttons">
-                <a href="#" class="button red">Delete project</a>
-            </p>
+            </form>
         </div>
     </div>
 {% endblock %}

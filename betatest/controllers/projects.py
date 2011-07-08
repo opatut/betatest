@@ -73,6 +73,7 @@ def project_edit(username, project, subpage = ''):
     p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
 
     tag_form = ChangeTagsForm()
+    delete_form = ProjectDeleteForm()
     form = ProjectEditForm()
     form.setProject(p)
 
@@ -95,7 +96,13 @@ def project_edit(username, project, subpage = ''):
         db.session.commit()
         flash("Added all tags.", "success")
 
-    return render_template("project-edit.html", user = u, project = p, form = form, tag_form = tag_form, tags = p.tags)
+    return render_template("project-edit.html",
+        user = u,
+        project = p,
+        form = form,
+        tag_form = tag_form,
+        delete_form = delete_form,
+        tags = p.tags)
 
 @app.route("/<username>/<project>/tags/remove/<tag>")
 def project_tags_remove(username, project, tag):
@@ -205,3 +212,28 @@ def project_report_details(username, project, id):
     r = models.report.Report.query.filter_by(project_id = p.id, id = id).first_or_404()
 
     return render_template("project-report-details.html", project = p, report = r)
+
+def is_user_password(form, field):
+    hash = sha512(field.data).hexdigest()
+    if hash != usersession.getCurrentUser().password:
+        raise ValidationError("That is not your password.")
+
+class ProjectDeleteForm(Form):
+    password = PasswordField("Password verification", validators=[is_user_password])
+
+@app.route("/<username>/<project>/delete", methods = ["POST"])
+def delete_project(username, project):
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+
+    usersession.loginCheck(users = [u])
+
+    form = ProjectDeleteForm()
+    if form.validate_on_submit():
+        p.delete()
+        db.session.commit()
+        flash("Too sad... your project has been deleted completely. It's gone now. Forever. :(", "success")
+        return redirect(url_for("dashboard"))
+    else:
+        flash("Your project has NOT been deleted. Your request failed.", "error")
+        return redirect(url_for("project_edit", username = username, project = project))

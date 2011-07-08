@@ -58,3 +58,12 @@ class User(db.Model):
 
     def hasAppliedForProject(self, id):
         return Application.query.filter_by(project_id = id, user_id = self.id).first() == None
+
+    def delete(self):
+        for project in self.projects:
+            project.delete()
+        for application in self.applications:
+            application.delete()
+        for notification in self.notifications:
+            notification.delete()
+        db.session.delete(self)

@@ -69,3 +69,6 @@ class Notification(db.Model):
 
     def __repr__(self):
         return "<Notification {0}:{1}>".format(self.user.username, self.id)
+
+    def delete(self):
+        db.session.delete(self)

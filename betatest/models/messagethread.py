@@ -38,3 +38,8 @@ class MessageThread(db.Model):
 
     def __repr__(self):
         return '<MessageThread: %r>' % self.id
+
+    def delete(self):
+        for message in self.messages:
+            message.delete()
+        db.session.delete(self)

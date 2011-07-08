@@ -18,3 +18,6 @@ class Message(db.Model):
 
     def url(self):
          return url_for('show_message', thread_id = self.thread_id) + "#reply-" + str(self.id)
+
+    def delete(self):
+        db.session.delete(self)
