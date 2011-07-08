@@ -10,28 +10,34 @@ def userlist_check(form, field):
 
 class NewMessageForm(Form):
     subject = TextField("Subject", validators=[Required(message = "Please enter a subject"), Length(max=255)])
-    receiver = TextField("Receiver", validators=[Required(message = "Please enter a receiver"), userlist_check])
+    receiver = TextField("Receiver", validators=[Required(message = "Please enter a receiver")])
     message = TextAreaField("Message", validators = [Required(message = "Please enter a message.")])
 
 class MessageReplyForm(Form):
     message = TextAreaField("Message", validators = [Required(message = "Please enter a message.")])
 
-@app.route("/dashboard/messages/<int:message_id>", methods = ["GET", "POST"])
-def show_message(message_id):
+@app.route("/dashboard/messages/<int:thread_id>", methods = ["GET", "POST"])
+def show_message(thread_id):
     form = MessageReplyForm()
-    msg = models.message.Message.query.filter_by(id = message_id).first_or_404()
-    usersession.loginCheck(users = [msg.receiver, msg.sender])
+    thread = models.messagethread.MessageThread.query.filter_by(id = thread_id).first_or_404()
+    usersession.loginCheck(users = thread.participants)
     user = usersession.getCurrentUser()
-    if user == msg.receiver:
-        msg.markRead(True)
+
+    if user in thread.users_unread:
+        thread.users_unread.delete(user)
+        db.session.commit()
+
     if form.validate_on_submit():
+        # reply
         text = form.message.data
-        m = models.message.Message(msg, text, user, (msg.sender if msg.receiver == user else msg.receiver))
+        m = models.message.Message(thread, text, user)
+        thread.users_unread = thread.participants
+        thread.markRead(user, True)
         db.session.add(m)
         db.session.commit()
-        flash("Your message has been sent.")
-        return redirect(url_for("show_message", message_id = message_id) + "#reply-" + str(m.id))
-    return render_template("dashboard-messages.html", subpage = 'messages', message = msg, form = form)
+        flash("Your reply has been sent.")
+        return redirect(url_for("show_message", thread_id = thread.id) + "#reply-" + str(m.id))
+    return render_template("dashboard-messages.html", subpage = 'messages', thread = thread, form = form)
 
 @app.route("/dashboard/messages/new", methods = ["GET", "POST"])
 @app.route("/<receiver>/contact", methods = ["GET", "POST"])
@@ -40,16 +46,36 @@ def new_message(receiver = ''):
         return redirect(url_for("login", next = url_for("new_message", receiver = receiver)))
 
     form = NewMessageForm()
+    c_user = usersession.getCurrentUser()
+
     if form.validate_on_submit():
         subject = form.subject.data
-        receiver = form.receiver.data
         text = form.message.data
-        r = models.user.User.query.filter_by(username = receiver).first_or_404()
-        m = models.message.Message(subject, text, usersession.getCurrentUser(), r)
-        db.session.add(m)
-        db.session.commit()
-        flash("Your message has been sent.")
-        return redirect(m.url())
+        receivers = []
+        error = False
+        for name in re.split("\s*[^a-zA-Z0-9_-]+\s*", form.receiver.data):
+            name = name.strip()
+            if name:
+                receiver = models.user.User.query.filter_by(username = name).first()
+                if receiver and receiver != c_user and not receiver in receivers:
+                    receivers.append(receiver)
+                elif not receiver:
+                    flash("The user %s cannot be found." % name, "error")
+                    error = True
+                    break
+        if len(receivers) == 0:
+            flash("You need at least one receiver.", "error")
+
+        if not error:
+            participants = receivers
+            participants.append(c_user)
+            thread = models.messagethread.MessageThread(subject, participants)
+            message = models.message.Message(thread, text, c_user)
+            db.session.add(thread)
+            db.session.add(message)
+            db.session.commit()
+            flash("Your message has been sent.", "success")
+            return redirect(message.url())
 
     return render_template("dashboard-messages.html", subpage = 'messages', newmessage = True, form = form, receiver = receiver)
 

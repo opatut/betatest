@@ -166,7 +166,7 @@ ul.flash-messages {
     box-shadow: 0 0 2px rgba(0,0,0,0.4) inset;
 }
 #HEADER-TEXT {
-    background: url("logo.png") left top no-repeat;
+    background: url("../gfx/logo.png") left top no-repeat;
     width: 615px;
     height: 100px;
 }
@@ -242,7 +242,7 @@ div#SEARCH-BAR {
 }
 
 input.search-text {
-    background: #FFF url("search.png") 6px center no-repeat;
+    background: #FFF url("../gfx/search.png") 6px center no-repeat;
 
     padding: 2px 10px 2px 26px;
 
@@ -620,6 +620,13 @@ ul.message-list-ul li .message {
     margin-top: 2px;
 }
 
+div.message-thread-participants {
+    text-align: right;
+    padding-right: 20px;
+}
+div.message-thread-participants img {
+    margin-bottom: 3px;
+}
 
 div.message-thread div.message {
     margin: 10px 20px;
@@ -812,7 +819,7 @@ ul.userlist li div.icon {
 }
 
 .progress-bar.rainbow .progress-bar-inner   {
-    background: url('progress.png');
+    background: url('../gfx/progress.png');
 }
 
 .profile-rating {
@@ -848,7 +855,7 @@ ul.tags li {
 }
 
 ul.tags li a.delete {
-    background: url("icons/cross.png");
+    background: url("../gfx/icons/cross.png");
     vertical-align: -2px;
     margin-left: 4px;
     width: 12px;

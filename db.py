@@ -71,8 +71,10 @@ spacegame.testers.append(zetaron)
 rgj_webapp.testers.append(zetaron)
 
 # create sample messages
-msg_1 = models.message.Message("Message 1", "Hi what's up?", opatut, zetaron)
-msg_2 = models.message.Message("Message 2", '''
+thread_1 = models.messagethread.MessageThread("Thread #1", [opatut, zetaron, svenstaro])
+
+msg_1 = models.message.Message(thread_1, "Hi what's up?", opatut)
+msg_2 = models.message.Message(thread_1, '''
 # What is this
 
 I think its a headline.
@@ -80,8 +82,8 @@ I think its a headline.
 ## Is it really?
 
 Yes it is!
-''', opatut, zetaron)
-msg_3 = models.message.Message("Message 3", '''
+''', zetaron)
+msg_3 = models.message.Message(thread_1, '''
 # Headline
 
 ## Second Headline
@@ -120,28 +122,14 @@ there is some ```inline-code```, some **bold** and *italic* text.
     def awesome():
         return "Markdown + Flask"
 
-Have fun with it!''', opatut, zetaron)
-msg_4 = models.message.Message("Message 4", "Good morning!", zetaron, opatut)
+Have fun with it!''', opatut)
+msg_4 = models.message.Message(thread_1, "That is a nice Markdown!", svenstaro)
 
-reply_3_1 = models.message.Message(msg_3, "Hello you!", zetaron, opatut)
-reply_3_2 = models.message.Message(msg_3, "I got your message.", opatut, zetaron)
-reply_3_3 = models.message.Message(msg_3, "What are you up to?", zetaron, opatut)
-reply_3_4 = models.message.Message(msg_3, "Can you please reply?!", opatut, zetaron)
-
+db.session.add(thread_1)
 db.session.add(msg_1)
 db.session.add(msg_2)
 db.session.add(msg_3)
 db.session.add(msg_4)
-db.session.add(reply_3_1)
-db.session.add(reply_3_2)
-db.session.add(reply_3_3)
-db.session.add(reply_3_4)
-
-msg_3.reply = reply_3_1
-reply_3_1.reply = reply_3_2
-reply_3_2.reply = reply_3_3
-reply_3_3.reply = reply_3_4
-
 
 # add some applications
 application1 = models.application.Application(rgj_webapp, "I'd like to do this kind of stupid test job.")
