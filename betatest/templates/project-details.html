@@ -44,6 +44,12 @@
                         <a class="button default" href="{{ project.url() }}">&laquo; Back to project</a>
                     </p>
                 {% endif %}
+
+                {% if not project.testers %}
+                <div class="box-content">
+                    <p>This project has no testers (yet).</p>
+                </div>
+                {% endif %}
             </div>
             {% if session.username == project.author.username and project.applications %}
             <div class="box">
@@ -60,7 +66,11 @@
     <div class="box">
         <h4>Description</h4>
         <div class="box-content markdown">
+            {% if project.description %}
             {{ project.description | markdown }}
+            {% else %}
+            This project has no description. {% if project.homepage %}You might find one on it's <a href="{{ project.homepage }}" target="_blank">homepage</a>.{% endif %}
+            {% endif %}
         </div>
     </div>
     {% endif %}

@@ -439,6 +439,7 @@ ul.projects-list li {
     padding: 10px;
     border-bottom: 1px solid #CCC;
     margin-left: 70px;
+    min-height: 60px;
 }
 
 ul.projects-list li:last-child {
@@ -784,7 +785,7 @@ div.markdown h1 {
 .profile .left .profile-links li a:hover {
     text-decoration: none;
     background: #ABF;
-    color: #fFF;
+    color: #FFF;
 }
 
 .profile .right {

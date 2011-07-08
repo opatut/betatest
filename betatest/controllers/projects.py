@@ -1,11 +1,36 @@
 from betatest import *
 
-@app.route("/projects/new")
+class UnusedProjectSlug(object):
+    def __init__(self, ignore_project = None):
+        self.ignore_project = ignore_project
+
+    def __call__(self, form, field):
+        user = usersession.getCurrentUser()
+        new_slug = models.project.titleToSlug(field.data)
+        project = user.findProject(new_slug)
+        # we have a project with that name
+        if project and (self.ignore_project == None or self.ignore_project != project):
+            raise ValidationError("You already have a project with a similar title. Please choose another one.")
+
+
+class NewProjectForm(Form):
+    title = TextField('Project title', validators = [Length(min = 6), Required(), UnusedProjectSlug()])
+
+@app.route("/projects/new", methods = ["POST", "GET"])
 def new_project():
     if not usersession.loginCheck("warning", warning_none = "Please log in to create a project."):
-        return redirect(url_for("login", next = url_for("new_project", receiver = receiver)))
+        return redirect(url_for("login", next = url_for("new_project")))
 
-    return render_template("projects-new.html", subpage = "new")
+    form = NewProjectForm()
+    if form.validate_on_submit():
+        user = usersession.getCurrentUser()
+        project = models.project.Project(form.title.data, "", user)
+        db.session.add(project)
+        db.session.commit()
+        flash("Your project has been created. You can now edit its details.", "success")
+        return redirect(url_for("project_edit", username = user.username, project = project.slug))
+
+    return render_template("projects-new.html", subpage = "new", form = form)
 
 @app.route("/projects")
 @app.route("/projects/<tab>")
@@ -26,9 +51,14 @@ def project_testers(username, project):
     return render_template("project-details.html", user = u, project = p, testers = True)
 
 class ProjectEditForm(Form):
-    title = TextField('Project title', validators = [Length(min = 6), Required()])
+    title = TextField('Project title', validators = [Length(min = 6), Required(), UnusedProjectSlug()])
     homepage = TextField('Homepage', validators = [Length(min = 6)])
     description = TextAreaField('Description')
+
+    def setProject(self, ignore_project):
+        for v in self.title.validators:
+            if type(v) == UnusedProjectSlug:
+                v.ignore_project = ignore_project
 
 class ChangeTagsForm(Form):
     tag = TextField("", validators=[Required()])
@@ -40,26 +70,24 @@ def project_edit(username, project, subpage = ''):
 
     usersession.loginCheck(users = [u])
 
-    tag_form = ChangeTagsForm()
-    form = ProjectEditForm()
     p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
 
-    if request.method == "POST" and subpage == "general" and form.validate_on_submit():
-        new_slug = models.project.titleToSlug(form.title.data)
-        if new_slug != p.slug and u.findProject(new_slug):
-            flash("You already have a project with a similar title. Please choose another one.", "error")
-        else:
-            p.title = form.title.data
-            p.slug = new_slug
-            p.homepage = form.homepage.data
-            p.description = form.description.data
-            db.session.commit()
-            flash("Your changes have been applied.", "success")
-            return redirect(p.url())
+    tag_form = ChangeTagsForm()
+    form = ProjectEditForm()
+    form.setProject(p)
+
+    if subpage == "general" and form.validate_on_submit():
+        p.title = form.title.data
+        p.slug = models.project.titleToSlug(form.title.data)
+        p.homepage = form.homepage.data
+        p.description = form.description.data
+        db.session.commit()
+        flash("Your changes have been applied.", "success")
+        return redirect(p.url())
     else:
         form.description.data = p.description
 
-    if request.method == "POST" and subpage == "tags" and tag_form.validate():
+    if subpage == "tags" and tag_form.validate_on_submit():
         for tag in re.split("\s*,\s*", tag_form.tag.data):
             t = models.tag.Tag.getTag(tag.strip())
             if not t in p.tags:
@@ -175,5 +203,5 @@ def project_report_details(username, project, id):
     users.append(u)
     usersession.loginCheck(users)
     r = models.report.Report.query.filter_by(project_id = p.id, id = id).first_or_404()
-    
+
     return render_template("project-report-details.html", project = p, report = r)

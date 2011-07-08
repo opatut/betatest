@@ -7,7 +7,9 @@
     <div class="box">
         <div class="box-content">
             <table class="details">
-                <tr><th>{{ form.title.label }}</th><td>{{ form.title(class="input-text", value = project.title) }}</td></tr>
+                <tr><th>{{ form.title.label }}</th><td>{{ form.title(class="input-text", value = project.title) }}
+                    {% for error in form.title.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+                </td></tr>
                 <tr><th>{{ form.homepage.label }}</th><td>{{ form.homepage(class="input-text", value = project.homepage) }}
                 <span class="input-details">Remember to prepend <b>http://</b> to your URL!</span>
                 </td></tr>

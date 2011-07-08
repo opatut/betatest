@@ -1,7 +1,15 @@
 {% extends "projects.html" %}
 
 {% block projects %}
-<p>
-    Form to create project... here!
-</p>
+<form method="post">
+    {{ form.hidden_tag() }}
+    <div class="box-content" style="padding: 30px; text-align: center;">
+        <p>Please enter a title for your new project:</p>
+        <p>{{ form.title(class="input-text", style="width: 60%") }}</p>
+        <p>{% for error in form.title.errors %}<div class="form-error">{{ error }}</div>{% endfor %}</p>
+    </div>
+    <p class="form-buttons">
+        <input type="submit" value="Create Project" class="default" />
+    </p>
+</form>
 {% endblock projects %}
