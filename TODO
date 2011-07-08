@@ -1,0 +1,24 @@
+opatut
+  - IN WORK
+    - tester applications style
+    - reports style
+    - home layout
+  - SOON
+    - "next" in login
+  - TRAY
+    - about pages, help, faq
+    - autocomplete: search bar
+    - add project
+    - project icons + more project settings
+    - feedback / reputation / rating
+
+zetaron
+  - IN WORK
+    - message read + unread + delete
+    - bugtracker
+    - registration
+  - TRAY
+    - test reports
+    - tester applications accept / decline
+    - inbox count auto refresh [AJAX]
+    - inbox filter / search [JS]
