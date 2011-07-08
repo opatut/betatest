@@ -5,18 +5,22 @@
 {% block content %}
     {{ displayMessages() }}
     <div class="profile">
-        <div class="icon">
-            <img width="64" height="64" src="{{ user.getAvatar(64) }}">
+        <div class="left">
+            <div class="icon">
+                <img width="64" height="64" src="{{ user.getAvatar(64) }}">
+            </div>
+
+            <ul class="profile-links">
+                {% if session.username == user.username %}
+                <li><a href="{{ url_for('settings') }}"><span class="icon-16 icon-16-edit"></span>Edit Profile</a></li>
+                {% else %}
+                <li><a href="{{ url_for('new_message', receiver = user.username ) }}"><span class="icon-16 icon-16-send-message"></span>Contact</a></li>
+                {% endif %}
+                {% block user_buttons %}{% endblock %}
+            </ul>
+
         </div>
         <div class="right">
-
-            <ul class="tabs" style="float: right;">
-            {% if session.username == user.username %}
-                <li><a href="{{ url_for('settings') }}"><span class="icon-16 icon-16-edit"></span>Edit Profile</a></li>
-            {% else %}
-                <li><a href="{{ url_for('new_message', receiver = user.username ) }}"><span class="icon-16 icon-16-send-message"></span>Send message</a></li>
-            {% endif %}
-            </ul>
 
             <div class="username">
                 <h1><a class="h1" href="{{ user.url() }}">{{ user.username }}</a>{% if user.realname %} <span class="realname">({{ user.realname }})</span>{% endif %}</h1>
@@ -56,7 +60,7 @@
                         {{ render_projects_list(user.projects) }}
                     </div>
                 </div>
-                
+
                 {% if user.tags %}
                 <div class="columns-separator"></div>
 
