@@ -338,6 +338,24 @@ a.button.default:hover {
     background: -webkit-gradient(linear, left top, left bottom, from(#ACF), to(#48F));
 }
 
+.box p.form-buttons input.green,
+a.button.green,
+input.button.green,
+ul.tabs li a.green {
+    background: -webkit-gradient(linear, left top, left bottom, from(#0B0), to(#060));
+    border-color: #060;
+    color: #FFF;
+    text-shadow: 0 -1px 1px #339;
+}
+
+.box p.form-buttons input.green:hover,
+input.button.green:hover,
+a.button.green:hover {
+    color: #FFF;
+    background: -webkit-gradient(linear, left top, left bottom, from(#0D0), to(#080));
+}
+
+
 ul.tabs li.current a {
     background: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#FFF));
     box-shadow: 0 1px 1px #FFF inset;
