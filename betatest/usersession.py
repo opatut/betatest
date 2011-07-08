@@ -8,11 +8,11 @@ def logout():
     session.pop('logged_in', None)
     session.pop('username', None)
 
+
 def getCurrentUser():
-    if 'username' in session:
+    if has_request_context() and 'username' in session:
         return models.user.User.query.filter_by(username = session['username']).first_or_404()
-    else:
-        return None
+    return None
 
 
 def loginCheck(action = "error", # error | warning | none
