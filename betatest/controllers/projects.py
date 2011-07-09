@@ -47,6 +47,13 @@ def project_testers(username, project):
     p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
     return render_template("project-details.html", user = u, project = p, testers = True)
 
+@app.route("/<username>/<project>/testers/kick/")
+def project_kicklist(username, project):
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+    usersession.loginCheck(users = [u])
+    return render_template("project-kicklist.html", user = u, project = p)
+
 @app.route("/<username>/<project>/testers/kick/<tester>", methods = ["POST", "GET"])
 def project_kick_tester(username, project, tester):
     u = models.user.User.query.filter_by(username = username).first_or_404()

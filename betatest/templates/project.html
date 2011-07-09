@@ -16,6 +16,7 @@
                 {% set is_author = session.username == project.author.username %}
 
                 <li><a href="{{ project.url() }}"><span class="icon-16 icon-16-details"></span>Details</a></li>
+                <li><a href="{{ url_for('project_testers', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-users"></span>Testers</a></li>
 
                 {% if is_tester or is_author %}
                 <li><a href="{{ url_for('project_reports', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-report"></span>Reports ({{ project.reports | length }})</a></li>
