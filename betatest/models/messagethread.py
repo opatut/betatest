@@ -1,4 +1,5 @@
 from betatest import *
+import random
 
 message_thread_users_unread = db.Table('message_thread_users_unread', db.Model.metadata,
     db.Column('thread_id', db.Integer, db.ForeignKey('message_thread.id')),
@@ -43,3 +44,17 @@ class MessageThread(db.Model):
         for message in self.messages:
             message.delete()
         db.session.delete(self)
+
+
+    def getRandomParticipants(self, limit = 0, exclude = None):
+        r = self.participants
+        random.shuffle(r)
+        x = []
+        count = 0
+        for p in r:
+            if p != exclude:
+                count += 1
+                x.append(p)
+                if limit != 0 and count >= limit:
+                    break
+        return x

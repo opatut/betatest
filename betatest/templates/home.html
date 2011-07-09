@@ -5,6 +5,23 @@
 {% block content %}
     <h1>Home</h1>
     {{ displayMessages() }}
-    <p>This is home.</p>
+
+    <div class="columns">
+        <div>
+            <div class="steps">
+                <a href="{{ url_for('login') }}" class="step"><div class="inner"><div class="stepnum">1</div> <div class="steptext">Login or register</div></div></a>
+                <a href="{{ url_for('help', page='projects/create') }}" class="step"><div class="inner"><div class="stepnum">2</div> <div class="steptext">Create a project</div></div></a>
+                <a href="{{ url_for('help', page='projects/testers') }}" class="step"><div class="inner"><div class="stepnum">3</div> <div class="steptext">Invite testers</div></div></a>
+                <a href="{{ url_for('help', page='projects/testing') }}" class="step"><div class="inner"><div class="stepnum">4</div> <div class="steptext">Start testing</div></div></a>
+            </div>
+        </div>
+        <div class="columns-separator"></div>
+        <div class="box">
+            <h4>Random projects</h4>
+            <div class="box-content">
+                {{ render_projects_list(random, True) }}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
