@@ -14,8 +14,6 @@ def show_message(thread_id):
         # reply
         text = form.message.data
         m = models.message.Message(thread, text, usersession.getCurrentUser())
-        thread.users_unread = thread.participants
-        thread.markRead(user, True)
         db.session.add(m)
         db.session.commit()
         flash("Your reply has been sent.")

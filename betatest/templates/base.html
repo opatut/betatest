@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>betatest » {% block pagetitle %}{% endblock %}</title>
-        <link href="{{ url_for('static', filename='icons/favicon-16.ico') }}" rel="icon" type="image/x-icon" />
+        <link href="{{ url_for('static', filename='gfx/icons/favicon-16-blue.ico') }}" rel="icon" type="image/x-icon" />
         {{ includeCSS("style.css") }}
         {{ includeCSS("icons.css") }}
         {{ includeJS("jquery.js") }}
@@ -58,6 +58,7 @@
             <div id="CONTENT">
                 {% block content %}{% endblock %}
             </div>
+            <div style="clear: both;"></div>
             <div id="FOOTER">
                 <ul class="footer-links">
                     <li><a href="{{ url_for('help', page = 'about') }}">About</a></li>

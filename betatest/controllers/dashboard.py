@@ -2,8 +2,8 @@ from betatest import *
 
 @app.route("/")
 def home():
-    if usersession.loginCheck("none"):
-        return redirect(url_for("dashboard"))
+    #if usersession.loginCheck("none"):
+    #    return redirect(url_for("dashboard"))
 
     random = models.project.Project.query.order_by(db.func.random()).limit(5)
     return render_template("home.html", random = random)
