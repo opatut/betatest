@@ -8,7 +8,6 @@
 
 {% block dashboard %}
     {% if thread %}
-
     <div class="columns">
         <h2 style="min-width: 400px;">
             {{ thread.subject }}
@@ -53,62 +52,66 @@
         </form>
     </div>
     {% elif threads %}
-    {% if not threads %}
+    {% if not current_user.participating_message_threads %}
     <div class="box-content">
         <p>You do not have any messages in your inbox.</p>
     </div>
     {% else %}
     <form class="message-list-form" method="post" action="{{ url_for('message_action') }}">
         <ul class="message-list-ul">
-        {% for thread in threads %}
-        {% set read = not (c_user in thread.users_unread) %}
-        {% set message = thread.messages[-1] %}
-        <li{% if not read %} class="unread"{% endif %}>
-            <div class="selection">
-                <input type="checkbox" class="selection" name="message-{{ message.id }}"/>
-            </div>
-            <div class="icon">
-                {% if is_sender %}
-                <img width="24" height="24" src="{{ message.receiver.getAvatar(24) }}">
-                {% else %}
-                <img width="24" height="24" src="{{ message.sender.getAvatar(24) }}">
-                {% endif %}
-            </div>
-            <div class="flags">
-                <div class="icon message-list-participants">
-                    {% set count = 0 %}
-                    {% for p in thread.getRandomParticipants(5, message.sender) %}
-                    {% set count = count + 1 %}
-                    <a href="{{ p.url() }}" title="{{ p.username }}" class="tooltip"><img width="16" height="16" src="{{ p.getAvatar(16) }}" /></a>
-                    {% endfor %}
+        {% for t in current_user.participating_message_threads %}
+            {% set read = not (c_user in t.users_unread) %}
+            {% set message = t.messages[-1] %}
+            {% set is_sender = (message.sender == current_user) %}
+
+            <li{% if not read %} class="unread"{% endif %}>
+                <div class="selection">
+                    <input type="checkbox" class="selection" name="message-{{ message.id }}"/>
                 </div>
-                {% if read %}
-                <span title="Read" class="icon-16 icon-16-old-message"></span>
-                {% else %}
-                <span title="Unread" class="icon-16 icon-16-new-message"></span>
-                {% endif %}
-                <a href="{{ message.url() }}" title="View thread"><span class="icon-16 icon-16-more"></span></a>
-            </div>
-            <div class="title">
-                <a class="message_title" href="{{ message.url() }}">{{ message.thread.subject }}</a>
-                <span class="meta">
-                    {% if is_sender %}sent{%else%}received{%endif%}
-                    {{ time(message.send_date, "send_date") }}
-
-                    {% if is_sender %}
-                        to <a class="sender" href="{{ message.receiver.url() }}">{{ message.receiver.username }}</a>
+                <div class="icon">
+                    <img width="24" height="24" src="{{ message.sender.getAvatar(24) }}">
+                </div>
+                <div class="flags">
+                    <div class="icon message-list-participants">
+                        {% for p in t.getRandomParticipants(5, message.sender) %}
+                            <a href="{{ p.url() }}" title="{{ p.username }}" class="tooltip"><img width="16" height="16" src="{{ p.getAvatar(16) }}" /></a>
+                        {% endfor %}
+                    </div>
+                    {% if read %}
+                    <span title="Read" class="icon-16 icon-16-old-message"></span>
                     {% else %}
-                        from <a class="sender" href="{{ message.sender.url() }}">{{ message.sender.username }}</a>
-                    {%endif%}
+                    <span title="Unread" class="icon-16 icon-16-new-message"></span>
+                    {% endif %}
+                    <a href="{{ message.url() }}" title="View thread"><span class="icon-16 icon-16-more"></span></a>
+                </div>
+                <div class="title">
+                    <a class="message_title" href="{{ message.url() }}">{{ t.subject }}</a>
+                    <span class="meta">
+                        {% if is_sender %}sent{%else%}received{%endif%}
+                        {{ time(message.send_date, "send_date") }}
+                        {% if is_sender %}
+                            to
+                            {% if t.participants | length == 2 %}
+                                {% set rec = t.participants[0] %}{% if rec == current_user %}{% set rec = t.participants[1] %}{% endif %}
+                                <a class="sender" href="{{ rec.url() }}">{{ rec.username }}</a>
+                            {% else %}
+                                {{ t.participants | length - 1 }} receivers
+                            {% endif %}
+                        {%else%}
+                            from <a class="sender" href="{{ message.sender.url() }}">{{ message.sender.username }}</a>
+                        {%endif%}
 
-                    {% set replies = message.thread.messages | length - 1 %}
-                    {% if replies > 0 %}| {{replies}} repl{%if replies == 1%}y{%else%}ies{%endif%}{%endif%}
-                </span>
-            </div>
-            <div class="message">
-                {{ message.message | markdown | wordcrop(40) }}
-            </div>
-        </li>
+
+                        {% set r = (t.messages | length - 1) %}
+                        {% if r > 0 %}| {{r}} repl{%if r == 1%}y{%else%}ies{%endif%}{%endif%}
+                    </span>
+                </div>
+
+                <div class="message">
+                    {{ message.message | markdown | wordcrop(40) }}
+                </div>
+
+            </li>
         {% endfor %}
         </ul>
         <p class="form-buttons">

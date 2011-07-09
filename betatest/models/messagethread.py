@@ -47,7 +47,7 @@ class MessageThread(db.Model):
 
 
     def getRandomParticipants(self, limit = 0, exclude = None):
-        r = self.participants
+        r = list(self.participants) # make a copy to shuffle!
         random.shuffle(r)
         x = []
         count = 0
