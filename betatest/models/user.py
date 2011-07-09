@@ -20,7 +20,7 @@ class User(db.Model):
     location = db.Column(db.String(128))
     website = db.Column(db.String(128))
     password = db.Column(db.String(128))
-    email = db.Column(db.String(256), unique=True)
+    email = db.Column(db.String(256))
     registered_date = db.Column(db.DateTime)
     projects = db.relationship('Project', backref='author', lazy='dynamic')
    # outbox = db.relationship('Message', backref='sender', lazy='dynamic', primaryjoin='Message.sender_id == User.id')

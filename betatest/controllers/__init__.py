@@ -7,8 +7,8 @@ import help
 import errors
 import settings
 import search
+import register
 import ajax
-
 import project_applications
 import project_bugtracker
 import project_reports

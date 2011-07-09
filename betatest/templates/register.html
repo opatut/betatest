@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block pagetitle %}Register{% endblock %}
+
+{% block content %}
+    {{ displayMessages() }}
+    <h1>Register</h1>
+    <p>
+    {% if not session.logged_in %}
+    <form action="{{ url_for('register') }}" method="post" class="register-form">
+        {{ form.hidden_tag() }}
+
+        <div class="box">
+            <div class="box-content">
+                <table class="details">
+                    <tr><th>{{ form.username.label }}</th><td>{{ form.username(class="input-text") }}
+                        {% for error in form.username.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+                    </td></tr>
+
+                    <tr><th>{{ form.password.label }}</th><td>{{ form.password(class="input-password") }}
+                        {% for error in form.password.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+                    </td></tr>
+
+                    <tr><th>{{ form.password_check.label }}</th><td>{{ form.password_check(class="input-text") }}
+                        {% for error in form.password_check.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+                    </td></tr>
+
+                    <tr><th>{{ form.email.label }}</th><td>{{ form.email(class="input-text") }}
+                        {% for error in form.email.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+                    </td></tr>
+
+
+                </table>
+            </div>
+            <p class="form-buttons">
+            <span style="font-size:8pt; float: left; text-align: left;">
+                Are you already registered and just want to <a href="#">log in?</a>
+            </span>
+            <input type="submit" class="default" value="Register now &raquo;">
+            </p>
+        </div>
+    </form>
+    {% else %}
+    You are already logged in!
+    <a href="{{ url_for('logout')}}" class="button">Logout</a>
+    {% endif %}
+</p>
+{% endblock %}

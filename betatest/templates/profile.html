@@ -53,17 +53,22 @@
                 </div>
             </div>
 
+            {% if user.projects.all() or user.tags %}
             <div class="columns">
+                {% if user.projects.all() %}
                 <div class="box">
                     <h4>Projects</h4>
                     <div class="box-content">
-                        {{ render_projects_list(user.projects) }}
+                        {{ render_projects_list(user.projects.all()) }}
                     </div>
                 </div>
+                {% endif %}
+
+                {% if user.tags and user.projects %}
+                <div class="columns-separator"></div>
+                {% endif %}
 
                 {% if user.tags %}
-                <div class="columns-separator"></div>
-
                 <div class="box" style="width: 160px;">
                     <h4>Favorite tags</h4>
                     <div class="box-content">
@@ -74,13 +79,16 @@
                 </div>
                 {% endif %}
             </div>
+            {% endif %}
 
+            {% if user.tested_projects %}
             <div class="box">
                 <h4>Tested projects</h4>
                 <div class="box-content">
                     {{ render_projects_list(user.tested_projects, True) }}
                 </div>
             </div>
+            {% endif %}
 
         </div>
     </div>
