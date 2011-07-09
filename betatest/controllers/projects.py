@@ -16,9 +16,6 @@ def new_project():
 
     return render_template("projects-new.html", subpage = "new", form = form)
 
-from betatest.models.project import *
-from betatest.models.user import *
-
 @app.route("/projects")
 @app.route("/projects/<tab>")
 def projects(tab = "list"):
@@ -28,8 +25,8 @@ def projects(tab = "list"):
     # - within order_by use func.count to count testers
     # - limit the result size
 
-    # SELECT * FROM project JOIN project_testers ON project_testers.project_id = project.id GROUP BY project.id  ORDER BY tester_count DESC    LIMIT 10;
-    projects = Project.query.join(models.project.project_testers).group_by(Project.id).order_by(db.desc(db.func.count(models.project.project_testers.c.tester_id))).limit(10)
+    # SELECT * FROM project JOIN project_testers ON project_testers.project_id = project.id GROUP BY project.id  ORDER BY count(project.id) DESC LIMIT 10;
+    projects = models.project.Project.query.join(models.project.project_testers).group_by(models.project.Project.id).order_by(db.desc(db.func.count(models.project.project_testers.c.tester_id))).limit(10)
     return render_template("projects-list.html", subpage = tab, delete_tag_endpoint = 'project_tags_remove', projects = projects)
 
 
@@ -204,7 +201,7 @@ def delete_project(username, project):
     else:
         flash("Your project has NOT been deleted. Your request failed.", "error")
         return redirect(url_for("project_edit", username = username, project = project))
-    
+
 @app.route("/<username>/<project>/bugtracker")
 def project_bugtracker(username, project):
     u = models.user.User.query.filter_by(username = username).first_or_404()
@@ -212,7 +209,7 @@ def project_bugtracker(username, project):
     users = [p.testers]
     users.append(u)
     usersession.loginCheck(users)
-    
+
     return render_template("project-bugtracker.html", project = p)
 
 @app.route("/<username>/<project>/bugtracker/report", methods=["GET", "POST"])
@@ -222,15 +219,15 @@ def project_bugtracker_report(username, project):
     users = [p.testers]
     users.append(u)
     usersession.loginCheck(users)
-    
+
     form = ProjectBugtrackerReportForm()
-    
+
     if form.validate_on_submit():
         b = models.bug.Bug(form.text.data, form.subject.data, p)
         db.session.add(b)
         db.session.commit()
         return redirect(b.url())
-    
+
     return render_template("project-bugtracker-report.html", project = p, form = form)
 
 @app.route("/<username>/<project>/bugtracker/<int:id>", methods=["GET", "POST"])
@@ -240,13 +237,13 @@ def project_bugtracker_bug(username, project, id):
     users = [p.testers]
     users.append(u)
     usersession.loginCheck(users)
-    
+
     b = models.bug.Bug.query.filter_by(project_id = p.id, id = id).first_or_404()
     form = ProjectBugtrackerBugReplyForm()
-    
+
     if form.validate_on_submit():
         r = models.bugreply.BugReply(form.text.data, b)
         db.session.commit()
         return redirect(b.url())
-    
+
     return render_template("project-bugtracker-bug.html", project = p, bug = b, form = form)
