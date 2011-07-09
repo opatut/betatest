@@ -1,21 +1,5 @@
 from betatest import *
 
-class UnusedProjectSlug(object):
-    def __init__(self, ignore_project = None):
-        self.ignore_project = ignore_project
-
-    def __call__(self, form, field):
-        user = usersession.getCurrentUser()
-        new_slug = models.project.titleToSlug(field.data)
-        project = user.findProject(new_slug)
-        # we have a project with that name
-        if project and (self.ignore_project == None or self.ignore_project != project):
-            raise ValidationError("You already have a project with a similar title. Please choose another one.")
-
-
-class NewProjectForm(Form):
-    title = TextField('Project title', validators = [Length(min = 6), Required(), UnusedProjectSlug()])
-
 @app.route("/projects/new", methods = ["POST", "GET"])
 def new_project():
     if not usersession.loginCheck("warning", warning_none = "Please log in to create a project."):
@@ -49,19 +33,6 @@ def project_testers(username, project):
     u = models.user.User.query.filter_by(username = username).first_or_404()
     p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
     return render_template("project-details.html", user = u, project = p, testers = True)
-
-class ProjectEditForm(Form):
-    title = TextField('Project title', validators = [Length(min = 6), Required(), UnusedProjectSlug()])
-    homepage = TextField('Homepage', validators = [Length(min = 6)])
-    description = TextAreaField('Description')
-
-    def setProject(self, ignore_project):
-        for v in self.title.validators:
-            if type(v) == UnusedProjectSlug:
-                v.ignore_project = ignore_project
-
-class ChangeTagsForm(Form):
-    tag = TextField("", validators=[Required()])
 
 @app.route("/<username>/<project>/edit", methods=['GET', 'POST'])
 @app.route("/<username>/<project>/edit/<subpage>", methods = ["GET", "POST"])
@@ -119,9 +90,6 @@ def project_tags_remove(username, project, tag):
     else:
         abort_reason(403, "You are not the author of this project.")
 
-class ProjectApplicationForm(Form):
-    text = TextAreaField("Your application letter", validators=[Required(message = "You need to write the application yourself :-P")])
-
 @app.route("/<username>/<project>/apply", methods=["GET", "POST"])
 def project_apply(username, project):
     if not usersession.loginCheck("warning"):
@@ -170,10 +138,6 @@ def project_application_details(username, project, applicant):
         a = models.application.Application.query.filter_by(project_id = p.id, user_id = application_sender.id).first_or_404()
         return render_template("project-application-details.html", project = p, application = a)
 
-class ProjectReportForm(Form):
-    subject = TextField("Subject:", validators=[Required()])
-    report = TextAreaField("Your Report", validators=[Required()])
-
 @app.route("/<username>/<project>/report", methods=["GET", "POST"])
 def project_report(username, project):
     u = models.user.User.query.filter_by(username = username).first_or_404()
@@ -213,14 +177,6 @@ def project_report_details(username, project, id):
 
     return render_template("project-report-details.html", project = p, report = r)
 
-def is_user_password(form, field):
-    hash = sha512(field.data).hexdigest()
-    if hash != usersession.getCurrentUser().password:
-        raise ValidationError("That is not your password.")
-
-class ProjectDeleteForm(Form):
-    password = PasswordField("Password verification", validators=[is_user_password])
-
 @app.route("/<username>/<project>/delete", methods = ["POST"])
 def delete_project(username, project):
     u = models.user.User.query.filter_by(username = username).first_or_404()
@@ -248,10 +204,6 @@ def project_bugtracker(username, project):
     
     return render_template("project-bugtracker.html", project = p)
 
-class ProjectBugtrackerReportForm(Form):
-    text = TextAreaField("", validators=[Required()])
-    subject = TextField("Subject:", validators=[Required()])
-
 @app.route("/<username>/<project>/bugtracker/report", methods=["GET", "POST"])
 def project_bugtracker_report(username, project):
     u = models.user.User.query.filter_by(username = username).first_or_404()
@@ -269,9 +221,6 @@ def project_bugtracker_report(username, project):
         return redirect(b.url())
     
     return render_template("project-bugtracker-report.html", project = p, form = form)
-
-class ProjectBugtrackerBugReplyForm(Form):
-    text = TextAreaField("", validators=[Required()])
 
 @app.route("/<username>/<project>/bugtracker/<int:id>", methods=["GET", "POST"])
 def project_bugtracker_bug(username, project, id):

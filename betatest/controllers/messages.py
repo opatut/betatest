@@ -1,21 +1,5 @@
 from betatest import *
 
-def userlist_check(form, field):
-    error = ""
-    for user in re.split("[^\w\d]*", field.data):
-        if not models.user.User.query.filter_by(username = user).first():
-            error += "The user " + user + " does not exist. "
-    if error:
-        raise ValidationError(error)
-
-class NewMessageForm(Form):
-    subject = TextField("Subject", validators=[Required(message = "Please enter a subject"), Length(max=255)])
-    receiver = TextField("Receiver", validators=[Required(message = "Please enter a receiver")])
-    message = TextAreaField("Message", validators = [Required(message = "Please enter a message.")])
-
-class MessageReplyForm(Form):
-    message = TextAreaField("Message", validators = [Required(message = "Please enter a message.")])
-
 @app.route("/dashboard/messages/<int:thread_id>", methods = ["GET", "POST"])
 def show_message(thread_id):
     form = MessageReplyForm()
