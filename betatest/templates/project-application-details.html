@@ -23,5 +23,13 @@
     <div class="box-content">
         <p>{{ application.text | markdown}}</p>
     </div>
+    {% if application.status != 'accepted' %}
+    <p class="form-buttons">
+        <a href="{{ url_for('project_application_handle', username = project.author.username, project = project.slug, applicant = application.user.username, handle = 'accept') }}" class="button green">Accept</a>
+        {% if application.status != 'declined' %}
+        <a href="{{ url_for('project_application_handle', username = project.author.username, project = project.slug, applicant = application.user.username, handle = 'decline') }}" class="button red">Decline</a>
+        {% endif %}
+    </p>
+    {% endif %}
 </div>
 {% endblock %}

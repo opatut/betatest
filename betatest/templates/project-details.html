@@ -54,9 +54,14 @@
             {% if session.username == project.author.username and project.applications %}
             <div class="box">
                 <h4>Applications</h4>
-                {{ render_user_list(project.getApplicants(), 10, href = url_for('project_application_details', username = project.author.username, project = project.slug, applicant = '{0}') ) }}
+                {% set applicants = project.getApplicants(['read', 'unread']) %}
+                {{ render_user_list(applicants, 10, message = "There are no new applications.", href = url_for('project_application_details', username = project.author.username, project = project.slug, applicant = '{0}') ) }}
                 <p class="form-buttons">
+                    {% if applicants %}
                     <a class="button" href="{{ url_for('project_applications', username = project.author.username, project = project.slug) }}">Show more &raquo;</a>
+                    {% else %}
+                    <a class="button" href="{{ url_for('project_applications', username = project.author.username, project = project.slug) }}">Show all &raquo;</a>
+                    {% endif %}
                 </p>
             </div>
             {% endif %}

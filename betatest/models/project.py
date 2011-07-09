@@ -53,10 +53,14 @@ class Project(db.Model):
     def getIcon(self, size = 32):
         return "http://www.gravatar.com/avatar/{0}?s={1}&d=identicon".format(md5(self.slug).hexdigest(), size)
 
-    def getApplicants(self):
+    def getApplicants(self, validator = []):
         applicants = []
         for application in self.applications:
-            applicants.append(application.user)
+            if validator and application.status in validator:
+                print("####### %s #####" % application.status)
+                applicants.append(application.user)
+            elif not validator:
+                applicants.append(application.user)
         return applicants
 
     def delete(self):

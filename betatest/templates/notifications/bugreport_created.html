@@ -1,0 +1,12 @@
+{% extends "notifications/base.html" %}
+
+{% block icon %}{{ bug.project.getIcon(icon_size) }}{% endblock %}
+
+{% block caption %}
+    <a href="{{ bug.user.url() }}">{{ bug.user.username }}</a>
+    <span class="meta">submitted a bug to your project <a href="{{ bug.project.url() }}">{{ bug.project.title }}</a></span>
+{% endblock %}
+
+{% block text %}
+    <a href="{{ bug.url() }}">View this bug &raquo;</a>
+{% endblock %}

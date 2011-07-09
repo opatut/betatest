@@ -26,6 +26,8 @@ def project_apply(username, project):
             return redirect(p.url())
         a = models.application.Application(p, form.text.data)
         a.user = user
+        notification = models.notification.Notification(u, models.notification.ApplicationStatus('created', a))
+        db.session.add(notification)
         db.session.commit()
         flash("Sent application succesfully", "success")
         return redirect(p.url())
@@ -41,9 +43,35 @@ def project_applications(username, project, applicant = None):
 
 @app.route("/<username>/<project>/applications/<applicant>")
 def project_application_details(username, project, applicant):
-        u = models.user.User.query.filter_by(username = username).first_or_404()
-        usersession.loginCheck(users = [u])
-        p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
-        application_sender = models.user.User.query.filter_by(username = applicant).first_or_404()
-        a = models.application.Application.query.filter_by(project_id = p.id, user_id = application_sender.id).first_or_404()
-        return render_template("project-application-details.html", project = p, application = a)
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    usersession.loginCheck(users = [u])
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+    application_sender = models.user.User.query.filter_by(username = applicant).first_or_404()
+    a = models.application.Application.query.filter_by(project_id = p.id, user_id = application_sender.id).first_or_404()
+    
+    if a.status == 'unread':
+        a.status = 'read'
+        notification = models.notification.Notification(application_sender, models.notification.ApplicationStatus('read', a))
+        db.session.add(notification)
+        db.session.commit()
+    
+    return render_template("project-application-details.html", project = p, application = a)
+        
+@app.route("/<username>/<project>/applications/<applicant>/<handle>")
+def project_application_handle(username, project, applicant, handle):
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    usersession.loginCheck(users = [u])
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+    application_sender = models.user.User.query.filter_by(username = applicant).first_or_404()
+    a = models.application.Application.query.filter_by(project_id = p.id, user_id = application_sender.id).first_or_404()
+    if handle == 'accept':
+        a.status = 'accepted'
+        notification = models.notification.Notification(application_sender, models.notification.ApplicationStatus('accepted', a))
+        db.session.add(notification)
+        db.session.commit()
+    elif handle == 'decline':
+        a.status = 'declined'
+        notification = models.notification.Notification(application_sender, models.notification.ApplicationStatus('declined', a))
+        db.session.add(notification)
+        db.session.commit()
+    return redirect(url_for('project_applications', username = username, project = project))

@@ -2,12 +2,14 @@ from betatest import *
 from betatest.models.application import Application
 from betatest.models.project import Project
 from betatest.models.user import User
+from betatest.models.bug import Bug
 
 
 '''
 Notification module. Nofications can have the following types:
 
-* Notification.ApplicationStatus(status, project)
+* notification.ApplicationStatus(status, application)
+* notification.BugStatus(status, bug)
 
 All notification types that have a project linked support the getProject() method.
 '''
@@ -24,11 +26,41 @@ class Data(object):
     def _render(self):
         return "Generic notification."
 
+class BugStatus(Data):
+    ''' status can be one of the following:
+        * created
+    '''
+    status = ""
+    bug_id = 0
+
+    def __init__(self, status, bug):
+        self.status = status.lower()
+        db.session.commit() # commit or the id might not be set
+        self.bug_id = bug.id
+
+    def getBug(self):
+        if not self.bug_id:
+            abort_reason(500, "A notification contains invalid data: %s" % self.bug_id)
+        return Bug.query.filter_by(id = self.bug_id).first()
+
+    def getProject(self):
+        return getBug().project
+
+    def _render(self):
+        b = self.getBug()
+        if self.status in ["created"]:
+            return render_template("notifications/bugreport_" + self.status + ".html",
+                bug = b,
+                notification = self.notification)
+        else:
+            abort_reason(500, "Invalid status (%s) for BugReport in Notification." % self.status) # internal server error
+
 class ApplicationStatus(Data):
     ''' status can be one of the following:
         * accepted
         * declined
         * created
+        * read
     '''
     status = ""
     application_id = 0
@@ -48,7 +80,7 @@ class ApplicationStatus(Data):
 
     def _render(self):
         a = self.getApplication()
-        if self.status in ["created", "accepted", "declined"]:
+        if self.status in ["created", "accepted", "declined", "read"]:
             return render_template("notifications/application_" + self.status + ".html",
                 application = a,
                 notification = self.notification)

@@ -8,7 +8,7 @@ class Bug(db.Model):
     is_closed = db.Column(db.Boolean)
     type = db.Column(db.Enum(
         'verified',
-        'fixed',
+        'solved',
         'rejected',
         'unknown'
     ))

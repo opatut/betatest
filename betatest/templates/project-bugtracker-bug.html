@@ -3,11 +3,23 @@
 {% block project_buttons %}{% endblock %}
 
 {% block project_details %}
-<h2>{{ bug.subject }}</h2>
+<h2>{{ bug.subject }}{% if bug.type == 'verified' %} - Verified{% endif %}</h2>
 <div class="box">
     <div class="box-content">
         <p>{{ bug.text | markdown }}</p>
     </div>
+    <p class="form-buttons">
+        {% if bug.type != 'solved' %}
+            {% if bug.type != 'verified' %}
+            <a href="{{ bug.url() }}/verify" class="button" style="float: left;">Verify</a>
+            {% endif %}
+            {% if bug.project.author == current_user %}
+            <a href="{{ bug.url() }}/solved" class="button green">Solved</a>
+            {% endif %}
+        {% else %}
+        <a href="{{ bug.url() }}/reopen" class="button red">Reopen</a>
+        {% endif %}
+    </p>
 </div>
 <hr class="fat" />
 <h2>Replies</h2>

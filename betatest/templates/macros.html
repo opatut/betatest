@@ -76,7 +76,8 @@
 {% endif %}
 {%- endmacro %}
 
-{% macro render_user_list(users, max = 0, highlight = '', href = '') -%}
+{% macro render_user_list(users, max = 0, highlight = '', href = '', message = '') -%}
+{% if users %}
 <ul class="userlist">
     {% set counter = 0 %}
     {% for user in users if (counter < max or max == 0) %}
@@ -96,4 +97,11 @@
     </li>
     {% endfor %}
 </ul>
+{% else %}
+<div class="box-content">
+<p>
+    {{ message if message else 'No users to diaplay.' }}
+</p>
+</div>
+{% endif %}
 {%- endmacro %}
