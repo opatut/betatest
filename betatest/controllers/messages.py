@@ -5,23 +5,22 @@ def show_message(thread_id):
     form = MessageReplyForm()
     thread = models.messagethread.MessageThread.query.filter_by(id = thread_id).first_or_404()
     usersession.loginCheck(users = thread.participants)
-    user = usersession.getCurrentUser()
 
-    if user in thread.users_unread:
-        thread.users_unread.remove(user)
-        db.session.commit()
+    read_date = thread.getUserReadDate()
+    thread.markAsRead()
+    db.session.commit()
 
     if form.validate_on_submit():
         # reply
         text = form.message.data
-        m = models.message.Message(thread, text, user)
+        m = models.message.Message(thread, text, usersession.getCurrentUser())
         thread.users_unread = thread.participants
         thread.markRead(user, True)
         db.session.add(m)
         db.session.commit()
         flash("Your reply has been sent.")
         return redirect(url_for("show_message", thread_id = thread.id) + "#reply-" + str(m.id))
-    return render_template("dashboard-messages.html", subpage = 'messages', thread = thread, form = form)
+    return render_template("dashboard-messages.html", subpage = 'messages', thread = thread, form = form, read_date = read_date)
 
 @app.route("/dashboard/messages/new", methods = ["GET", "POST"])
 @app.route("/<receiver>/contact", methods = ["GET", "POST"])
@@ -75,26 +74,28 @@ def message_action():
         delete = "delete" in request.form
 
         for key in request.form:
-            if re.search("message-", key):
-                key = key.replace("message-", "")
-                msg = models.message.Message.query.filter_by(id = key).first_or_404()
+            if re.search("thread-", key):
+                key = key.replace("thread-", "")
+                t = models.messagethread.MessageThread.query.filter_by(id = key).first_or_404()
 
                 if delete:
-                    return "Delete"
-                elif mark_read and msg.receiver == usersession.getCurrentUser() and not msg.isread:
+                    t.deleteForUser()
+                    db.session.commit()
                     count += 1
-                    msg.markRead(True)
-                elif mark_unread and msg.receiver == usersession.getCurrentUser() and msg.isread:
+                elif mark_read and not t.isReadByUser():
                     count += 1
-                    msg.markRead(False)
+                    t.markAsRead(True)
+                elif mark_unread and t.isReadByUser():
+                    count += 1
+                    t.markAsRead(False)
 
     s = ""
     if mark_read:
-        s = "marked read"
+        s = "marked as read"
     elif mark_unread:
-        s = "marked unread"
+        s = "marked as unread"
     elif delete:
         s = "deleted"
 
-    flash(str(count) + " message" + ("s" if count != 1 else "") + " have been " + s + ".", "info")
+    flash(str(count) + " thread" + ("s have" if count != 1 else " has") + " been " + s + ".", "info")
     return redirect('/dashboard/messages')

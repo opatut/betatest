@@ -7,7 +7,13 @@
     <div class="profile">
         <div class="left">
             <div class="icon">
-                <img width="64" height="64" src="{{ user.getAvatar(64) }}">
+                {% if user == current_user %}
+                <a href="http://en.gravatar.com/emails/" title="Change your icon at gravatar.com" target="_blank">
+                {% else %}
+                <a href="{{ user.getAvatar(256) }}" target="_blank">
+                {% endif %}
+                <img width="80" height="80" src="{{ user.getAvatar(80) }}" />
+                </a>
             </div>
 
             <ul class="profile-links">

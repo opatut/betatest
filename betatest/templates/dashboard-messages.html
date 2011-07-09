@@ -23,7 +23,7 @@
     <div class="message-thread">
         {% for message in thread.messages %}
         <a name="reply-{{ message.id }}"></a>
-        <div class="message">
+        <div class="message {% if not read_date or read_date < message.send_date %} unread{% endif %}">
             <div class="icon">
                 <a href="{{ message.sender.url() }}"><img width="32" height="32" src="{{ message.sender.getAvatar(32) }}"></a>
             </div>
@@ -60,13 +60,13 @@
     <form class="message-list-form" method="post" action="{{ url_for('message_action') }}">
         <ul class="message-list-ul">
         {% for t in current_user.participating_message_threads %}
-            {% set read = not (c_user in t.users_unread) %}
+            {% set read = t.isReadByUser() %}
             {% set message = t.messages[-1] %}
             {% set is_sender = (message.sender == current_user) %}
 
             <li{% if not read %} class="unread"{% endif %}>
                 <div class="selection">
-                    <input type="checkbox" class="selection" name="message-{{ message.id }}"/>
+                    <input type="checkbox" class="selection" name="thread-{{ t.id }}"/>
                 </div>
                 <div class="icon">
                     <img width="24" height="24" src="{{ message.sender.getAvatar(24) }}">

@@ -23,8 +23,6 @@ class User(db.Model):
     email = db.Column(db.String(256))
     registered_date = db.Column(db.DateTime)
     projects = db.relationship('Project', backref='author', lazy='dynamic')
-   # outbox = db.relationship('Message', backref='sender', lazy='dynamic', primaryjoin='Message.sender_id == User.id')
-   # inbox = db.relationship('Message', backref='receiver', lazy='dynamic', primaryjoin='Message.receiver_id == User.id')
     sent_messages = db.relationship('Message', backref='sender', lazy='dynamic', primaryjoin='Message.sender_id == User.id')
     notifications = db.relationship('Notification', backref = 'user', lazy = 'dynamic')
     applications = db.relationship('Application', backref='user')

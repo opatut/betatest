@@ -671,9 +671,13 @@ div.message-list-participants {
 }
 
 div.message-thread div.message {
-    margin: 10px 20px;
-    padding: 10px 10px;
+    margin: 0 20px;
+    padding: 15px 10px 10px 10px;
     border-bottom: 1px solid #CCC;
+}
+
+div.message-thread div.message.unread {
+    background: #E8E8FF;
 }
 
 div.message-thread div.message div.icon {

@@ -7,4 +7,5 @@ import project
 import report
 import tag
 import user
+import messagethreadreadmark
 import messagethread
