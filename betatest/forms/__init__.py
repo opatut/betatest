@@ -1,6 +1,6 @@
 from betatest import *
 
-import projects
-import settings
-import login
-import messages
+from projects import *
+from settings import *
+from login import *
+from messages import *
