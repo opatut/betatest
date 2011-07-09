@@ -1,0 +1,19 @@
+{% extends "project.html" %}
+
+{% block project_buttons %}{% endblock %}
+
+{% block project_details %}
+<form action="{{ url_for('project_quit', username = project.author.username, project = project.slug) }}" method="post">
+<div class="box">
+    <div class="box-content" style="margin: 20px;">
+        {{ form.hidden_tag() }}
+        <p>You are about to quit this project. You will need to write a new
+        application to join the project as a tester again. Are you sure?</p>
+    </div>
+    <p class="form-buttons">
+        <a href="{{ project.url() }}" class="button red">Don't quit</a>
+        <input type="submit" value="Yes, quit" class="button green" />
+    </p>
+</div>
+</form>
+{% endblock %}

@@ -17,6 +17,9 @@ class ProjectEditForm(Form):
 class ChangeTagsForm(Form):
     tag = TextField("", validators=[Required()])
 
+class ProjectQuitForm(Form):
+    pass
+
 class ProjectApplicationForm(Form):
     text = TextAreaField("Your application letter", validators=[Required(message = "You need to write the application yourself :-P")])
 

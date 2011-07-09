@@ -119,3 +119,23 @@ def project_tags_remove(username, project, tag):
         return redirect(url_for("project_edit", username = username, project = project))
     else:
         abort_reason(403, "You are not the author of this project.")
+
+@app.route("/<username>/<project>/quit", methods = ["POST", "GET"])
+def project_quit(username, project):
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+
+    if not usersession.loginCheck("none", users = p.testers):
+        flash("You have to be tester to quit this project.", "warning")
+        return redirect(p.url())
+
+    form = ProjectQuitForm()
+    if form.validate_on_submit():
+        p.testers.remove(usersession.getCurrentUser())
+        db.session.commit()
+        flash("You have quit the project.", "success")
+        return redirect(p.url())
+
+    return render_template("project-quit.html", username = username, project = p, form = form)
+
+

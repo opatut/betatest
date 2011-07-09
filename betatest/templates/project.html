@@ -29,6 +29,8 @@
                 <li><a href="{{ url_for('project_change_icon', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-icon"></span>New icon</a></li>
                 {% elif current_user and not is_tester and not current_user.hasAppliedForProject(project.id) %}
                 <li><a href="{{ url_for('project_apply', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-door-in"></span>Apply</a></li>
+                {% elif is_tester %}
+                <li><a href="{{ url_for('project_quit', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-door-out"></span>Quit</a></li>
                 {% endif %}
                 {% block project_buttons %}{% endblock %}
             </ul>
