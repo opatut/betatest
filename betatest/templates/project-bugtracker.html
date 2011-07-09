@@ -1,0 +1,41 @@
+{% extends "project.html" %}
+
+{% block project_buttons %}{% endblock %}
+
+{% block project_details %}
+<div class="box">
+    <h4>Bug reports</h4>
+    {% if project.bugs %}
+    <ul class="notifications-list">
+    {% for bug in project.bugs %}
+        <li>
+            {% set icon_size = 24 %}
+            <div class="icon">
+                <a href="{{ bug.user.url() }}" class="tooltip" title="View the profile of {{ bug.user.username }}">
+                <img width="{{ icon_size }}" height="{{ icon_size }}" src="{{ bug.user.getAvatar(icon_size) }}" />
+                </a>
+            </div>
+            <div class="flags">
+                <a href="{{ bug.url() }}" title="Show bug details"><span class="icon-16 icon-16-more"></span></a>
+            </div>
+            <div class="caption">
+                <a href="{{ bug.user.url() }}">{{ bug.user.username }}</a>
+                <span class="meta">submitted {{ time(bug.date) }}:</span>
+            </div>
+            <div class="text">
+                <a href="{{ bug.url() }}" class="tooltip" title="Show bug details">
+                {{ bug.subject }}
+                </a>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <div class="box-content">
+        <p>No bugs reported yet.</p>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+

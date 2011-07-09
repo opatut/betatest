@@ -1,31 +1,5 @@
 from betatest import *
 
-def isCurrentUserPassword(form, field):
-    if sha512(field.data).hexdigest() != usersession.getCurrentUser().password:
-        raise ValidationError("Thats not your password.")
-
-class EqualValidator(object):
-    def __init__(self, other):
-        self.other = other
-
-    def __call__(self, form, field):
-        if field.data != form[self.other].data:
-            raise ValidationError("Values do not match.")
-
-class ChangePasswordForm(Form):
-    password = PasswordField("Current password", validators=[Required(), isCurrentUserPassword])
-    password_new = PasswordField("New password", validators=[Required(), Length(min=6)])
-    password_new2 = PasswordField("Repeat password", validators=[Required(), EqualValidator("password_new")])
-
-class ChangeTagsForm(Form):
-    tag = TextField("", validators=[Required()])
-
-class GeneralSettingsForm(Form):
-    realname = TextField("Real name")
-    location = TextField("Location")
-    website = TextField("Website")
-    email = TextField("Email", validators = [Email()])
-
 @app.route("/settings", methods=['GET', 'POST'])
 @app.route("/settings/<subpage>", methods=['GET', 'POST'])
 def settings(subpage = ''):

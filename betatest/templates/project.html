@@ -18,6 +18,8 @@
                 {% if is_tester or is_author %}
                 <li><a href="{{ url_for('project_reports', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-report"></span>Reports ({{ project.reports | length }})</a></li>
                 <li><a href="{{ url_for('project_report', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-report-add"></span>New Report</a></li>
+                <li><a href="{{ url_for('project_bugtracker', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-bug"></span>Bugs ({{ project.bugs | length }})</a></li>
+                <li><a href="{{ url_for('project_bugtracker_report', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-bug-add"></span>Submit bug</a></li>
                 {% endif %}
 
                 {% if is_author %}

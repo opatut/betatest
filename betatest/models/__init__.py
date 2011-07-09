@@ -1,4 +1,6 @@
 import application
+import bug
+import bugreply
 import message
 import notification
 import project

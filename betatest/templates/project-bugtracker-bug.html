@@ -1,0 +1,42 @@
+{% extends "project.html" %}
+
+{% block project_buttons %}{% endblock %}
+
+{% block project_details %}
+<h2>{{ bug.subject }}</h2>
+<div class="box">
+    <div class="box-content">
+        <p>{{ bug.text | markdown }}</p>
+    </div>
+</div>
+<hr class="fat" />
+<h2>Replies</h2>
+{% if bug.replies %}
+{% for reply in bug.replies %}
+<div class="box">
+    <h4><a href="{{ reply.user.url() }}">{{ reply.user.username }}</a></h4>
+    <div class="box-content">
+        <p>{{ reply.text | markdown }}</p>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<p>No replies yet.</p>
+{% endif %}
+<div class="box">
+    <h2>Reply</h2>
+    <div class="message-write">
+        <form action="{{ url_for('project_bugtracker_bug', username = project.author.username, project = project.slug, id = bug.id) }}" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.text(class="compose-message") }}
+                {% for error in form.text.errors %}<div class="form-error">{{ error }}</div>{% endfor %}
+            </p>
+            <p style="float:right;">Parsed with <a href="/help/messages/compose">Markdown</a></p>
+            <input type="submit" value="Send reply" class="button default">
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+

@@ -153,7 +153,33 @@ status = models.notification.ApplicationStatus("declined", application3)
 n1 = models.notification.Notification(opatut, status)
 db.session.add(n1)
 
+# add some bugs
+bug1 = models.bug.Bug("This is a real bug report you should realy think about writing your own... I mean __realy__", "First real bug report", betatest)
+bug1.user = opatut
 
+bug2 = models.bug.Bug("This is a real bug report you should realy think about writing your own... I mean __realy__. Not like me I just copied the first one.", "Second real bug report", betatest)
+bug2.user = svenstaro
+
+bug3 = models.bug.Bug("This is a real bug report you should realy think about writing your own... I mean __realy__. Not like me I just copied the first one. Thats bad I know but I did not know what to write as a sample bug report.", "Third real bug report", betatest)
+bug3.user = zetaron
+
+db.session.add(bug1)
+db.session.add(bug2)
+db.session.add(bug3)
+
+# add some replies to the bugs
+reply1 = models.bugreply.BugReply("Wow thats an awsome bug report you should write more like this one.", bug1)
+reply1.user = zetaron
+
+reply2 = models.bugreply.BugReply("Wow thats an awsome bug report you should write more like this one. Ok I did it again... I copied the previous comment. Sry.", bug1)
+reply2.user = svenstaro
+
+reply3 = models.bugreply.BugReply("Wow thats an awsome bug report you should write more like this one. Ok I did it again... I copied the previous comment. Sry. Hehe you cant blame me :). Right thats my first time I copied something __on this page__ :P.", bug1)
+reply3.user = opatut
+
+db.session.add(reply1)
+db.session.add(reply2)
+db.session.add(reply3)
 # close
 db.session.commit()
 

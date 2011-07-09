@@ -1,4 +1,5 @@
 from betatest import *
+from betatest.models.user import User
 
 def login(username):
     session['logged_in'] = True
@@ -11,7 +12,7 @@ def logout():
 
 def getCurrentUser():
     if has_request_context() and 'username' in session:
-        return models.user.User.query.filter_by(username = session['username']).first_or_404()
+        return User.query.filter_by(username = session['username']).first_or_404()
     return None
 
 
