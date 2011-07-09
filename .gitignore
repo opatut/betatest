@@ -2,3 +2,4 @@ env/
 *.pyc
 betatest.db
 fam/
+betatest/uploads/

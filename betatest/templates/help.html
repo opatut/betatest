@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% macro helpImage(src, caption = "", href = "", width = 0, height = 0) %}
+    <div class="help-image">
+        <a href="{% if href %}{{ href }}{% else %}{{ src }}{% endif %}">
+        <img {% if width %}width="{{ width }}" {% endif %}{% if height %}height="{{ height }}" {% endif %}src="{{ src }}" />
+        </a>
+        {% if caption %}
+        <div class="caption">
+            {{ caption }}
+        </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro helpImageStatic(src, caption = "") %}
+    {{ helpImage(url_for('static', filename = src), caption) }}
+{% endmacro %}
+
+{% block title %}Help{% endblock %}
+
+{% block content %}
+<div class="help">
+    <style>#HEADER { background: #FF9900; }</style>
+    {% block help %}{% endblock %}
+    <div style="clear: both;"></div>
+</div>
+{% endblock %}

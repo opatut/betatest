@@ -1,0 +1,14 @@
+{% extends "project.html" %}
+
+{% block project_buttons %}{% endblock %}
+
+{% block project_details %}
+<div class="box">
+    <h4>Kick a tester</h4>
+    <div class="box-content">
+        <p>Select a tester to kick:</p>
+        {{ render_user_list(project.testers, href = url_for('project_kick_tester', username = project.author.username, project = project.slug, tester = '{0}')) }}
+    </div>
+</div>
+</form>
+{% endblock %}

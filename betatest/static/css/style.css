@@ -1114,3 +1114,45 @@ ul.message-list-ul li .message *  {
     margin-top: -15px;
     padding-bottom: 15px;
 }
+
+
+div.help-image {
+    background: #F6F6F6;
+    border: 1px solid #CCC;
+    text-align: center;
+    float: right;
+    margin-left: 10px;
+}
+
+div.help-image img {
+    border: 1px solid #CCC;
+    margin: 10px;
+}
+
+div.help-image .caption {
+    border-top: 1px solid #CCC;
+    padding: 3px 10px;
+    background: #EEE;
+    font-size: 8pt;
+    color: #666;
+}
+
+.help {
+    background: #EEE;
+    border-radius: 8px;
+    border: 1px solid #CCC;
+    margin: 50px;
+    padding: 20px;
+    font-size: 10pt;
+    line-height: 1.7em;
+}
+
+
+a[target=_blank]:after {
+    content: " ";
+    display: inline-block;
+    background: url("../gfx/external-link.png") center center no-repeat;
+    width: 16px;
+    height: 10px;
+    vertical-align: middle;
+}

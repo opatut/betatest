@@ -20,6 +20,9 @@ class ChangeTagsForm(Form):
 class ProjectQuitForm(Form):
     pass
 
+class ProjectKickForm(Form):
+    pass
+
 class ProjectApplicationForm(Form):
     text = TextAreaField("Your application letter", validators=[Required(message = "You need to write the application yourself :-P")])
 
@@ -38,5 +41,5 @@ class ProjectBugtrackerBugReplyForm(Form):
     text = TextAreaField("", validators=[Required()])
 
 class ChangeIconForm(Form):
-    icon = FileField("New Icon", validators = [Regexp('^[^/\\\\]+\\.(jpg|png|jpeg|gif)$')])
+    icon = FileField("New Icon")
     delete = BooleanField("Delete current icon", default = False)
