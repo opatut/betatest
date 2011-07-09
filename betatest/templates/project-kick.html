@@ -1,0 +1,30 @@
+{% extends "project.html" %}
+
+{% block project_buttons %}{% endblock %}
+
+{% block project_details %}
+<form action="{{ url_for('project_kick_tester', username = project.author.username, project = project.slug, tester = tester.username) }}" method="post">
+<div class="box">
+    <div class="box-content" style="margin: 20px;">
+        {{ form.hidden_tag() }}
+        {% set s = 64 %}
+        <div class="columns">
+            <div class="icon" style="width: {{ s + 4 }}px">
+                <a href="{{ tester.url() }}"><img width="{{ s }}" height="{{ s }}" src="{{ tester.getAvatar(s) }}" /></a>
+            </div>
+            <div class="columns-separator"></div>
+            <div style="vertical-align: top;">
+                <p>You are about to kick <a href="{{ tester.url() }}">{{ tester.username }}</a> from this project.</p>
+                <p>This means {{ tester.username }} will not be able to write reports or submit bugs anymore. {{ tester.username }}
+                will also receive a notification about this process.</p>
+                <p><b>Are you sure you want to kick {{ tester.username }}?</b></p>
+            </div>
+        </div>
+    </div>
+    <p class="form-buttons">
+        <a href="{{ project.url() }}" class="button red">Don't kick</a>
+        <input type="submit" value="Yes, kick" class="button green" />
+    </p>
+</div>
+</form>
+{% endblock %}

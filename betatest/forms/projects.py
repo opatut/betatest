@@ -20,6 +20,9 @@ class ChangeTagsForm(Form):
 class ProjectQuitForm(Form):
     pass
 
+class ProjectKickForm(Form):
+    pass
+
 class ProjectApplicationForm(Form):
     text = TextAreaField("Your application letter", validators=[Required(message = "You need to write the application yourself :-P")])
 
