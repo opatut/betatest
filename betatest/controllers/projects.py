@@ -1,4 +1,9 @@
 from betatest import *
+import os
+from werkzeug import secure_filename
+
+def is_allowed_filename(filename, extensions = ["png", "jpg", "jpeg", "gif"]):
+    return '.' in filename and filename.rsplit('.', 1)[1] in extensions
 
 @app.route("/projects/new", methods = ["POST", "GET"])
 def new_project():
@@ -82,6 +87,23 @@ def project_edit(username, project, subpage = ''):
         tag_form = tag_form,
         delete_form = delete_form,
         tags = p.tags)
+
+@app.route("/<username>/<project>/changeicon")
+def project_change_icon(username, project):
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    usersession.loginCheck(users = [u])
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+
+    form = ChangeIconForm()
+
+    if form.validate_on_submit():
+        file = request.files[form.icon.name]
+        if file and is_allowed_filename(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(target, filename))
+
+    return render_template("project-change-icon.html", form = form, project = p)
+
 
 @app.route("/<username>/<project>/tags/remove/<tag>")
 def project_tags_remove(username, project, tag):

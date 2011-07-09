@@ -1,0 +1,46 @@
+{% extends "project.html" %}
+
+{% block project_details %}
+    <form method="post" action="{{ url_for('project_edit', username = project.author.username, project = project.slug, subpage = 'general') }}">
+    {{ form.hidden_tag() }}
+    <h2>Change project icon</h2>
+    <div class="columns">
+        {% set s = 256 %}
+        <div style="width: {{ s + 4 }}px;" class="icon box">
+            <h4>Current icon</h4>
+            <img width="{{ s }}" height="{{ s }}" src="{{ project.getIcon(s) }}">
+        </div>
+        <div class="columns-separator"></div>
+        <div class="box">
+            <h4>Change the icon</h4>
+            <div class="box-content">
+                <p>Below you can choose a file to upload as your project's icon. Please note the following guidelines:</p>
+                <ul>
+                    <li>Icons have to be in <b>PNG</b>, <b>JPG</b> or <b>GIF</b> format.</li>
+                    <li>Icons should be at least 128 x 128 pixels in size, but may not exceed 512 x 512 pixels.</li>
+                    <li>If your icon is too small, it will be scaled up. This will reduce its quality.</li>
+                    <li>Your icon may be max. 100 KB in size. If you cannot fit this, choose another size or compression.</li>
+                    <li>Your icon must meet the <a href="/about/content-guidelines">content guidelines.</a></li>
+                    <li>You have to own the right to publish the icon without violating any copyright.</li>
+                </ul>
+                <p>You can read more about this in the <a href="/about/icons">help section</a>.</p>
+
+                <p>{{ form.icon() }}</p>
+                <hr />
+                <p>If you want to delete your current icon and fallback to the
+                default icon, tick the checkbox below. You don't need to delete
+                your icon if you want to upload a new one. It will just be overridden.</p>
+                <p>{{ form.delete() }} {{ form.delete.label }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <p class="form-buttons only-in-box">
+            <input type="reset" value="Reset" />
+            <input type="submit" class="default" value="Save icon" />
+        </p>
+    </div>
+
+
+{% endblock %}

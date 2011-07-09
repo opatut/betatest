@@ -6,7 +6,9 @@
     <div class="profile">
         <div class="left">
             <div class="icon">
+                <a href="{{ project.url() }}">
                 <img width="80" height="80" src="{{ project.getIcon(80) }}" />
+                </a>
             </div>
 
             <ul class="profile-links">
@@ -24,6 +26,7 @@
 
                 {% if is_author %}
                 <li><a href="{{ url_for('project_edit', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-edit"></span>Edit Project</a></li>
+                <li><a href="{{ url_for('project_change_icon', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-icon"></span>New icon</a></li>
                 {% elif not is_tester and not g.usersession.getCurrentUser().hasAppliedForProject(project.id) %}
                 <li><a href="{{ url_for('project_apply', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-door-in"></span>Apply</a></li>
                 {% endif %}

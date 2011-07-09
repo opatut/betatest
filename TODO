@@ -3,10 +3,10 @@ opatut
     - reports style
     - home layout
     - tester applications style
-  - SOON
-    - "next" in login
   - TRAY
+    - "next" in login
     - interesting projects 
+    - styles fix (v-aligns)
     - about pages, help, faq
     - autocomplete: search bar
     - project icons + more project settings

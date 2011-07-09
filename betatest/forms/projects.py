@@ -3,7 +3,7 @@ from betatest import validators
 
 class NewProjectForm(Form):
     title = TextField('Project title', validators = [Length(min = 6), Required(), validators.UnusedProjectSlug()])
-    
+
 class ProjectEditForm(Form):
     title = TextField('Project title', validators = [Length(min = 6), Required(), validators.UnusedProjectSlug()])
     homepage = TextField('Homepage', validators = [Length(min = 6)])
@@ -33,3 +33,7 @@ class ProjectBugtrackerReportForm(Form):
 
 class ProjectBugtrackerBugReplyForm(Form):
     text = TextAreaField("", validators=[Required()])
+
+class ChangeIconForm(Form):
+    icon = FileField("New Icon", validators = [Regexp('^[^/\\\\]+\\.(jpg|png|jpeg|gif)$')])
+    delete = BooleanField("Delete current icon", default = False)
