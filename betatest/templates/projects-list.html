@@ -1,0 +1,6 @@
+{% extends "projects.html" %}
+
+{% block projects_content %}
+    <div class="box-content"><p>These are the {{ projects.all() | length }} projects with the most testers.</p></div>
+    {{ render_projects_list(projects) }}
+{% endblock %}

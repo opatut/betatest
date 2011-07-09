@@ -19,11 +19,11 @@ def abort_reason(code, reason):
     abort(code)
 
 import validators
+from betatest.forms import *
 from betatest.filters import *
 from betatest.models import *
 from betatest.usersession import *
 from betatest.controllers import *
-from betatest.forms import *
 
 def setupGlobals(sender):
     g.usersession = usersession

@@ -19,7 +19,15 @@ def new_project():
 @app.route("/projects")
 @app.route("/projects/<tab>")
 def projects(tab = "list"):
-    return render_template("projects.html", subpage = tab, delete_tag_endpoint = 'project_tags_remove')
+    # to find the XX projects with the most testers
+    # - join the project_testers table
+    # - group_by Project.id
+    # - within order_by use func.count to count testers
+    # - limit the result size
+
+    # SELECT * FROM project JOIN project_testers ON project_testers.project_id = project.id GROUP BY project.id  ORDER BY count(project.id) DESC LIMIT 10;
+    projects = models.project.Project.query.join(models.project.project_testers).group_by(models.project.Project.id).order_by(db.desc(db.func.count(models.project.project_testers.c.tester_id))).limit(10)
+    return render_template("projects-list.html", subpage = tab, delete_tag_endpoint = 'project_tags_remove', projects = projects)
 
 
 @app.route("/<username>/<project>")

@@ -6,13 +6,13 @@
     <h1>Projects</h1>
     <p>
         <ul class="tabs standing-tabs" id="main-tabs">
-            {% for name, caption in [("list", "List of projects"),("interesting","Interesting stuff"),("new","Create New Project")] %}
+            {% for name, caption in [("list", "List of projects"),("new","Create New Project")] %}
                 {{ printTab("projects", name, caption) }}
             {% endfor %}
         </ul>
 
         <div class="box" style="border-top-left-radius: 0;" id="main-box">
-            {% block projects %}{% endblock %}
+            {% block projects_content %}{% endblock %}
         </div>
     </p>
 {% endblock content %}
