@@ -12,7 +12,7 @@
             </div>
 
             <ul class="profile-links">
-                {% set is_tester = g.usersession.getCurrentUser() in project.testers %}
+                {% set is_tester = current_user in project.testers %}
                 {% set is_author = session.username == project.author.username %}
 
                 <li><a href="{{ project.url() }}"><span class="icon-16 icon-16-details"></span>Details</a></li>
@@ -27,7 +27,7 @@
                 {% if is_author %}
                 <li><a href="{{ url_for('project_edit', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-edit"></span>Edit Project</a></li>
                 <li><a href="{{ url_for('project_change_icon', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-icon"></span>New icon</a></li>
-                {% elif not is_tester and not g.usersession.getCurrentUser().hasAppliedForProject(project.id) %}
+                {% elif current_user and not is_tester and not current_user.hasAppliedForProject(project.id) %}
                 <li><a href="{{ url_for('project_apply', username = project.author.username, project = project.slug) }}"><span class="icon-16 icon-16-door-in"></span>Apply</a></li>
                 {% endif %}
                 {% block project_buttons %}{% endblock %}

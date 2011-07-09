@@ -1,6 +1,6 @@
 {% extends "dashboard.html" %}
 
-{% set notifications = g.usersession.getCurrentUser().notifications.all() %}
+{% set notifications = current_user.notifications.all() %}
 
 {% block page_title %}{{ message.title }}{% endblock %}
 

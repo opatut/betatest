@@ -18,14 +18,14 @@ def abort_reason(code, reason):
     session["abort_reason"] = reason
     abort(code)
 
+@app.context_processor
+def inject_user():
+    return dict(current_user = usersession.getCurrentUser())
+
+
 import validators
 from betatest.forms import *
 from betatest.filters import *
 from betatest.models import *
 from betatest.usersession import *
 from betatest.controllers import *
-
-def setupGlobals(sender):
-    g.usersession = usersession
-
-request_started.connect(setupGlobals)
