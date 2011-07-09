@@ -691,7 +691,7 @@ div.message-thread div.message div.meta {
 
 div.message-thread div.message div.meta a.author {
     font-size: 11pt;
-}+
+}
 
 div.message-write {
     margin: 20px 80px;
@@ -1062,7 +1062,6 @@ ul.message-list-ul li .message *  {
 }
 .steps .step:hover .stepnum {
     text-shadow: 0 0 10px #AAA;
-
 }
 
 
