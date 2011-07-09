@@ -1,6 +1,6 @@
 {% extends "projects.html" %}
 
-{% block projects %}
+{% block projects_content %}
 <form method="post">
     {{ form.hidden_tag() }}
     <div class="box-content" style="padding: 30px; text-align: center;">
@@ -12,4 +12,4 @@
         <input type="submit" value="Create Project" class="default" />
     </p>
 </form>
-{% endblock projects %}
+{% endblock %}

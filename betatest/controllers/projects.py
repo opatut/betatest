@@ -32,10 +32,21 @@ def new_project():
 
     return render_template("projects-new.html", subpage = "new", form = form)
 
+from betatest.models.project import *
+from betatest.models.user import *
+
 @app.route("/projects")
 @app.route("/projects/<tab>")
 def projects(tab = "list"):
-    return render_template("projects.html", subpage = tab, delete_tag_endpoint = 'project_tags_remove')
+    # to find the XX projects with the most testers
+    # - join the project_testers table
+    # - group_by Project.id
+    # - within order_by use func.count to count testers
+    # - limit the result size
+
+    # SELECT * FROM project JOIN project_testers ON project_testers.project_id = project.id GROUP BY project.id  ORDER BY tester_count DESC    LIMIT 10;
+    projects = Project.query.join(models.project.project_testers).group_by(Project.id).order_by(db.desc(db.func.count(models.project.project_testers.c.tester_id))).limit(10)
+    return render_template("projects-list.html", subpage = tab, delete_tag_endpoint = 'project_tags_remove', projects = projects)
 
 
 @app.route("/<username>/<project>")
