@@ -1,0 +1,19 @@
+{% extends "notifications/base.html" %}
+
+{% block icon %}{{ project.getIcon(icon_size) }}{% endblock %}
+
+{% block caption %}
+    {% if was_kicked %}
+    <a href="{{ project.author.url() }}">{{ project.author.username }}</a>
+    <span class="meta">kicked you from the project <a href="{{ project.url() }}">{{ project.title }}</a></span>
+    {% elif user %}
+    <a href="{{ user.url() }}">{{ user.username }}</a>
+    <span class="meta">quit your project <a href="{{ project.url() }}">{{ project.title }}</a></span>
+    {% else %}
+    <span class="flash-error">There was an error rendering this notification.</span>
+    {% endif %}
+{% endblock %}
+
+{% block text %}
+    <a href="{{ project.url() }}">Visit the project page &raquo;</a>
+{% endblock %}

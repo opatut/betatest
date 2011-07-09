@@ -1,5 +1,7 @@
 from betatest import *
 from betatest.models.application import Application
+from betatest.models.project import Project
+from betatest.models.user import User
 
 
 '''
@@ -15,7 +17,7 @@ class Data(object):
 
     def getProject(self):
         if self.project_id:
-            return models.project.Project.query.filter_by(id = self.project_id).first()
+            return Project.query.filter_by(id = self.project_id).first()
         else:
             return None
 
@@ -53,6 +55,19 @@ class ApplicationStatus(Data):
         else:
             abort_reason(500, "Invalid status (%s) for ApplicationStatus in Notification." % self.status) # internal server error
 
+class ProjectQuit(Data):
+    def __init__(self, project, quit_user, was_kicked = False):
+        self.project_id = project.id
+        self.was_kicked = was_kicked
+        self.user_id = quit_user.id
+
+
+    def _render(self):
+        return render_template("notifications/project_quit.html",
+        project = self.getProject(),
+        was_kicked = self.was_kicked,
+        notification = self.notification,
+        user = User.query.filter_by(id = self.user_id).first())
 
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -131,7 +131,9 @@ def project_quit(username, project):
 
     form = ProjectQuitForm()
     if form.validate_on_submit():
-        p.testers.remove(usersession.getCurrentUser())
+        c_user = usersession.getCurrentUser()
+        p.testers.remove(c_user)
+        db.session.add(models.notification.Notification(p.author, models.notification.ProjectQuit(p, c_user)))
         db.session.commit()
         flash("You have quit the project.", "success")
         return redirect(p.url())
