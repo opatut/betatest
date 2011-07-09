@@ -41,5 +41,5 @@ class ProjectBugtrackerBugReplyForm(Form):
     text = TextAreaField("", validators=[Required()])
 
 class ChangeIconForm(Form):
-    icon = FileField("New Icon", validators = [Regexp('^[^/\\\\]+\\.(jpg|png|jpeg|gif)$')])
+    icon = FileField("New Icon")
     delete = BooleanField("Delete current icon", default = False)

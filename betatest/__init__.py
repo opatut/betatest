@@ -5,7 +5,8 @@ from flaskext.wtf import *
 from flaskext.markdown import Markdown
 from datetime import datetime, timedelta
 from hashlib import sha512, md5
-import re
+import hashlib
+import re, random
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///betatest.db'
@@ -20,7 +21,7 @@ def abort_reason(code, reason):
 
 @app.context_processor
 def inject_user():
-    return dict(current_user = usersession.getCurrentUser())
+    return dict(current_user = usersession.getCurrentUser(), random = random, hashlib = hashlib)
 
 
 import validators

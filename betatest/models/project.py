@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from betatest import *
-import re
+import re, os, sys
 
 project_testers = db.Table('project_testers', db.Model.metadata,
     db.Column('project_id', db.Integer, db.ForeignKey('project.id')),
@@ -31,6 +31,7 @@ class Project(db.Model):
     testers = db.relationship("User", secondary = project_testers, backref = "tested_projects")
     applications = db.relationship("Application", backref = "project")
     reports = db.relationship("Report", backref = "project")
+    iconfile = db.Column(db.String(128))
 
     def __init__(self, title, description, author, homepage = ''):
         self.title = title
@@ -51,7 +52,12 @@ class Project(db.Model):
         return '<Project: %r>' % self.title
 
     def getIcon(self, size = 32):
+        if self.iconfile:
+            return url_for("project_icon", username = self.author.username, project = self.slug, size = size)
         return "http://www.gravatar.com/avatar/{0}?s={1}&d=identicon".format(md5(self.slug).hexdigest(), size)
+
+    def getIconFile(self):
+        return os.path.join(sys.path[0], "betatest", "uploads", "project-icons", self.iconfile)
 
     def getApplicants(self):
         applicants = []

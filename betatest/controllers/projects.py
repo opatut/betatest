@@ -1,9 +1,9 @@
 from betatest import *
-import os
+import os, sys
 from werkzeug import secure_filename
 
 def is_allowed_filename(filename, extensions = ["png", "jpg", "jpeg", "gif"]):
-    return '.' in filename and filename.rsplit('.', 1)[1] in extensions
+    return '.' in filename and filename.lower().rsplit('.', 1)[1] in extensions
 
 @app.route("/projects/new", methods = ["POST", "GET"])
 def new_project():
@@ -117,7 +117,7 @@ def project_edit(username, project, subpage = ''):
         delete_form = delete_form,
         tags = p.tags)
 
-@app.route("/<username>/<project>/changeicon")
+@app.route("/<username>/<project>/changeicon", methods = ["POST", "GET"])
 def project_change_icon(username, project):
     u = models.user.User.query.filter_by(username = username).first_or_404()
     usersession.loginCheck(users = [u])
@@ -128,10 +128,28 @@ def project_change_icon(username, project):
     if form.validate_on_submit():
         file = request.files[form.icon.name]
         if file and is_allowed_filename(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(target, filename))
+            name = str(p.id) + "." + file.filename.lower().rsplit('.', 1)[1]
+            name = secure_filename(name)
+            p.iconfile = name
+            file.save(p.getIconFile())
+            db.session.commit()
+            flash("Your icon has been changed.", success)
+        elif form.delete.data:
+            return "Gotta delete the icon."
 
     return render_template("project-change-icon.html", form = form, project = p)
+
+@app.route("/<username>/<project>/icon")
+@app.route("/<username>/<project>/icon/<size>")
+def project_icon(username, project, size = 32):
+    u = models.user.User.query.filter_by(username = username).first_or_404()
+    p = models.project.Project.query.filter_by(slug = project.lower(), author_id = u.id).first_or_404()
+
+    if p.iconfile:
+        # todo: scale and cache
+        return send_file(p.getIconFile())
+    else:
+        abort(404)
 
 
 @app.route("/<username>/<project>/tags/remove/<tag>")

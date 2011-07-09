@@ -1,0 +1,85 @@
+{% extends "help.html" %}
+
+{% block help %}
+
+    <h1>Project icons</h1>
+    <p>
+
+        {% set size = "64" %}
+        {% set identicon = "http://www.gravatar.com/avatar/" + hashlib.md5(random.randint(0,1000000).__repr__()).hexdigest() + "?d=identicon&s=" %}
+        {{ helpImage(identicon + size, "A sample identicon.", identicon + "512",  size, size) }}
+
+        Every project is associated with an icon. This icon is displayed in every
+        list your project appears in.
+    </p>
+
+    <h2>Default icons</h2>
+
+    <p>
+        The default icon for your project is generated as an
+        <a href="http://en.wikipedia.org/wiki/Identicon" target="_blank">identicon</a> by the online avatar
+        service <a href="http://gravatar.com" target="_blank">gravatar.com</a> (which is also used to fetch the
+        <a href="/help/user-icons">user-icons</a>). The project title is included in this
+        generation process, so changing your project title might also change your
+        default icon.
+    </p>
+
+    <h2>Upload a custom icon</h2>
+
+    <p>
+        {{ helpImageStatic('about/img/project-sidebar.png', 'The project page sidebar.') }}
+
+        It is possible to upload a custom icon for your project. You will find a
+        link for this in your project page sidebar.
+    </p>
+
+    <p>
+        You will find a form displaying your current icon. On the right you
+        are able to select an image file from your computer. This file
+        must meet the following guidelines in order to be a valid icon.
+        Otherwise the upload will fail.
+    </p>
+
+    <ul>
+        <li>Icons have to be in <b>PNG</b>, <b>JPG</b> or <b>GIF</b> format.</li>
+        <li>Icons should be at least 128 x 128 pixels in size, but may not exceed 512 x 512 pixels.</li>
+        <li>If your icon is too small, it will be scaled up. This will reduce its quality.</li>
+        <li>Your icon may be max. 250 KB in size. If you cannot fit this, choose another size or compression. We suggest PNG.</li>
+        <li>Your icon must meet the <a href="/about/content-guidelines">content guidelines.</a></li>
+        <li>You have to own the right to publish the icon without violating any copyright.</li>
+    </ul>
+
+    <h2>Tips for a good icon</h2>
+
+    <p>
+        It can be difficult to find a good icon for your project. You always
+        need to keep in mind that this is what other users see first, and
+        that they recognize your project by its icon. So follow these
+        few steps:
+    </p>
+
+    <ol>
+        <li>
+            <b>Don't use a complicated icon.</b>
+            In some lists the icon will be scaled down to 16x16 pixels. If your
+            icon is too complicated, one cannot identify it well.
+        </li>
+        <li>
+            <b>Have contrast.</b>
+            Your icon will be better recognizale with a high contrast against
+            its background.
+        </li>
+        <li>
+            <b>Capture the main characteristic of your project. </b>
+            Otherwise one might not remember what your project was about
+            when seeing the icon.
+        </li>
+    </ol>
+
+    <p>
+        You might also want to <a href="http://www.google.com/?q=icon+design+tips" target="_blank">google</a>
+        for icon design tips, to create an icon that fits your project.
+    </p>
+
+
+{% endblock %}
