@@ -133,7 +133,7 @@ def project_change_icon(username, project):
             p.iconfile = name
             file.save(p.getIconFile())
             db.session.commit()
-            flash("Your icon has been changed.", success)
+            flash("Your icon has been changed.", "success")
         elif form.delete.data:
             return "Gotta delete the icon."
 
