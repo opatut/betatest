@@ -59,7 +59,7 @@ class Project(db.Model):
     def getIconFile(self):
         return os.path.join(sys.path[0], "betatest", "uploads", "project-icons", self.iconfile)
 
-    def getApplicants(self):
+    def getApplicants(self, validator = []):
         applicants = []
         for application in self.applications:
             if validator and application.status in validator:
