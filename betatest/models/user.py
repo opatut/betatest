@@ -44,9 +44,13 @@ class User(db.Model):
 
     def getNewMessageCount(self):
         i = 0
-        for msg in self.participating_message_threads:
-            i += 1
+        for thread in self.participating_message_threads:
+            if not thread.isReadByUser():
+                i += 1
         return i
+
+    def getNotificationCount(self):
+        return len(self.notifications.all())
 
     def getAvatar(self, size = 32):
         return "http://www.gravatar.com/avatar/{0}?s={1}&d=identicon".format(md5(self.email.lower()).hexdigest(), size)

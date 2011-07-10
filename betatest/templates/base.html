@@ -45,7 +45,8 @@
                         <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
                         {% set inbox = current_user.getNewMessageCount() %}
                         <li><a href="{{ url_for('dashboard', page='messages') }}">Inbox{% if inbox %} <span id="inbox-count">{{ inbox }}</span>{% endif %}</a></li>
-                        <li><a href="{{ url_for('dashboard', page='notifications') }}">Notifications</a></li>
+                        {% set n = current_user.getNotificationCount() %}
+                        <li><a href="{{ url_for('dashboard', page='notifications') }}">Notifications{% if n %} <span id="inbox-count">{{ n }}</span>{% endif %}</a></li>
                         <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                     {% else %}
                         <li><a href="{{ url_for('register') }}">Register</a></li>
