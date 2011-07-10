@@ -6,7 +6,7 @@ class NewProjectForm(Form):
 
 class ProjectEditForm(Form):
     title = TextField('Project title', validators = [Length(min = 6), Required(), validators.UnusedProjectSlug()])
-    homepage = TextField('Homepage', validators = [Length(min = 6)])
+    homepage = TextField('Homepage', validators = [Optional(), URL()])
     description = TextAreaField('Description')
 
     def setProject(self, ignore_project):

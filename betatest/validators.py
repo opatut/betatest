@@ -1,5 +1,7 @@
 from betatest import *
 from betatest.models.user import User
+from betatest.models.project import titleToSlug
+from betatest import usersession
 
 def userlist_check(form, field):
     error = ""
@@ -19,7 +21,7 @@ class UnusedProjectSlug(object):
 
     def __call__(self, form, field):
         user = usersession.getCurrentUser()
-        new_slug = models.project.titleToSlug(field.data)
+        new_slug = titleToSlug(field.data)
         project = user.findProject(new_slug)
         # we have a project with that name
         if project and (self.ignore_project == None or self.ignore_project != project):

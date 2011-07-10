@@ -98,8 +98,10 @@ def project_edit(username, project, subpage = ''):
         db.session.commit()
         flash("Your changes have been applied.", "success")
         return redirect(p.url())
-    else:
+    elif request.method != "POST":
+        form.title.data = p.title
         form.description.data = p.description
+        form.homepage.data = p.homepage
 
     if subpage == "tags" and tag_form.validate_on_submit():
         for tag in re.split("\s*,\s*", tag_form.tag.data):
