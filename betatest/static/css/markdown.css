@@ -1,0 +1,46 @@
+/* Markdown */
+
+div.markdown h1 {
+    font-size: 12pt;
+    margin: 12px 0 6px 0;
+    border-bottom: 2px solid #CCC;
+}
+
+.markdown h2 {
+    font-size: 10pt;
+    margin: 6px 0;
+    font-weight: bold;
+}
+
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+    font-size: 1em;
+}
+
+.markdown h4 {
+    text-decoration: underline;
+    font-weight: normal;
+}
+
+.markdown h5,
+.markdown h6 {
+    font-weight: normal;
+}
+
+
+/* Resets */
+
+ul.projects-list li div.description *,
+ul.entry-list li .text *  {
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+    display: inline;
+    border: none;
+    background: none;
+    letter-spacing: 0;
+    line-height: 1.3em;
+}
+

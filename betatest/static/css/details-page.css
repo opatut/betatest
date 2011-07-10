@@ -1,0 +1,45 @@
+/* Detail pages, i.e. Profiles and Projects */
+
+.details-page .project-title .author {
+    font-size: 0.7em;
+    color: #666;
+}
+
+.details-page .username .realname {
+    font-weight: normal;
+    color: #888;
+    font-size: 0.8em;
+}
+
+.details-page .left {
+    float: left;
+    width: 84px;
+}
+
+.details-page .left .details-page-links {
+    list-style: none;
+    margin: 10px 0;
+    padding: 0;
+    width: 100%;
+    font-size: 8pt;
+}
+
+.details-page .left .details-page-links li {
+    margin-bottom: 3px;
+}
+
+.details-page .left .details-page-links li a {
+    display: block;
+    padding: 2px;
+    color: #888;
+}
+
+.details-page .left .details-page-links li a:hover {
+    text-decoration: none;
+    background: #ABF;
+    color: #FFF;
+}
+
+.details-page .right {
+    margin-left: 96px;
+}

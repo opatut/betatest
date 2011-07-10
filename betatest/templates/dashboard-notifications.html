@@ -16,7 +16,7 @@
         <p>You don't have any notifications.</p>
     </div>
     {% else %}
-    <ul class="notifications-list">
+    <ul class="entry-list" id="notifications-list">
     {% for notification in notifications %}
         <li>
         {{ notification.render() | safe }}

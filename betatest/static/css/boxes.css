@@ -1,0 +1,51 @@
+/* Content boxes and columns */
+
+.box {
+    background: #F6F6F6;
+    background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F6F6F6));
+    background: -moz-linear-gradient(top, #FFFFFF, #F6F6F6);
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    margin: 0;
+    margin-bottom: 10px;
+    vertical-align: top;
+}
+
+.box > h4 {
+    font-size: 1em;
+    border-bottom: 1px solid #CCC;
+    padding: 4px 10px;
+    border-radius: 2px 2px 0 0;
+}
+
+.box > .box-content {
+    padding: 4px 10px;
+}
+
+.box p.form-buttons {
+    padding: 4px 10px;
+    border-top: 1px solid #CCC;
+    background: #EEEEFF;
+    margin: 0;
+    text-align: right;
+    border-radius: 0px 0px 2px 2px;
+}
+
+.box p.form-buttons.only-in-box {
+    border-top: 0;
+    border-radius: 2px;
+}
+
+.columns {
+    display: table;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.columns > div {
+    display: table-cell;
+}
+
+.columns > div.columns-separator {
+    width: 10px;
+}

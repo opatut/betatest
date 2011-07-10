@@ -1,0 +1,38 @@
+/* Main navigation */
+
+@-webkit-keyframes bounce {
+    from {
+    }
+    to {
+        background: #000;
+    }
+}
+
+a span#inbox-count {
+    background: rgba(0,0,0,0.6);
+    position: relative;
+    border-radius: 4px;
+    color: #FFF;
+    text-shadow: none;
+    font-weight: normal;
+    display: inline-block;
+    font-size: 8pt;
+    width: 14px;
+    text-align: center;
+    padding: 1px;
+
+    -webkit-animation-name: bounce;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 6;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+a:hover span#inbox-count {
+    background: rgba(0,0,0,1);
+}
+
+img#tabbar-profile-icon {
+    vertical-align: top;
+    margin-right: 4px;
+}

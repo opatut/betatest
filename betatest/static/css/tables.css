@@ -1,0 +1,20 @@
+/* Tables */
+
+table.details {
+    font-size: 9pt;
+}
+
+table.details th {
+    text-align: left;
+    font-weight: normal;
+    color: #888;
+}
+
+table.details p {
+    margin: 0;
+}
+
+table.details td,
+table.details th {
+    padding-right: 20px;
+}

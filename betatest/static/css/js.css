@@ -1,0 +1,23 @@
+/* JS Styling stuff */
+
+.no-js-hide {
+    visibility: hidden;
+}
+
+
+#tooltip {
+    position: absolute;
+    z-index: 3000;
+    border: 1px solid #000;
+    background-color: rgba(0,0,0,0.9);
+    border-radius: 5px;
+    padding: 5px 10px;
+    opacity: 0.85;
+    color: #FFF;
+}
+
+#tooltip h3, #tooltip div {
+    font-size: 8pt;
+    font-weight: normal;
+    margin: 0;
+}

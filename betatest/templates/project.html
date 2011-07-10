@@ -3,7 +3,7 @@
 {% block pagetitle %}Projects{% endblock %}
 
 {% block content %}
-    <div class="profile">
+    <div class="details-page">
         <div class="left">
             <div class="icon">
                 <a href="{{ project.url() }}">
@@ -11,7 +11,7 @@
                 </a>
             </div>
 
-            <ul class="profile-links">
+            <ul class="details-page-links">
                 {% set is_tester = current_user in project.testers %}
                 {% set is_author = session.username == project.author.username %}
 

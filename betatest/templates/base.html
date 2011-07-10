@@ -1,19 +1,14 @@
+<!DOCTYPE HTML>
 {% from "macros.html" import printTab, time, displayMessages, tagsList, render_projects_list, render_user_list, includeCSS, includeJS with context %}
 <html>
     <head>
         <title>betatest » {% block pagetitle %}{% endblock %}</title>
         <link href="{{ url_for('static', filename='gfx/icons/favicon-16-blue.ico') }}" rel="icon" type="image/x-icon" />
-        {{ includeCSS("style.css") }}
-        {{ includeCSS("icons.css") }}
-        {{ includeJS("jquery.js") }}
-        {{ includeJS("jquery.autocomplete.js") }}
-        {{ includeJS("jquery.bgiframe.js") }}
-        {{ includeJS("jquery.tooltip.js") }}
-        {{ includeJS("general.js") }}
-        {{ includeJS("messages.js") }}
-        {{ includeJS("tags.js") }}
+        {% for css in ["autocomplete.css", "boxes.css", "details-page.css", "entry-list.css", "errors.css", "footer.css", "forms.css", "help.css", "home.css", "icons.css", "js.css", "main.css", "markdown.css", "messages.css", "nav.css", "profile.css", "projects-list.css", "style.css", "tables.css", "tabs-buttons.css", "tags.css", "user-list.css"] %}
+        {{ includeCSS(css) }}{% endfor %}
+        {% for js in ["jquery.js", "jquery.autocomplete.js", "jquery.bgiframe.js", "jquery.tooltip.js", "general.js", "messages.js", "tags.js"] %}
+        {{ includeJS(js) }}{% endfor %}
         {% block head %}{% endblock %}
-
         <script>
             var $ROOT_PATH = {{ request.script_root|tojson|safe }};
         </script>
@@ -33,10 +28,9 @@
 
                 <div id="SEARCH-BAR">
                     <form action="/search" method="get">
-                        <input type="text" placeholder="Search..." name="q" {% if request.endpoint == "search" %}value="{{ request.args.get('q', '') }}" {% endif %}class="input-text search-text" size="40" />
+                        <input type="text" placeholder="Search..." name="q" {% if request.endpoint == "search" %}value="{{ request.args.get('q', '') }}" {% endif %}class="input-text search-text" />
                     </form>
                 </div>
-
 
                 <ul class="tabs hanging-tabs" style="text-align: right">
                     {% if session.logged_in %}

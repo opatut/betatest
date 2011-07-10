@@ -1,0 +1,136 @@
+/* Tabs and buttons */
+
+ul.tabs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.tabs li {
+    display: inline-block;
+}
+
+.box p.form-buttons a.button {
+    display: inline-block;
+}
+
+.box p.form-buttons input,
+a.button,
+input.button,
+ul.tabs li a {
+    background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#DDD));
+    background: -moz-linear-gradient(top, #FFF, #DDD);
+    color: #666;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid #d4d4d4;
+    text-shadow: 1px 1px 1px #FFF;
+    cursor: pointer;
+
+    -webkit-transition: box-shadow 0.2s linear, color 0.2s linear, background 0.2s linear;
+    -moz-transition: box-shadow 0.2s linear, color 0.2s linear, background 0.2s linear;
+}
+
+.box p.form-buttons input.red,
+a.button.red,
+input.button.red,
+ul.tabs li a.red {
+    background: -webkit-gradient(linear, left top, left bottom, from(#F00), to(#900));
+    background: -moz-linear-gradient(top, #F00, #900);
+    border-color: #900;
+    color: #FFF;
+    text-shadow: 0 -1px 1px #339;
+}
+
+.box p.form-buttons input.default,
+input.button.default,
+a.button.default {
+    background: -webkit-gradient(linear, left top, left bottom, from(#9AF), to(#37F));
+    background: -moz-linear-gradient(top, #9AF, #37F);
+    border-color: #558;
+    color: #FFF;
+    text-shadow: 0 -1px 1px #339;
+}
+
+ul.tabs li a:hover {
+    color: #222;
+}
+
+.box p.form-buttons input:hover,
+input.button:hover,
+a.button:hover {
+    color: #222;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.box p.form-buttons input.red:hover,
+input.button.red:hover,
+a.button.red:hover {
+    color: #FFF;
+    background: -webkit-gradient(linear, left top, left bottom, from(#F44), to(#C00));
+    background: -moz-linear-gradient(top, #F44, #C00);
+}
+
+.box p.form-buttons input.default:hover,
+input.button.default:hover,
+a.button.default:hover {
+    color: #FFF;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ACF), to(#48F));
+    background: -moz-linear-gradient(top, #ACF, #48F);
+}
+
+.box p.form-buttons input.green,
+a.button.green,
+input.button.green,
+ul.tabs li a.green {
+    background: -webkit-gradient(linear, left top, left bottom, from(#0B0), to(#060));
+    background: -moz-linear-gradient(top, #0B0, #060);
+    border-color: #060;
+    color: #FFF;
+    text-shadow: 0 -1px 1px #339;
+}
+
+.box p.form-buttons input.green:hover,
+input.button.green:hover,
+a.button.green:hover {
+    color: #FFF;
+    background: -webkit-gradient(linear, left top, left bottom, from(#0D0), to(#080));
+    background: -moz-linear-gradient(top, #0D0, #080);
+}
+
+
+ul.tabs li.current a {
+    background: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#FFF));
+    background: -moz-linear-gradient(top, #DDD, #FFF);
+    box-shadow: 0 1px 1px #FFF inset;
+}
+
+ul.tabs.hanging-tabs {
+    margin-top: 4px;
+}
+
+ul.tabs.hanging-tabs li a {
+    border-radius: 0 0 5px 5px;
+    border-top: 0;
+}
+
+
+ul.tabs.standing-tabs {
+    margin-bottom: 4px;
+}
+
+ul.tabs.standing-tabs li a {
+    border-radius: 5px 5px 0 0;
+    border-bottom: 0;
+}
+
+ul.tabs.small-tabs li a {
+    padding: 3px 8px;
+}
+
+ul.tabs.standing-tabs li.current a{
+    border-bottom: 1px solid #FFF;
+    margin-bottom: -1px;
+}

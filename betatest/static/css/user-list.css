@@ -1,0 +1,55 @@
+/* User list */
+
+ul.users-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.users-list li {
+    margin: 0;
+    padding: 0;
+}
+
+ul.users-list li a {
+    display: block;
+    margin: 0;
+    background: #EEF;
+    padding: 3px 4px;
+    text-decoration: none;
+    color: #444;
+}
+
+ul.users-list li:nth-child(2n) a {
+    background: #CDF;
+}
+
+ul.users-list li a:hover {
+    border-left: 4px solid #ACF;
+    padding-left: 0;
+}
+
+ul.users-list li:nth-child(2n) a:hover {
+    border-left-color: #9BF;
+}
+
+ul.users-list li div.icon {
+    float: left;
+    margin-left: 4px;
+}
+
+ul.users-list li div.username {
+    margin-left: 30px;
+    height: 20px;
+    line-height: 20px;
+}
+
+ul.users-list li a div.more {
+    display: none;
+    float: right;
+    margin-top: 3px;
+}
+
+ul.users-list li a:hover div.more {
+    display: block;
+}

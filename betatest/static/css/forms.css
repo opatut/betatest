@@ -1,0 +1,73 @@
+/* Form styles */
+
+form {
+    padding: 0;
+    margin: 0;
+}
+
+input {
+    vertical-align: middle;
+    margin-left: 0;
+}
+
+textarea,
+input.input-text,
+input.input-password {
+    border: 1px solid #AAA;
+    background: #FFF;
+    border-radius: 4px;
+    padding: 3px 6px;
+    color: #888;
+}
+
+textarea:focus,
+input.input-text:focus,
+input.input-password:focus {
+    border-color: #888;
+    color: #666;
+    box-shadow: 0 0 3px #DDD inset;
+    outline: 0;
+}
+
+textarea.compose-message {
+    width: 100%;
+    height: 200px;
+}
+
+.input-details {
+    color: #AAA;
+    font-size: 8pt;
+}
+
+
+/* SEARCH FORM */
+
+input.search-text {
+    background: #FFF url("../gfx/search.png") 6px center no-repeat;
+    padding: 2px 10px 2px 26px;
+    border-color: #e5e5e5;
+    width: 80%;
+}
+
+input.search-text:focus {
+    border-color: #CCC;
+}
+
+
+/* LOGIN FORM */
+
+.login-form {
+    width: 300px;
+    margin: 30px auto;
+}
+
+form.login-form label {
+    display: inline-block;
+    width: 70px;
+    font-weight: bold;
+    color: #444;
+    text-shadow: 1px 1px 1px #FFF;
+    font-size: 8pt;
+    text-align: right;
+    padding-right: 10px;
+}

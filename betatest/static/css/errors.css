@@ -1,0 +1,45 @@
+/* Flash messages & form errors  */
+
+ul.flash-messages {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.flash-error,
+.flash-success,
+.flash-warning,
+.flash-info,
+.form-error {
+    padding: 3px 10px;
+    border-radius: 4px;
+    vertical-align: middle;
+    border: 1px solid #888;
+    margin-top: 2px;
+}
+
+.flash-error,
+.form-error {
+    color: #F00;
+    background: #FCC;
+    border-color: #F00;
+}
+
+.flash-success {
+    color: #080;
+    background: #CFC;
+    border-color: #080;
+}
+
+.flash-warning {
+    color: #FB0;
+    background: #FF8;
+    border-color: #FB0;
+}
+
+.flash-info {
+    color: #00A;
+    background: #CCF;
+    border-color: #00A;
+}

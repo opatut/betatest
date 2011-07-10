@@ -4,7 +4,7 @@
 
 {% block content %}
     {{ displayMessages() }}
-    <div class="profile">
+    <div class="details-page">
         <div class="left">
             <div class="icon">
                 {% if user == current_user %}
@@ -16,7 +16,7 @@
                 </a>
             </div>
 
-            <ul class="profile-links">
+            <ul class="details-page-links">
                 {% if session.username == user.username %}
                 <li><a href="{{ url_for('settings') }}"><span class="icon-16 icon-16-edit"></span>Edit Profile</a></li>
                 {% else %}

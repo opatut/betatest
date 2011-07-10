@@ -1,0 +1,79 @@
+/* Entry lists, as seen in Applications, Messages and Notifications */
+
+ul.entry-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px;
+}
+
+ul.entry-list > li {
+    margin-top: 2px;
+    background: #EEF;
+    -webkit-transition: background 0.2s linear;
+    -moz-transition: background 0.2s linear;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+ul#message-list > li {
+    cursor: pointer;
+}
+
+ul.entry-list li.unread {
+    background: #CDF;
+}
+
+ul.entry-list li.selected {
+    background: #FC5;
+}
+
+ul.entry-list li.selected a {
+    color: #000;
+}
+
+ul.entry-list li .selection {
+    float: left;
+    margin-top: 5px;
+    margin-left: 3px;
+    margin-right: 5px;
+}
+
+ul.entry-list li .flags {
+    float: right;
+    line-height: 42px;
+}
+
+ul.entry-list li .icon {
+    float: left;
+    margin-top: 3px;
+}
+
+ul.entry-list li .caption {
+    font-size: 11pt;
+    font-weight: bold;
+}
+
+ul.entry-list li .meta {
+    font-size: 9pt;
+    color: #888;
+}
+
+ul.entry-list li .text {
+    color: #444;
+    margin-top: 2px;
+}
+
+ul.entry-list li .caption,
+ul.entry-list li .text {
+    margin-left: 36px;
+    margin-right: 100px;
+}
+
+ul#message-list li .text,
+ul#message-list li .caption {
+    margin-left: 64px;
+}
+
+ul.entry-list li .text p {
+    margin: 0;
+}

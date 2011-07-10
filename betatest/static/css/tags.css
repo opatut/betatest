@@ -1,0 +1,40 @@
+/* Tags */
+
+ul.tags {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.tags li {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.tags.spaced li {
+    margin-bottom: 3px;
+}
+
+ul.tags li {
+    background: #CDF;
+    border: 1px solid #79C;
+    color: #447;
+    font-size: 8pt;
+    padding: 1px 4px;
+    border-radius: 2px;
+}
+
+ul.tags li a.delete {
+    background: url("../gfx/icons/tag_delete_button.png");
+    vertical-align: -2px;
+    margin-left: 4px;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+}
+
+ul.tags li a.delete:hover {
+    background-position: 0 -12px;
+    background-color: #48A;
+}

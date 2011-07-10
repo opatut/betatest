@@ -58,7 +58,7 @@
     </div>
     {% else %}
     <form class="message-list-form" method="post" action="{{ url_for('message_action') }}">
-        <ul class="message-list-ul">
+        <ul class="entry-list" id="message-list">
         {% for t in current_user.participating_message_threads %}
             {% set read = t.isReadByUser() %}
             {% set message = t.messages[-1] %}
@@ -84,7 +84,7 @@
                     {% endif %}
                     <a href="{{ message.url() }}" title="View thread"><span class="icon-16 icon-16-more"></span></a>
                 </div>
-                <div class="title">
+                <div class="caption">
                     <a class="message_title" href="{{ message.url() }}">{{ t.subject }}</a>
                     <span class="meta">
                         {% if is_sender %}sent{%else%}received{%endif%}
@@ -107,7 +107,7 @@
                     </span>
                 </div>
 
-                <div class="message">
+                <div class="text">
                     {{ message.message | markdown | wordcrop(40) }}
                 </div>
 
