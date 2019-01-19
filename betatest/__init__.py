@@ -1,8 +1,8 @@
 from flask import *
 
-from flaskext.sqlalchemy import SQLAlchemy
-from flaskext.wtf import *
-from flaskext.markdown import Markdown
+from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.wtf import *
+from flask.ext.markdown import Markdown
 from datetime import datetime, timedelta
 from hashlib import sha512, md5
 import hashlib
